@@ -1,0 +1,79 @@
+<h1>REGISTRO</h1>
+
+<h2>Crea tu cuenta para salir a bailar</h2>
+
+<div class="flex justify-content-center flex-wrap">
+  <div class=" p-4 shadow-2 border-round w-full lg:w-6 ">
+    <div class="text-center mb-5">
+      <img ngSrc="/imgRegisterBig.png" alt="Image" height="200" width="250" class="mb-3">
+      <div class="text-900 text-3xl font-medium mb-3">Bienvenid&#64;s, bailarines!</div>
+      <span class="text-600 font-medium line-height-3">¿Ya tienes una cuenta?</span>
+      <a routerLink="/login" class="font-medium no-underline ml-2 text-blue-500 cursor-pointer">Pincha y accede</a>
+    </div>
+
+    <form [formGroup]="signUpForm" (ngSubmit)="onRegister()">
+
+      <label for="nameRegister" class="block text-900 font-medium mb-2">Nombre: </label>
+      <input [formControlName]="'name'" type="text" placeholder="Escribe tu nombre" pInputText id="nameRegister"
+             aria-describedby="name-help" class="w-full mb-3"/>
+
+      <small *ngIf="signUpForm.get('name')?.dirty && signUpForm.get('name')?.hasError('required')"
+             id="name-help">{{ signUpForm.get('name')?.getError('required') }} </small>
+      <label for="description" class="block text-900 font-medium mb-2">Descripción: </label>
+      <input [formControlName]="'description'" id="description" type="text" placeholder="Descríbete brevemente"
+             pInputText class="w-full mb-3">
+
+      <label for="location" class="block text-900 font-medium mb-2">Localidad: </label>
+      <input [formControlName]="'location'" type="text" placeholder="Escribe tu localidad" pInputText id="location"
+             aria-describedby="name-help" class="w-full mb-3"/>
+
+      <label for="email1" class="block text-900 font-medium mb-2">Email: </label>
+      <input [formControlName]="'email'" id="email1" type="text" placeholder="ejemplo@mail.com" pInputText
+             class="w-full mb-3">
+
+      <label class="block text-900 font-medium mb-2">Cumpleaños: </label>
+      <p-calendar [formControlName]="'birthday'" [showIcon]="true" dateFormat="dd.mm.yy" class="w-full mb-3"/> <!--[iconDisplay]="'input'" Esconde -->
+
+      <br/>
+      <br/>
+      <label for="password1" class="block text-900 font-medium mb-2">Password: </label>
+
+      <p-password [formControlName]="'password'" [toggleMask]="true" id="password1">
+        <ng-template pTemplate="header">
+          <h6>Escoge una contraseña</h6>
+        </ng-template>
+        <ng-template pTemplate="footer">
+          <p-divider/>
+          <p class="mt-2">Sugerencias</p>
+          <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+            <li>Al menos una minúscula</li>
+            <li>Al menos una mayúscula</li>
+            <li>Al menos un número</li>
+            <li>Mínimo 8 caracteres</li>
+          </ul>
+        </ng-template>
+      </p-password>
+
+      <!--    <p-multiSelect-->
+      <!--      [options]="getallstyles()"-->
+      <!--      [formControlName]="'styles'"-->
+      <!--      placeholder="Que estilos sabes bailar?"-->
+      <!--      optionLabel="name"-->
+      <!--      display="chip"-->
+      <!--      [showClear]="true" />-->
+
+      <div class="flex align-items-center justify-content-between mb-6">
+        <div class="flex align-items-center">
+          <!--        <p-checkbox [formControlName]="'confirm'" [label]="'Confirmo que soy mayor de 18 años y acepto los términos y condiciones'"-->
+          <!--                     class="text-900" inputId="confirm">-->
+          <!--        </p-checkbox>-->
+        </div>
+      </div>
+      {{ signUpForm.errors }}
+      <div class="flex align-items-center justify-content-around mb-6">
+        <p-button type="submit" label="Crear cuenta" class="p-button-success" severity="success"></p-button>
+        <p-button (click)="signUpForm.reset()" label="Borrar datos" severity="danger"/>
+      </div>
+    </form>
+  </div>
+</div>

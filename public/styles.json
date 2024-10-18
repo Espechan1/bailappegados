@@ -1,0 +1,49 @@
+{
+	"status": 200,
+	"data": [
+		{
+			"id": 1,
+			"name": "bachata sensual",
+		},
+		{
+			"id": 2,
+			"name": "salsa cubana",
+		},
+		{
+			"id": 3,
+			"name": "kizomba",
+		},
+		{
+			"id": 4,
+			"name": "salsa en linea",
+		},
+		{
+			"id": 5,
+			"name": "sevillanas",
+		},
+		{
+			"id": 6,
+			"name": "tango",
+		},
+		{
+			"id": 7,
+			"name": "bailes de salón",
+		},
+		{
+			"id": 8,
+			"name": "Marylynne",		
+		},
+		{
+			"id": 9,
+			"name": "Aurie",
+		},
+		{
+			"id": 10,
+			"name": "Onfroi",
+			"email": "ogrisewood9@scribd.com",
+			"gender": "Male",
+			"password": "oM7*20ItyBz",
+			"description": "Nulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi."
+		}
+	]
+}

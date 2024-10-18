@@ -1,0 +1,27 @@
+/* You can add global styles to this file, and also import other style files */
+@import "primeicons/primeicons.css";
+
+:root {
+  --colorBg: #fdeae6;
+  --pinky: #ffb4f7;
+  --myRed: #f21705;
+  --yellorange: #fdcd12;
+}
+html {
+  font-size: 14px;
+}
+
+body {
+  background-color: var(--colorBg);
+  font-family: var(--font-family), serif;
+  font-weight: normal;
+  color: black;
+  padding: 1rem;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.styleTab2 > a{
+  background: var(--pinky);
+  border: 1px solid #d600d9;
+  color: var(--myRed);
+}

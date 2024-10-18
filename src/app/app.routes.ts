@@ -1,0 +1,24 @@
+import { Routes } from '@angular/router';
+import {NotFoundComponent} from './pages/not-found/not-found.component';
+import {LoginComponent} from './pages/login/login.component';
+import {RegisterComponent} from './pages/register/register.component';
+import {LogoutComponent} from './pages/logout/logout.component';
+import {HomeComponent} from './pages/home/home.component';
+import {GuestComponent} from './pages/guest/guest.component';
+import {PremisesComponent} from './pages/premises/premises.component';
+import {EventsComponent} from './pages/events/events.component';
+import {ContactComponent} from './pages/contact/contact.component';
+
+export const routes: Routes = [
+  {path: '', component: GuestComponent},
+  {path: 'login', component: LoginComponent},
+  {path: 'logout', component: LogoutComponent},
+  {path: 'register', component: RegisterComponent},
+  {path: 'premises', component: PremisesComponent},
+  {path: 'events', component: EventsComponent},
+  {path: 'contactus', component: ContactComponent},
+  {path: 'home', component: HomeComponent, canActivate: [()=>{
+    return sessionStorage.getItem('token') === 'mockToken'
+    }] },
+  {path: '**', component: NotFoundComponent}
+];
