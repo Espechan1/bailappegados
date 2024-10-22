@@ -1,0 +1,67 @@
+footer {
+  background: linear-gradient(to bottom, #fdeae6, #ffb4f7);
+  color: #333;
+  padding: 2rem; /* Espacio alrededor del contenido del footer */
+  text-align: center;
+}
+
+.container {
+  max-width: 1200px; /* Ancho máximo del contenedor para centrar el contenido */
+  margin: 0 auto;
+}
+
+.input-group {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem; /* Espacio entre el input y el botón */
+}
+
+input[type="email"] {
+  padding: 1rem;
+  border: none;
+  border-radius: 5px;
+  flex: 1; /* El input se expande para ocupar todo el espacio disponible */
+}
+
+button {
+  padding: 1rem 2rem;
+  background: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem; /* Espacio entre los iconos */
+}
+
+.social-icons a {
+  font-size: 1.5rem; /* Tamaño de los iconos */
+  color: #333;
+}
+
+/* Media queries para ajustar el diseño a diferentes tamaños de pantalla */
+@media (max-width: 768px) {
+  .container {
+    max-width: 95%; /* El contenedor ocupa casi todo el ancho en pantallas pequeñas */
+  }
+
+  .social-icons {
+    flex-direction: column; /* Los iconos se apilan uno encima del otro */
+  }
+
+  input[type="email"] {
+    width: 100%; /* El input ocupa todo el ancho disponible */
+  }
+}
+
+@media (max-width: 576px) {
+  /* Ajustes adicionales para pantallas aún más pequeñas */
+  footer {
+    padding: 1rem;
+  }
+  /* ... otros ajustes según sea necesario ... */
+}

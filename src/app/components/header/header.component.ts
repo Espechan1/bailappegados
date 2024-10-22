@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit {
     {id: "main", label: 'Inicio', routerLink: '/', styleClass: 'styleTab2'},
     {id: "events", label: 'Eventos', routerLink: '/events'},
     {id: "premises", label: 'Locales', routerLink: '/premises'},
-    {id: "account#logged", label: 'Mi cuenta', routerLink: '/account', },
+    {id: "account#logged", label: 'Mi cuenta', routerLink: '/myaccount', },
     {id: "logout#logged", label: 'Logout', routerLink: '/login'},
     {id: "login#loggin", label: 'Login', routerLink: '/login',},
     {id: "signup#loggin",label: 'Register', routerLink: '/register'}
@@ -43,6 +43,9 @@ export class HeaderComponent implements OnInit {
         value.visible = sessionStorage.getItem('token') === null;
       }
     })
+    /**
+     * (this.items.find(value => value.label === 'Login') as MenuItem).visible = !!sessionStorage?.getItem('token');
+     * Si consigue el token(devuelve un string y será parseado a true), visible es falso y no muestra 'Login'.*/
     // if (isPlatformBrowser(this.platformId)) {
     //   if(typeof sessionStorage.getItem('token') === 'string'){ //getItem devuelve un string si hay token o un null sino.
     //     (this.items.find(value => value.label === 'Login') as MenuItem).visible = false;
@@ -60,7 +63,4 @@ export class HeaderComponent implements OnInit {
     // }
   }
 }
-/**
- * (this.items.find(value => value.label === 'Login') as MenuItem).visible = !!sessionStorage?.getItem('token');
- * Si consigue el token(devuelve un string y será parseado a true), visible es falso y no muestra 'Login'.*/
 

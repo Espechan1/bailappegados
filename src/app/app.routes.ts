@@ -8,6 +8,7 @@ import {GuestComponent} from './pages/guest/guest.component';
 import {PremisesComponent} from './pages/premises/premises.component';
 import {EventsComponent} from './pages/events/events.component';
 import {ContactComponent} from './pages/contact/contact.component';
+// import {MyAccountComponent} from './pages/my-account/my-account.component';
 
 export const routes: Routes = [
   {path: '', component: GuestComponent},
@@ -16,9 +17,12 @@ export const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'premises', component: PremisesComponent},
   {path: 'events', component: EventsComponent},
-  {path: 'contactus', component: ContactComponent},
+  {path: 'contact', component: ContactComponent},
   {path: 'home', component: HomeComponent, canActivate: [()=>{
     return sessionStorage.getItem('token') === 'mockToken'
+    }] },
+  {path: 'myaccount', component: MyAccountComponent, canActivate: [()=>{
+      return sessionStorage.getItem('token') === 'mockToken'
     }] },
   {path: '**', component: NotFoundComponent}
 ];

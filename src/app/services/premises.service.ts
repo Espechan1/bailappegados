@@ -12,7 +12,7 @@ export class PremisesService {
 
   private readonly http = inject(HttpClient); // = constructor(private http: HttpClient) {}
 
-  getAll(): Observable<ContainerList<Premise>> {
+  getPremises(): Observable<ContainerList<Premise>> {
     return this.http.get<ContainerList<Premise>>(this.url)
   }
 

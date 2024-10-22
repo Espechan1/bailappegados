@@ -32,7 +32,8 @@
              class="w-full mb-3">
 
       <label class="block text-900 font-medium mb-2">Cumpleaños: </label>
-      <p-calendar [formControlName]="'birthday'" [showIcon]="true" dateFormat="dd.mm.yy" class="w-full mb-3"/> <!--[iconDisplay]="'input'" Esconde -->
+      <p-calendar [formControlName]="'birthday'" [showIcon]="true" dateFormat="dd.mm.yy" class="w-full mb-3"/>
+      <!--[iconDisplay]="'input'" Esconde -->
 
       <br/>
       <br/>
@@ -53,20 +54,25 @@
           </ul>
         </ng-template>
       </p-password>
-
-      <!--    <p-multiSelect-->
-      <!--      [options]="getallstyles()"-->
-      <!--      [formControlName]="'styles'"-->
-      <!--      placeholder="Que estilos sabes bailar?"-->
-      <!--      optionLabel="name"-->
-      <!--      display="chip"-->
-      <!--      [showClear]="true" />-->
+      <br/>
+      <br/>
+      <br/>
+      <label for="styles">¿Qué estilos sabes bailar?  </label>
+      <br/>
+      <p-multiSelect
+        id="styles"
+        [options]="stylesList"
+        [formControlName]="'styles'"
+        placeholder="Seleccionalos"
+        optionLabel="name"
+        display="chip"
+        [showClear]="true"/>
 
       <div class="flex align-items-center justify-content-between mb-6">
         <div class="flex align-items-center">
-          <!--        <p-checkbox [formControlName]="'confirm'" [label]="'Confirmo que soy mayor de 18 años y acepto los términos y condiciones'"-->
-          <!--                     class="text-900" inputId="confirm">-->
-          <!--        </p-checkbox>-->
+<!--                  <p-checkbox [formControlName]="'confirm'" [label]="'Confirmo que soy mayor de 18 años y acepto los términos y condiciones'"-->
+<!--                               class="text-900" inputId="confirm">-->
+<!--                  </p-checkbox>-->
         </div>
       </div>
       {{ signUpForm.errors }}
