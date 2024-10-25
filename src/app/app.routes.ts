@@ -8,7 +8,7 @@ import {GuestComponent} from './pages/guest/guest.component';
 import {PremisesComponent} from './pages/premises/premises.component';
 import {EventsComponent} from './pages/events/events.component';
 import {ContactComponent} from './pages/contact/contact.component';
-// import {MyAccountComponent} from './pages/my-account/my-account.component';
+import {MyAccountComponent} from './pages/my-account/my-account.component';
 
 export const routes: Routes = [
   {path: '', component: GuestComponent},

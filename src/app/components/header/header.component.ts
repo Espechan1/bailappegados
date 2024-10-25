@@ -1,5 +1,5 @@
 import {Component, inject, OnInit, PLATFORM_ID} from '@angular/core';
-import {isPlatformBrowser, NgOptimizedImage} from '@angular/common';
+import {NgOptimizedImage} from '@angular/common';
 import {Button} from 'primeng/button';
 import {TabMenuModule} from 'primeng/tabmenu';
 import {MenuItem} from 'primeng/api';
@@ -23,13 +23,13 @@ export class HeaderComponent implements OnInit {
     {id: "main", label: 'Inicio', routerLink: '/', styleClass: 'styleTab2'},
     {id: "events", label: 'Eventos', routerLink: '/events'},
     {id: "premises", label: 'Locales', routerLink: '/premises'},
-    {id: "account#logged", label: 'Mi cuenta', routerLink: '/myaccount', },
+    {id: "account#logged", label: 'Mi cuenta', routerLink: '/myaccount'},
     {id: "logout#logged", label: 'Logout', routerLink: '/login'},
     {id: "login#loggin", label: 'Login', routerLink: '/login',},
     {id: "signup#loggin",label: 'Register', routerLink: '/register'}
   ];
 
-  private readonly menuVisible = {
+  private readonly menuVisible = { //obj de dos propiedades, los itemsid públicos y los de logueado.
     login: this.items.filter(value => value.id?.includes('#logged')).map(value => value.id),
     logout: this.items.filter(value => value.id?.includes('#loggin')).map(value => value.id),
   }

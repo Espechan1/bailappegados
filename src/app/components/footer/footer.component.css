@@ -4,6 +4,12 @@ footer {
   padding: 2rem; /* Espacio alrededor del contenido del footer */
   text-align: center;
 }
+  li {
+    display: inline-block;
+    padding: 1em;
+    justify-content: space-around;
+  }
+
 
 .container {
   max-width: 1200px; /* Ancho máximo del contenedor para centrar el contenido */
@@ -54,7 +60,7 @@ button {
   }
 
   input[type="email"] {
-    width: 100%; /* El input ocupa todo el ancho disponible */
+    width: 100%; /* El input ocupa el ancho disponible */
   }
 }
 

@@ -42,7 +42,7 @@ export class MyAccountComponent implements OnInit{
     this.getAllStyles()
   }
 
-  getAllStyles(): void {
+  getAllStyles(): void { //Todos los estilos por los botones de opciones
     this.stylesService.getStyles()
       .pipe(take(1))
       .subscribe((value: ContainerList<Style>) => {
@@ -68,15 +68,15 @@ export class MyAccountComponent implements OnInit{
     password: new FormControl(this.myUser.password, [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/)]),
   })
 }
-  // onUpdateUser():void{
-  //   if(this.myAccountForm.invalid){
-  //     console.log("Algo ta mal")
-  //     for (let controlsKey in this.myAccountForm.controls) { //controls EN ROJO!!
-  //       this.myAccountForm.get(controlsKey)?.markAsDirty()
-  //       this.myAccountForm.get(controlsKey)?.updateValueAndValidity()
-  //     }
-  //     return
-  //   }
-  //   console.log("funciono")
-  // }
+  onUpdateUser():void{
+    if(this.myAccountForm.invalid){
+      console.log("Algo ta mal")
+      for (let controlsKey in this.myAccountForm.controls) { //controls EN ROJO!!
+        this.myAccountForm.get(controlsKey)?.markAsDirty()
+        this.myAccountForm.get(controlsKey)?.updateValueAndValidity()
+      }
+      return
+    }
+    console.log("funciono")
+  }
 

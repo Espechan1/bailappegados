@@ -29,6 +29,7 @@ export class PremisesComponent implements OnInit {
 
   premisesList: Premise[] = [];
   premise?: Premise;
+
   private readonly premisesService = inject(PremisesService); // = constructor(private readonly premisesService: PremisesService) {}
 
   ngOnInit(): void {
