@@ -7,8 +7,8 @@ import {UserLogged} from '../models/user';
 })
 export class StateServiceService {
 
-  private _token!: LoginDecodeResponse;
-  private _userLogged!: UserLogged;
+  private _token!: LoginDecodeResponse; //Devuelve un objeto con el id del user, el rol y la expiración del token.
+  private _userLogged!: UserLogged; // Devuelve un boolean del tipo de rol, user=isLogged, manager o admin
 
   get userLogged(): UserLogged {
     return this._userLogged;

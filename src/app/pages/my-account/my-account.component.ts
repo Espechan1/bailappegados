@@ -2,10 +2,11 @@ import {Component, inject, Injectable, OnInit} from '@angular/core';
 import {User} from '../../models/user';
 import {Style} from '../../models/style';
 import {UsersService} from '../../services/users.service';
+import {StylesService} from '../../services/styles.service';
+import {StateServiceService} from '../../services/state-service.service';
 import {take} from 'rxjs';
 import {Container, ContainerList} from '../../models/container';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {StylesService} from '../../services/styles.service';
 import {InputTextModule} from 'primeng/inputtext';
 import {CalendarModule} from 'primeng/calendar';
 import {DividerModule} from 'primeng/divider';
@@ -23,7 +24,7 @@ import {MultiSelectModule} from 'primeng/multiselect';
     PasswordModule,
     MultiSelectModule
   ],
-  providers: [StylesService, UsersService],
+  providers: [StylesService, UsersService, StateServiceService],
   templateUrl: './my-account.component.html',
   styleUrl: './my-account.component.css'
 })
@@ -33,10 +34,11 @@ export class MyAccountComponent implements OnInit{
 
   private readonly usersService = inject(UsersService);
   private readonly stylesService = inject(StylesService);
+  private readonly stateService = inject(StateServiceService);
 
   stylesList: Style[]=[];
   style?: Style;
-  myUser?: User;
+  myUser!: User;
 
   ngOnInit(): void {
     this.getAllStyles()
@@ -50,8 +52,9 @@ export class MyAccountComponent implements OnInit{
         console.log(this.stylesList, value)
       })
   }
-  getUserById(id: number) { // Consulta datos del usuario, seguramente se tendrá que modificar revisando token!
-    this.usersService.getById(this.myUser.id)
+
+  getUserById() { // Consulta datos del usuario
+    this.usersService.getById(this.stateService.token.user)
       .pipe(take(1))
       .subscribe((value: Container<User>) => {
         this.myUser = value.data
@@ -66,12 +69,12 @@ export class MyAccountComponent implements OnInit{
     birthday: new FormControl(this.myUser.birthday),
     genre: new FormControl(this.myUser.genre),
     password: new FormControl(this.myUser.password, [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/)]),
-  })
-}
+  });
+
   onUpdateUser():void{
     if(this.myAccountForm.invalid){
-      console.log("Algo ta mal")
-      for (let controlsKey in this.myAccountForm.controls) { //controls EN ROJO!!
+      console.log("Algo del formulario no pasa validación")
+      for (let controlsKey in this.myAccountForm.controls) {
         this.myAccountForm.get(controlsKey)?.markAsDirty()
         this.myAccountForm.get(controlsKey)?.updateValueAndValidity()
       }
@@ -79,4 +82,8 @@ export class MyAccountComponent implements OnInit{
     }
     console.log("funciono")
   }
+
+}
+
+
 
