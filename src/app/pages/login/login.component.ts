@@ -5,13 +5,13 @@ import {ButtonDirective} from 'primeng/button';
 import {Ripple} from 'primeng/ripple';
 import {InputTextModule} from 'primeng/inputtext';
 import {NgOptimizedImage} from "@angular/common";
-import {RouterLink} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {LoginService} from '../../services/login.service';
 import {Credential} from '../../models/credential';
 import {take} from 'rxjs';
 import {jwtDecode} from 'jwt-decode';
 import {StateServiceService} from '../../services/state-service.service';
-import {LoginDecodeResponse, TokenDecodeResponse} from '../../models/login-response';
+import {TokenDecodeResponse} from '../../models/login-response';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +24,7 @@ import {LoginDecodeResponse, TokenDecodeResponse} from '../../models/login-respo
     InputTextModule,
     NgOptimizedImage,
     RouterLink,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
@@ -34,6 +34,8 @@ export class LoginComponent implements OnInit {
 
   private readonly loginService = inject(LoginService);
   private readonly stateService = inject(StateServiceService);
+  constructor(private router: Router) {}
+
 
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.email, Validators.required]),
@@ -58,6 +60,7 @@ export class LoginComponent implements OnInit {
         }
         console.log(this.stateService.token);
       });
+    this.router.navigate(['/myaccount']);
   }
 }
 

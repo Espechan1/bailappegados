@@ -19,10 +19,10 @@ export const routes: Routes = [
   {path: 'events', component: EventsComponent},
   {path: 'contact', component: ContactComponent},
   {path: 'home', component: HomeComponent, canActivate: [()=>{
-    return sessionStorage.getItem('token') === 'mockToken'
+    return sessionStorage.getItem('token');
     }] },
   {path: 'myaccount', component: MyAccountComponent, canActivate: [()=>{
-      return sessionStorage.getItem('token') === 'mockToken'
+      return sessionStorage.getItem('token');
     }] },
   {path: '**', component: NotFoundComponent}
 ];
