@@ -12,6 +12,7 @@ import {CalendarModule} from 'primeng/calendar';
 import {DividerModule} from 'primeng/divider';
 import {PasswordModule} from 'primeng/password';
 import {MultiSelectModule} from 'primeng/multiselect';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-my-account',
@@ -22,7 +23,8 @@ import {MultiSelectModule} from 'primeng/multiselect';
     CalendarModule,
     DividerModule,
     PasswordModule,
-    MultiSelectModule
+    MultiSelectModule,
+    NgIf
   ],
   providers: [StylesService, UsersService, StateServiceService],
   templateUrl: './my-account.component.html',

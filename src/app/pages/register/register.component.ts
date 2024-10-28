@@ -61,6 +61,10 @@ export class RegisterComponent implements OnInit{ //
       Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/)])
   })
 
+  ngOnInit(): void {
+    this.getAllStyles()
+  }
+
   readonly  genders = [{
     key: 'H',
     name: 'Hombre',
@@ -93,15 +97,14 @@ export class RegisterComponent implements OnInit{ //
       });
     return this.stylesList;
   }
-  getById(id: number) {
-    this.stylesService.getById(id)
-      .pipe(take(1))
-      .subscribe((value: Container<Style>) => {
-        this.style = value.data
-      })
-  }
 
-  ngOnInit(): void {
-    this.getAllStyles()
-  }
+  // getById(id: number) {
+  //   this.stylesService.getById(id)
+  //     .pipe(take(1))
+  //     .subscribe((value: Container<Style>) => {
+  //       this.style = value.data
+  //     })
+  // }
+
+
 }
