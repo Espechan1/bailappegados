@@ -11,7 +11,8 @@ import {Credential} from '../../models/credential';
 import {take} from 'rxjs';
 import {jwtDecode} from 'jwt-decode';
 import {StateServiceService} from '../../services/state-service.service';
-import {LoginDecodeResponse, TokenDecodeResponse} from '../../models/login-response';
+import {TokenDecodeResponse} from '../../models/login-response';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -34,6 +35,7 @@ export class LoginComponent implements OnInit {
 
   private readonly loginService = inject(LoginService);
   private readonly stateService = inject(StateServiceService);
+  constructor(private router: Router){}
 
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.email, Validators.required]),
@@ -49,7 +51,9 @@ export class LoginComponent implements OnInit {
     this.loginService.login(this.loginForm.value as Credential)
       .pipe(take(1))
       .subscribe(value => {
-        sessionStorage.setItem('token', value.token);
+        if (typeof window !== 'undefined') {
+          sessionStorage.setItem('token', value.token);
+        }
         const tokenDecode = jwtDecode(value.token) as TokenDecodeResponse;
         this.stateService.token = {
           user: tokenDecode.user,
@@ -57,6 +61,7 @@ export class LoginComponent implements OnInit {
           exp: tokenDecode.exp
         }
         console.log(this.stateService.token);
+        this.router.navigate(['/myaccount']);
       });
   }
 }
