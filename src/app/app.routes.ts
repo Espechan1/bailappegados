@@ -21,7 +21,7 @@ export const routes: Routes = [
   {path: 'home', component: HomeComponent, canActivate: [()=>{
     return sessionStorage.getItem('token')
     }] },
-  {path: 'myaccount', component: MyAccountComponent, canActivate: [()=>{
+  {path: 'my-account', component: MyAccountComponent, canActivate: [()=>{
       return sessionStorage.getItem('token')
     }] },
   {path: '**', component: NotFoundComponent}

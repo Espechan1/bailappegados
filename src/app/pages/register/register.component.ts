@@ -3,7 +3,7 @@ import {Style} from '../../models/style';
 import {StylesService} from '../../services/styles.service';
 import {JsonPipe, NgForOf, NgIf, NgOptimizedImage} from '@angular/common';
 import {take} from 'rxjs';
-import {Container, ContainerList} from '../../models/container';
+import {ContainerList} from '../../models/container';
 import {RouterLink} from '@angular/router';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {InputTextModule} from 'primeng/inputtext';

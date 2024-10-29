@@ -12,12 +12,12 @@
 
   <!-- DESCRIPCIÓN PERSONAL -->
   <label for="description" class="block text-900 font-medium mb-2">Descripción: </label> <!--  -->
-  <input [formControlName]="'description'" id="description" type="text" placeholder="{{myUser?.description}}"
+  <input [formControlName]="'description'" id="description" type="text" placeholder="{{myUser.description}}"
          pInputText class="w-full mb-3"> <!-- *ngIf="myUser.description === undefined" -->
 
   <!-- LOCALIDAD -->
   <label for="location" class="block text-900 font-medium mb-2">Localidad: </label>
-  <input [formControlName]="'location'" type="text" placeholder="{{myUser?.location}}" pInputText id="location"
+  <input [formControlName]="'location'" type="text" placeholder="{{myUser.location}}" pInputText id="location"
          aria-describedby="name-help" class="w-full mb-3"/>
 
   <!-- EMAIL -->
@@ -27,7 +27,7 @@
 
   <!-- BIRTHDAY -->
   <label class="block text-900 font-medium mb-2">Cumpleaños: </label>
-  <p-calendar [formControlName]="'birthday'" [showIcon]="true" dateFormat="dd.mm.yy" class="w-full mb-3"/>
+  <p-calendar [formControlName]="'birthday'" [showIcon]="true" placeholder="{{myUser.birthday}}" dateFormat="dd.mm.yy" class="w-full mb-3"/>
 
   <!-- STYLES -->  <!-- options: stylesList | async pipe  -->
   <p-multiSelect
@@ -51,7 +51,7 @@
         <li>Al menos una minúscula</li>
         <li>Al menos una mayúscula</li>
         <li>Al menos un número</li>
-        <li>Mínimo 8 caracteres</li>
+        <li>Mínimo 8, máximo 20 caracteres</li>
       </ul>
     </ng-template>
   </p-password>

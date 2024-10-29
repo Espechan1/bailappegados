@@ -17,14 +17,12 @@ import {MenuItem} from 'primeng/api';
 })
 export class HeaderComponent implements OnInit {
 
-  private readonly platformId = inject(PLATFORM_ID);
-
   items: MenuItem[] = [
     {id: "main", label: 'Inicio', routerLink: '/', styleClass: 'styleTab2'},
     {id: "events", label: 'Eventos', routerLink: '/events'},
     {id: "premises", label: 'Locales', routerLink: '/premises'},
-    {id: "account#logged", label: 'Mi cuenta', routerLink: '/myaccount'},
-    {id: "logout#logged", label: 'Logout', routerLink: '/login'},
+    {id: "account#logged", label: 'Mi cuenta', routerLink: '/my-account'},
+    {id: "logout#logged", label: 'Logout', routerLink: '/logout'},
     {id: "login#loggin", label: 'Login', routerLink: '/login',},
     {id: "signup#loggin",label: 'Register', routerLink: '/register'}
   ];
@@ -35,17 +33,19 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    this.items.forEach(value => {
-      if(this.menuVisible.login.includes(value.id)){
-        value.visible = !!sessionStorage.getItem('token')
-      } else if(this.menuVisible.logout.includes(value.id)){
-        value.visible = sessionStorage.getItem('token') === null;
-      }
-    })
+    if (typeof window !== 'undefined'){
+      this.items.forEach(value => {
+        if(this.menuVisible.login.includes(value.id)){
+          value.visible = !!sessionStorage.getItem('token')
+        } else if(this.menuVisible.logout.includes(value.id)){
+          value.visible = sessionStorage.getItem('token') === null;
+        }
+      })
+    }
     /**
      * (this.items.find(value => value.label === 'Login') as MenuItem).visible = !!sessionStorage?.getItem('token');
      * Si consigue el token(devuelve un string y será parseado a true), visible es falso y no muestra 'Login'.*/
+    // private readonly platformId = inject(PLATFORM_ID);
     // if (isPlatformBrowser(this.platformId)) {
     //   if(typeof sessionStorage.getItem('token') === 'string'){ //getItem devuelve un string si hay token o un null sino.
     //     (this.items.find(value => value.label === 'Login') as MenuItem).visible = false;

@@ -10,7 +10,7 @@ import {LoginService} from '../../services/login.service';
 import {Credential} from '../../models/credential';
 import {take} from 'rxjs';
 import {jwtDecode} from 'jwt-decode';
-import {StateServiceService} from '../../services/state-service.service';
+import {StateService} from '../../services/state.service';
 import {TokenDecodeResponse} from '../../models/login-response';
 import {Router} from '@angular/router';
 
@@ -25,17 +25,17 @@ import {Router} from '@angular/router';
     InputTextModule,
     NgOptimizedImage,
     RouterLink,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
-  providers: [LoginService]
+  providers: [LoginService, StateService]
 })
 export class LoginComponent implements OnInit {
 
   private readonly loginService = inject(LoginService);
-  private readonly stateService = inject(StateServiceService);
-  constructor(private router: Router){}
+  private readonly stateService = inject(StateService);
+  private router = inject(Router);
 
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.email, Validators.required]),
@@ -44,7 +44,9 @@ export class LoginComponent implements OnInit {
   })
 
   ngOnInit(): void {
-    sessionStorage.clear()
+    if (typeof window !== 'undefined') {
+      sessionStorage.clear()
+    }
   }
 
   login(): void {
@@ -61,24 +63,8 @@ export class LoginComponent implements OnInit {
           exp: tokenDecode.exp
         }
         console.log(this.stateService.token);
-        this.router.navigate(['/myaccount']);
+        setTimeout(()=>this.router.navigate(['my-account']).then(), 3000)
+
       });
   }
 }
-
-
-/**
- * subscribe(): es el metodo que uso para escuchar los datos que emite un Observable. para qué sirve? cuando te suscribes
- * le dices a tu aplicación que quieres recibir los datos que generas. Ej: en mi login me suscribo para recibir el token.
- * TE PERMITE RECIBIR DATOS DEL OBSERVABLE
- *
- * pipe() metodo que permite encadenar varios operadores de RxJS para transformar o filtrar los datos que emite un Observable.
- * Te ayuda a modificar la forma en que recibes o manejas los datos sin cambiar el Observable original. Ej: añadiendo cosas.
- * TE PERMITE TRANSFORMAR O FILTRAR LOS DATOS ANTES DE RECIBIRLOS
- *
- *
- * take() es un operador que se usa dentro de pipe para limitar la cantidad de valores que recibes del Observable. Ejemplo:
- * (1) quiero el primer valor y te desuscribes.
- * LIMITA LA CANTIDAD DE VECES QUE RECIBO INFORMACIÓN DE LA SUSCRIPCIÓN, CUANDO LLEGA A LA CANTIDAD SE DESUSCRIBE.
- *
- */

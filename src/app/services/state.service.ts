@@ -5,9 +5,9 @@ import {UserLogged} from '../models/user';
 @Injectable({
   providedIn: "root"
 })
-export class StateServiceService {
+export class StateService {
 
-  private _token!: LoginDecodeResponse; //Devuelve un objeto con el id del user, el rol y la expiración del token.
+  private _token!: LoginDecodeResponse; //Devuelve un objeto con el id del user, el rol y la expiración del token decodificados
   private _userLogged!: UserLogged; // Devuelve un boolean del tipo de rol, user=isLogged, manager o admin
 
   get userLogged(): UserLogged {
@@ -25,9 +25,11 @@ export class StateServiceService {
   set token(value: LoginDecodeResponse) {
     this.userLogged = {
       isLogged: value.roles.includes(3), //role_id = 3
-      isManager: this.userLogged.isLogged && value.roles.includes(2),
-      isAdmin: this.userLogged.isLogged && value.roles.includes(1)
     }
+
+    this.userLogged.isManager = this.userLogged.isLogged && value.roles.includes(2)
+    this.userLogged.isAdmin = this.userLogged.isLogged && value.roles.includes(1)
+
     this._token = value;
   }
 }

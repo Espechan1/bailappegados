@@ -3,7 +3,7 @@ import {User} from '../../models/user';
 import {Style} from '../../models/style';
 import {UsersService} from '../../services/users.service';
 import {StylesService} from '../../services/styles.service';
-import {StateServiceService} from '../../services/state-service.service';
+import {StateService} from '../../services/state.service';
 import {take} from 'rxjs';
 import {Container, ContainerList} from '../../models/container';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
@@ -26,24 +26,44 @@ import {NgIf} from '@angular/common';
     MultiSelectModule,
     NgIf
   ],
-  providers: [StylesService, UsersService, StateServiceService],
+  providers: [StylesService, UsersService, StateService],
   templateUrl: './my-account.component.html',
   styleUrl: './my-account.component.css'
 })
 
 @Injectable()
-export class MyAccountComponent implements OnInit{
+export class MyAccountComponent implements OnInit {
 
   private readonly usersService = inject(UsersService);
   private readonly stylesService = inject(StylesService);
-  private readonly stateService = inject(StateServiceService);
+  private readonly stateService = inject(StateService);
 
   stylesList: Style[]=[];
   style?: Style;
   myUser!: User;
+  selectedStyles?: Style[]=[];
+
+  myAccountForm = this.initForm();
+
+  private initForm(user?: User): FormGroup {
+    if(!user){ //si el usuario no está definido
+      return new FormGroup({})
+    }
+    return new FormGroup({
+      name: new FormControl(user.name, [Validators.required, Validators.max(80), Validators.min(2)]),
+      description: new FormControl(user.description),
+      email: new FormControl(user.email, [Validators.required, Validators.max(80),Validators.email]),
+      location: new FormControl(user.location),
+      birthday: new FormControl(user.birthday),
+      genre: new FormControl(user.genre),
+      styles: new FormControl (user.styles, [Validators.min(1)]),
+      password: new FormControl(user.password, [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/)]),
+    })
+  }
 
   ngOnInit(): void {
     this.getAllStyles()
+    this.getUserById()
   }
 
   getAllStyles(): void { //Todos los estilos por los botones de opciones
@@ -51,7 +71,7 @@ export class MyAccountComponent implements OnInit{
       .pipe(take(1))
       .subscribe((value: ContainerList<Style>) => {
         this.stylesList = value.data
-        console.log(this.stylesList, value)
+        //console.log(this.stylesList, value)
       })
   }
 
@@ -59,19 +79,13 @@ export class MyAccountComponent implements OnInit{
     this.usersService.getById(this.stateService.token.user)
       .pipe(take(1))
       .subscribe((value: Container<User>) => {
-        this.myUser = value.data
+        this.myUser = value.data;
+        console.log(this.myUser, value.data)
+        this.selectedStyles = value.data.styles;
+        console.log(this.selectedStyles, value.data.styles);
+        this.myAccountForm = this.initForm(this.myUser)
       })
   }
-
-  myAccountForm = new FormGroup({
-    name: new FormControl(this.myUser.name, [Validators.required, Validators.max(100), Validators.min(2)]),
-    description: new FormControl(this.myUser.description),
-    email: new FormControl(this.myUser.email, [Validators.required, Validators.max(80),Validators.email]),
-    location: new FormControl(this.myUser.location),
-    birthday: new FormControl(this.myUser.birthday),
-    genre: new FormControl(this.myUser.genre),
-    password: new FormControl(this.myUser.password, [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/)]),
-  });
 
   onUpdateUser():void{
     if(this.myAccountForm.invalid){
