@@ -54,7 +54,7 @@ export class RegisterComponent implements OnInit{ //
     email: new FormControl('', [Validators.email, Validators.required]),
     location: new FormControl(),
     styles: new FormControl(),
-    gender: new FormControl(),
+    genre: new FormControl(),
     birthday: new FormControl(),
     confirm: new FormControl(false, Validators.required),
     password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.max(20),
@@ -92,8 +92,9 @@ export class RegisterComponent implements OnInit{ //
     this.stylesService.getStyles()
       .pipe(take(1))
       .subscribe((value: ContainerList<Style>) => {
-        this.stylesList = value.data;
-        console.log(this.stylesList, value);
+        this.stylesList = value.data
+        console.log(this.stylesList) //Array de obj, hay que quitar created_at
+        console.log( value);
       });
     return this.stylesList;
   }

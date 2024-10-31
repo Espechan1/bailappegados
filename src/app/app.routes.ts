@@ -11,7 +11,13 @@ import {ContactComponent} from './pages/contact/contact.component';
 import {MyAccountComponent} from './pages/my-account/my-account.component';
 import {inject} from '@angular/core';
 import {StateService} from './services/state.service';
-const stateService = inject(StateService)
+
+// const stateService = inject(StateService)
+
+function checkToken() {
+  const stateService = inject(StateService)
+  return stateService.token
+}
 
 export const routes: Routes = [
   {path: '', component: GuestComponent},
@@ -22,10 +28,10 @@ export const routes: Routes = [
   {path: 'events', component: EventsComponent},
   {path: 'contact', component: ContactComponent},
   {path: 'home', component: HomeComponent, canActivate: [()=>{ // es como el condicional para que revise el token.
-    return true
+      return checkToken();
     }] },
   {path: 'my-account', component: MyAccountComponent, canActivate: [()=>{
-      return true
+      return checkToken()
     }] },
   {path: '**', component: NotFoundComponent}
 ];

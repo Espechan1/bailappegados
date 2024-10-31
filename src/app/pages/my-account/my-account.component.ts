@@ -76,6 +76,7 @@ export class MyAccountComponent implements OnInit {
   }
 
   getUserById() { // Consulta datos del usuario
+    console.log(this.stateService.token)
     this.usersService.getById((this.stateService.token as LoginDecodeResponse).userId)
       .pipe(take(1))
       .subscribe((value: Container<User>) => {

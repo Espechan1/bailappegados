@@ -5,8 +5,9 @@ import {take} from 'rxjs';
 import {Container, ContainerList} from '../../models/container';
 import {DataViewModule} from 'primeng/dataview';
 import {TagModule} from 'primeng/tag';
-import {Button} from 'primeng/button';
-import {formatDate, NgClass, NgForOf} from '@angular/common';
+import {Button, ButtonDirective} from 'primeng/button';
+import {formatDate, NgClass, NgForOf, NgOptimizedImage} from '@angular/common';
+import {Ripple} from 'primeng/ripple';
 
 @Component({
   selector: 'app-events',
@@ -16,7 +17,10 @@ import {formatDate, NgClass, NgForOf} from '@angular/common';
     TagModule,
     Button,
     NgForOf,
-    NgClass
+    NgClass,
+    ButtonDirective,
+    Ripple,
+    NgOptimizedImage
   ],
   templateUrl: './events.component.html',
   styleUrl: './events.component.css',

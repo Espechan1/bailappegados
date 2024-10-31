@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     if (typeof window !== 'undefined') {
-      sessionStorage.clear()
+      localStorage.clear()
     }
   }
 
@@ -53,9 +53,10 @@ export class LoginComponent implements OnInit {
     this.loginService.login(this.loginForm.value as Credential) //Hace la consulta de login y devuelve el token s/decode
       .pipe(take(1))
       .subscribe(value => {
-          sessionStorage.setItem('token', value.token);
+          localStorage.setItem('token', value.token);
           console.log(this.stateService.token) // decodificado, devuelve un objeto tipo LoginDecodeResponse
           console.log(this.stateService.userLogged) //devuelve el rol.
+          this.router.navigate(['my-account']).then();
       });
   }
 }

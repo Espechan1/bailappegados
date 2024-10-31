@@ -26,13 +26,57 @@
       <label for="location" class="block text-900 font-medium mb-2">Localidad: </label>
       <input [formControlName]="'location'" type="text" placeholder="Escribe tu localidad" pInputText id="location"
              aria-describedby="name-help" class="w-full mb-3"/>
+      <br/>
+      <br/>
+      <label>Género: </label>
+      <br/>
+      <br/>
+      <div class="flex flex-wrap gap-3">
+        <div class="flex align-items-center">
+          <p-radioButton
+            name="genre"
+            value="Male"
+            [formControlName]="'genre'"
+            inputId="Male"
+            id="Male"/>
+          <label for="Male" class="ml-2">
+            Hombre
+          </label>
+        </div>
 
+        <div class="flex align-items-center">
+          <p-radioButton
+            name="genre"
+            value="Female"
+            [formControlName]="'genre'"
+            inputId="Female"
+            id="Female"/>
+          <label for="Female" class="ml-2">
+            Mujer
+          </label>
+        </div>
+
+        <div class="flex align-items-center">
+          <p-radioButton
+            name="genre"
+            value="Others"
+            [formControlName]="'genre'"
+            inputId="Others"
+            id="Others"/>
+          <label for="Others" class="ml-2">
+            Otros
+          </label>
+        </div>
+      </div>
+
+      <br/>
+      <br/>
       <label for="email1" class="block text-900 font-medium mb-2">Email: </label>
       <input [formControlName]="'email'" id="email1" type="text" placeholder="ejemplo@mail.com" pInputText
              class="w-full mb-3">
 
       <label class="block text-900 font-medium mb-2">Cumpleaños: </label>
-      <p-calendar [formControlName]="'birthday'" [showIcon]="true" dateFormat="dd.mm.yy" class="w-full mb-3"/>
+      <p-calendar [formControlName]="'birthday'" [showIcon]="true" placeholder="DD/MM/YYYY" dateFormat="dd.mm.yy" class="w-full mb-3"/>
       <!--[iconDisplay]="'input'" Esconde el icono-->
 
       <br/>
@@ -67,13 +111,16 @@
         optionLabel="name"
         display="chip"
         [showClear]="true"/>
-
+      <br/>
+      <br/>
       <div class="flex align-items-center justify-content-between mb-6">
         <div class="flex align-items-center">
-<!--                  <p-checkbox [formControlName]="'confirm'" [label]="'Confirmo que soy mayor de 18 años y acepto los términos y condiciones'"-->
-<!--                               class="text-900" inputId="confirm">-->
-<!--                  </p-checkbox>-->
+          <p-checkbox [formControlName]="'confirm'"
+                      [label]="'Confirmo que soy mayor de 18 años y acepto los términos y condiciones'"
+                      class="text-900" inputId="confirm">
+          </p-checkbox>
         </div>
+        <br/><br/>
       </div>
       {{ signUpForm.errors }}
       <div class="flex align-items-center justify-content-around mb-6">

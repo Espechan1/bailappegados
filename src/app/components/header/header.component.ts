@@ -3,6 +3,7 @@ import {NgOptimizedImage} from '@angular/common';
 import {Button} from 'primeng/button';
 import {TabMenuModule} from 'primeng/tabmenu';
 import {MenuItem} from 'primeng/api';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -16,6 +17,8 @@ import {MenuItem} from 'primeng/api';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent implements OnInit {
+
+  private readonly router = inject(Router);
 
   items: MenuItem[] = [
     {id: "main", label: 'Inicio', routerLink: '/', styleClass: 'styleTab2'},
@@ -32,22 +35,21 @@ export class HeaderComponent implements OnInit {
     logout: this.items.filter(value => value.id?.includes('#loggin')).map(value => value.id),
   }
 
+
+
   ngOnInit(): void {
-    if (typeof window !== 'undefined'){
-      this.items.forEach(value => {
-        if(this.menuVisible.login.includes(value.id)){
-          value.visible = !!sessionStorage.getItem('token')
-        } else if(this.menuVisible.logout.includes(value.id)){
-          value.visible = sessionStorage.getItem('token') === null;
-        }
-      })
-    }
+   // this.controlRolMenu();
+    this.router.events.subscribe(value => {
+      this.controlRolMenu();
+    })
+
+
     /**
-     * (this.items.find(value => value.label === 'Login') as MenuItem).visible = !!sessionStorage?.getItem('token');
+     * (this.items.find(value => value.label === 'Login') as MenuItem).visible = !!localStorage?.getItem('token');
      * Si consigue el token(devuelve un string y será parseado a true), visible es falso y no muestra 'Login'.*/
     // private readonly platformId = inject(PLATFORM_ID);
     // if (isPlatformBrowser(this.platformId)) {
-    //   if(typeof sessionStorage.getItem('token') === 'string'){ //getItem devuelve un string si hay token o un null sino.
+    //   if(typeof localStorage.getItem('token') === 'string'){ //getItem devuelve un string si hay token o un null sino.
     //     (this.items.find(value => value.label === 'Login') as MenuItem).visible = false;
     //     (this.items.find(value => value.label === 'Register') as MenuItem).visible = false;
     //     (this.items.find(value => value.label === 'Logout') as MenuItem).visible = true;
@@ -56,11 +58,21 @@ export class HeaderComponent implements OnInit {
     //   }
     // }
     // if (isPlatformBrowser(this.platformId)) {
-    //   (this.items.find(value => value.label === 'Login') as MenuItem).visible = !!sessionStorage?.getItem('token');
-    //   (this.items.find(value => value.label === 'Register') as MenuItem).visible = !!sessionStorage?.getItem('token');
+    //   (this.items.find(value => value.label === 'Login') as MenuItem).visible = !!localStorage?.getItem('token');
+    //   (this.items.find(value => value.label === 'Register') as MenuItem).visible = !!localStorage?.getItem('token');
     //   (this.items.find(value => value.label === 'Logout') as MenuItem).visible = true;
     //   (this.items.find(value => value.label === 'Logout') as MenuItem).visible = true;
     // }
+  }
+
+  private controlRolMenu() {
+    this.items.forEach(value => {
+      if (this.menuVisible.login.includes(value.id)) {
+        value.visible = !!localStorage.getItem('token')
+      } else if (this.menuVisible.logout.includes(value.id)) {
+        value.visible = localStorage.getItem('token') === null;
+      }
+    })
   }
 }
 
