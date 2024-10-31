@@ -1,46 +1,46 @@
-<!--<p-dataView #dv [value]="eventsList" [rows]="5" [paginator]="true">-->
-<!--  <ng-template pTemplate="list" let-eventsList>-->
-<!--    <div class="grid grid-nogutter">-->
-<!--      <div *ngFor="let event of eventsList; let first = first" class="col-12">-->
-<!--        <div class="flex flex-column sm:flex-row sm:align-items-center p-4 gap-3"-->
-<!--             [ngClass]="{ 'border-top-1 surface-border': !first }">-->
-<!--          <div class="md:w-10rem relative">-->
-<!--            <img class="block xl:block mx-auto border-round w-full" [src]="'https://primefaces.org/cdn/primeng/images/demo/product/'-->
-<!--            + event.image" [alt]="event.name"/>-->
-<!--            <p-tag [value]="event.price" class="absolute" [style.left.px]="4" [style.top.px]="4"/>-->
-<!--          </div>-->
-<!--          <div class="flex flex-column md:flex-row justify-content-between md:align-items-center flex-1 gap-4">-->
-<!--            <div class="flex flex-row md:flex-column justify-content-between align-items-start gap-2">-->
-<!--              <div>-->
-<!--                <span class="font-medium text-secondary text-sm">{{ event.style }}</span>-->
-<!--                &lt;!&ndash;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; STYLE&ndash;&gt;-->
-<!--                <div class="text-lg font-medium text-900 mt-2">{{ event.name }}</div>-->
-<!--                &lt;!&ndash;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; NAME &ndash;&gt;-->
-<!--              </div>-->
-<!--              <div class="surface-100 p-1" style="border-radius: 30px">-->
-<!--                <div class="surface-0 flex align-items-center gap-2 justify-content-center py-1 px-2"-->
-<!--                     style="border-radius: 30px; box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.04), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)">-->
-<!--                  <span class="text-900 font-medium text-sm">{{ event.dance_instructors }}-->
-<!--                    <span class="text-900 font-medium text-sm">{{ event.dj }}</span>-->
-<!--                    &lt;!&ndash; <&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;VALORACIONES  &ndash;&gt;-->
-<!--                  <i class="pi pi-star-fill text-yellow-500"></i>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--                <div class="flex flex-column md:align-items-end gap-5">-->
-<!--                  <span class="text-xl font-semibold text-900">{{ event.price + '€' }}</span>-->
-<!--                  &lt;!&ndash; <&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; PRECIO &ndash;&gt;-->
-<!--                  <div class="flex flex-row-reverse md:flex-row gap-2">-->
-<!--                    <p-button icon="pi pi-heart" [outlined]="true"/>-->
-<!--                    <p-button icon="pi pi-shopping-cart" class="flex-auto md:flex-initial white-space-nowrap"-->
-<!--                              label=""/> &lt;!&ndash; botón &ndash;&gt;-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--  </ng-template>-->
-<!--</p-dataView>-->
+<p-dataView #dv [value]="eventsList" [rows]="5" [paginator]="true">
+  <ng-template pTemplate="list" let-eventsList>
+    <div class="grid grid-nogutter">
+      <div *ngFor="let event of eventsList; let first = first" class="col-12">
+        <div class="flex flex-column sm:flex-row sm:align-items-center p-4 gap-3"
+             [ngClass]="{ 'border-top-1 surface-border': !first }">
+          <div class="md:w-10rem relative">
+            <img class="block xl:block mx-auto border-round w-full" [src]="'https://primefaces.org/cdn/primeng/images/demo/product/'
+            + event.image" [alt]="event.name"/>
+            <p-tag [value]="event.price" class="absolute" [style.left.px]="4" [style.top.px]="4"/>
+          </div>
+          <div class="flex flex-column md:flex-row justify-content-between md:align-items-center flex-1 gap-4">
+            <div class="flex flex-row md:flex-column justify-content-between align-items-start gap-2">
+              <div>
+                <span class="font-medium text-secondary text-sm">{{ event.style }}</span>
+                <!---------------------------------- STYLE-->
+                <div class="text-lg font-medium text-900 mt-2">{{ event.name }}</div>
+                <!------------------------------------------ NAME -->
+              </div>
+              <div class="surface-100 p-1" style="border-radius: 30px">
+                <div class="surface-0 flex align-items-center gap-2 justify-content-center py-1 px-2"
+                     style="border-radius: 30px; box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.04), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)">
+                  <span class="text-900 font-medium text-sm">{{ event.dance_instructors }}
+                    <span class="text-900 font-medium text-sm">{{ event.dj }}</span>
+                    <!-- <------------------------------------VALORACIONES  -->
+                  <i class="pi pi-star-fill text-yellow-500"></i>
+                </div>
+              </div>
+                <div class="flex flex-column md:align-items-end gap-5">
+                  <span class="text-xl font-semibold text-900">{{ event.price + '€' }}</span>
+                  <!-- <-------------------------------------- PRECIO -->
+                  <div class="flex flex-row-reverse md:flex-row gap-2">
+                    <p-button icon="pi pi-heart" [outlined]="true"/>
+                    <p-button icon="pi pi-shopping-cart" class="flex-auto md:flex-initial white-space-nowrap"
+                              label=""/> <!-- botón -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  </ng-template>
+</p-dataView>
 
 
 

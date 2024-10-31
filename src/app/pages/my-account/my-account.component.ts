@@ -13,6 +13,7 @@ import {DividerModule} from 'primeng/divider';
 import {PasswordModule} from 'primeng/password';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {NgIf} from '@angular/common';
+import {LoginDecodeResponse} from '../../models/login-response';
 
 @Component({
   selector: 'app-my-account',
@@ -71,17 +72,16 @@ export class MyAccountComponent implements OnInit {
       .pipe(take(1))
       .subscribe((value: ContainerList<Style>) => {
         this.stylesList = value.data
-        //console.log(this.stylesList, value)
       })
   }
 
   getUserById() { // Consulta datos del usuario
-    this.usersService.getById(this.stateService.token.user)
+    this.usersService.getById((this.stateService.token as LoginDecodeResponse).userId)
       .pipe(take(1))
       .subscribe((value: Container<User>) => {
         this.myUser = value.data;
         console.log(this.myUser, value.data)
-        this.selectedStyles = value.data.styles;
+        this.selectedStyles = value.data.styles;//.map(value1 => value1.id);
         console.log(this.selectedStyles, value.data.styles);
         this.myAccountForm = this.initForm(this.myUser)
       })

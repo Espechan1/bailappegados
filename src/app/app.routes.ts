@@ -9,6 +9,9 @@ import {PremisesComponent} from './pages/premises/premises.component';
 import {EventsComponent} from './pages/events/events.component';
 import {ContactComponent} from './pages/contact/contact.component';
 import {MyAccountComponent} from './pages/my-account/my-account.component';
+import {inject} from '@angular/core';
+import {StateService} from './services/state.service';
+const stateService = inject(StateService)
 
 export const routes: Routes = [
   {path: '', component: GuestComponent},
@@ -18,11 +21,11 @@ export const routes: Routes = [
   {path: 'premises', component: PremisesComponent},
   {path: 'events', component: EventsComponent},
   {path: 'contact', component: ContactComponent},
-  {path: 'home', component: HomeComponent, canActivate: [()=>{
-    return sessionStorage.getItem('token')
+  {path: 'home', component: HomeComponent, canActivate: [()=>{ // es como el condicional para que revise el token.
+    return true
     }] },
   {path: 'my-account', component: MyAccountComponent, canActivate: [()=>{
-      return sessionStorage.getItem('token')
+      return true
     }] },
   {path: '**', component: NotFoundComponent}
 ];

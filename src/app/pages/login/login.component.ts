@@ -50,21 +50,12 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    this.loginService.login(this.loginForm.value as Credential)
+    this.loginService.login(this.loginForm.value as Credential) //Hace la consulta de login y devuelve el token s/decode
       .pipe(take(1))
       .subscribe(value => {
-        if (typeof window !== 'undefined') {
           sessionStorage.setItem('token', value.token);
-        }
-        const tokenDecode = jwtDecode(value.token) as TokenDecodeResponse;
-        this.stateService.token = {
-          user: tokenDecode.user,
-          roles: tokenDecode.roles.map(value1 => value1.id),
-          exp: tokenDecode.exp
-        }
-        console.log(this.stateService.token);
-        setTimeout(()=>this.router.navigate(['my-account']).then(), 3000)
-
+          console.log(this.stateService.token) // decodificado, devuelve un objeto tipo LoginDecodeResponse
+          console.log(this.stateService.userLogged) //devuelve el rol.
       });
   }
 }

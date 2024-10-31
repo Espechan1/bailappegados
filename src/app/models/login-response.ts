@@ -4,11 +4,11 @@ export interface LoginResponse {
   token: string
 }
 export interface LoginDecodeResponse {
-  user: number;
+  userId: number;
   roles: number[];
   exp?: number;
 }
 export interface TokenDecodeResponse extends JwtPayload{
-  user: number;
+  userId: number;
   roles: {id: number}[];
 }

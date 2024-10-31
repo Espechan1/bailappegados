@@ -1,35 +1,38 @@
 import { Injectable } from '@angular/core';
-import {LoginDecodeResponse} from '../models/login-response';
+import {LoginDecodeResponse, TokenDecodeResponse} from '../models/login-response';
 import {UserLogged} from '../models/user';
+import {jwtDecode} from 'jwt-decode';
 
 @Injectable({
   providedIn: "root"
 })
 export class StateService {
 
-  private _token!: LoginDecodeResponse; //Devuelve un objeto con el id del user, el rol y la expiración del token decodificados
-  private _userLogged!: UserLogged; // Devuelve un boolean del tipo de rol, user=isLogged, manager o admin
+  private _token?: LoginDecodeResponse; //Devuelve un objeto con el id del user, el rol y la expiración del token decodificados
+  private _userLogged!: UserLogged; // Devuelve un obj del tipo de rol, user=isLogged, manager o admin
 
   get userLogged(): UserLogged {
-    return this._userLogged;
+    const token = this.token;
+    const userLogged: UserLogged = {}
+    const roles = token?.roles??[]
+
+    userLogged.isLogged = token !== undefined && roles.includes(3); //si tiene token
+    userLogged.isManager = userLogged.isLogged && roles.includes(2);
+    userLogged.isAdmin = userLogged.isManager && roles.includes(1);
+
+    return userLogged;
   }
 
-  set userLogged(value: UserLogged) {
-    this._userLogged = value;
-  }
-
-  get token(): LoginDecodeResponse {
-    return this._token;
-  }
-
-  set token(value: LoginDecodeResponse) {
-    this.userLogged = {
-      isLogged: value.roles.includes(3), //role_id = 3
+  get token(): LoginDecodeResponse|undefined {
+    const token = sessionStorage.getItem('token')
+    if(token) { //tiene valor
+      const tokenDecode = jwtDecode(token) as TokenDecodeResponse; //Puede o no existir por el tipo
+      return {
+        userId: tokenDecode.userId,
+        roles: tokenDecode.roles.map(role => role.id),
+        exp: tokenDecode.exp
+      }
     }
-
-    this.userLogged.isManager = this.userLogged.isLogged && value.roles.includes(2)
-    this.userLogged.isAdmin = this.userLogged.isLogged && value.roles.includes(1)
-
-    this._token = value;
+    return undefined
   }
 }
