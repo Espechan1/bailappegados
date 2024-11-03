@@ -70,6 +70,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['my-account']).then();
         },
         error: () => {
+          // TODO remove
           localStorage.setItem(
             'token',
             'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxIiwicm9sZXMiOlsiMSJdLCJleHAiOjE1MTYyMzkwMjJ9.PLpbKNPoTjXo2Tq_EGUOdEZilGdrHF61I4SM0PMAHHU',
