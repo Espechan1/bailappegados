@@ -1,66 +1,132 @@
 <div class="flex justify-content-center flex-wrap">
-  <div class=" p-4 shadow-2 border-round w-full lg:w-6 ">
+  <div class="p-4 shadow-2 border-round w-full lg:w-6">
     <div class="text-center mb-5">
-<form [formGroup]="myAccountForm" (ngSubmit)="onUpdateUser()" *ngIf='myUser' >
-  <!-- NOMBRE -->
-  <label for="yourname" class="block text-900 font-medium mb-2">Nombre: </label>
-  <input [formControlName]="'name'" type="text" placeholder="{{myUser.name}}" pInputText id="yourname"
-         aria-describedby="name-help" class="w-full mb-3"/>
+      <form
+        [formGroup]="myAccountForm"
+        (ngSubmit)="onUpdateUser()"
+        *ngIf="myUser"
+      >
+        <!-- NOMBRE -->
+        <label for="yourname" class="block text-900 font-medium mb-2"
+          >Nombre:
+        </label>
+        <input
+          [formControlName]="'name'"
+          type="text"
+          placeholder="{{ myUser.name }}"
+          pInputText
+          id="yourname"
+          aria-describedby="name-help"
+          class="w-full mb-3"
+        />
 
-  <small *ngIf="myAccountForm.get('name')?.dirty && myAccountForm.get('name')?.hasError('required')"
-         id="name-help">{{ myAccountForm.get('name')?.getError('required') }} </small>
+        <small
+          *ngIf="
+            myAccountForm.get('name')?.dirty &&
+            myAccountForm.get('name')?.hasError('required')
+          "
+          id="name-help"
+          >{{ myAccountForm.get('name')?.getError('required') }}
+        </small>
 
-  <!-- DESCRIPCIÓN PERSONAL -->
-  <label for="description" class="block text-900 font-medium mb-2">Descripción: </label> <!--  -->
-  <input [formControlName]="'description'" id="description" type="text" placeholder="{{myUser.description}}"
-         pInputText class="w-full mb-3">
+        <!-- DESCRIPCIÓN PERSONAL -->
+        <label for="description" class="block text-900 font-medium mb-2"
+          >Descripción:
+        </label>
+        <!--  -->
+        <input
+          [formControlName]="'description'"
+          id="description"
+          type="text"
+          placeholder="{{ myUser.description }}"
+          pInputText
+          class="w-full mb-3"
+        />
 
-  <!-- LOCALIDAD -->
-  <label for="location" class="block text-900 font-medium mb-2">Localidad: </label>
-  <input [formControlName]="'location'" type="text" placeholder="{{myUser.location}}" pInputText id="location"
-         aria-describedby="name-help" class="w-full mb-3"/>
+        <!-- LOCALIDAD -->
+        <label for="location" class="block text-900 font-medium mb-2"
+          >Localidad:
+        </label>
+        <input
+          [formControlName]="'location'"
+          type="text"
+          placeholder="{{ myUser.location }}"
+          pInputText
+          id="location"
+          aria-describedby="name-help"
+          class="w-full mb-3"
+        />
 
-  <!-- EMAIL -->
-  <label for="email1" class="block text-900 font-medium mb-2">Email: </label>
-  <input [formControlName]="'email'" id="email1" type="text" placeholder="{{myUser.email}}" pInputText
-         class="w-full mb-3">
+        <!-- EMAIL -->
+        <label for="email1" class="block text-900 font-medium mb-2"
+          >Email:
+        </label>
+        <input
+          [formControlName]="'email'"
+          id="email1"
+          type="text"
+          placeholder="{{ myUser.email }}"
+          pInputText
+          class="w-full mb-3"
+        />
 
-  <!-- BIRTHDAY -->
-  <label class="block text-900 font-medium mb-2">Cumpleaños: </label>
-  <p-calendar [formControlName]="'birthday'" [showIcon]="true" placeholder="{{myUser.birthday}}" dateFormat="dd.mm.yy" class="w-full mb-3"/>
+        <!-- BIRTHDAY -->
+        <label class="block text-900 font-medium mb-2">Cumpleaños: </label>
+        <p-calendar
+          [formControlName]="'birthday'"
+          [showIcon]="true"
+          placeholder="{{ myUser.birthday }}"
+          dateFormat="dd.mm.yy"
+          class="w-full mb-3"
+        />
 
-  <!-- STYLES -->  <!-- options: stylesList | async pipe  -->
-  <p-multiSelect
-    id="styles"
-    [options]="stylesList"
-    [formControlName]="'styles'"
-    placeholder="Seleccionalos"
-    optionLabel="name"
-    display="chip"
-    [showClear]="true"/>
+        <!-- STYLES -->
+        <!-- options: stylesList | async pipe  -->
+        <p-multiSelect
+          id="styles"
+          [options]="stylesList"
+          [formControlName]="'styles'"
+          placeholder="Seleccionalos"
+          optionLabel="name"
+          display="chip"
+          [showClear]="true"
+        />
 
-  <!-- PASSWORD -->
-  <p-password [formControlName]="'password'" [toggleMask]="true" id="password1">
-    <ng-template pTemplate="header">
-      <h6>Escoge una contraseña</h6>
-    </ng-template>
-    <ng-template pTemplate="footer">
-      <p-divider/>
-      <p class="mt-2">Sugerencias</p>
-      <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
-        <li>Al menos una minúscula</li>
-        <li>Al menos una mayúscula</li>
-        <li>Al menos un número</li>
-        <li>Mínimo 8, máximo 20 caracteres</li>
-      </ul>
-    </ng-template>
-  </p-password>
+        <!-- PASSWORD -->
+        <p-password
+          [formControlName]="'password'"
+          [toggleMask]="true"
+          id="password1"
+        >
+          <ng-template pTemplate="header">
+            <h6>Escoge una contraseña</h6>
+          </ng-template>
+          <ng-template pTemplate="footer">
+            <p-divider />
+            <p class="mt-2">Sugerencias</p>
+            <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+              <li>Al menos una minúscula</li>
+              <li>Al menos una mayúscula</li>
+              <li>Al menos un número</li>
+              <li>Mínimo 8, máximo 20 caracteres</li>
+            </ul>
+          </ng-template>
+        </p-password>
 
-  <div class="flex align-items-center justify-content-around mb-6">
-    <p-button type="submit" label="Modificar cuenta" class="p-button-success" severity="success"></p-button>
-    <p-button (click)="myAccountForm.reset()" label="Borrar datos" severity="danger"/>
-  </div>
-</form>
+        <div class="flex align-items-center justify-content-around mb-6">
+          <p-button
+            type="submit"
+            label="Modificar cuenta"
+            class="p-button-success"
+            severity="success"
+          ></p-button>
+          <p-button
+            (click)="myAccountForm.reset()"
+            label="Borrar datos"
+            severity="danger"
+          />
+        </div>
+      </form>
     </div>
   </div>
 </div>

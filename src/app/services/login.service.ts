@@ -1,41 +1,19 @@
-import {inject, Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {environment} from '../../environments/environment';
-import {Observable} from 'rxjs';
-import {Credential} from '../models/credential';
-import {LoginResponse} from '../models/login-response';
+import { inject, Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
+import { Observable } from 'rxjs';
+import { Credential } from '../models/credential';
+import { LoginResponse } from '../models/login-response';
 
 @Injectable()
 export class LoginService {
-
   private readonly url = `${environment.api}/login`;
   private readonly http = inject(HttpClient);
 
-  login(credentials: Credential):Observable<LoginResponse>{
-    return this.http.post<LoginResponse>(this.url, credentials)
+  login(credentials: Credential): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(this.url, credentials);
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /**
  * los parámetros del metodo son lo que envío por post en el body, el observable el que espera el tipo de respuesta del

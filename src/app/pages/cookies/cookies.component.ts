@@ -5,8 +5,6 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './cookies.component.html',
-  styleUrl: './cookies.component.css'
+  styleUrl: './cookies.component.css',
 })
-export class CookiesComponent {
-
-}
+export class CookiesComponent {}

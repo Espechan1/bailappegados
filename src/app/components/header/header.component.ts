@@ -1,48 +1,45 @@
-import {Component, inject, OnInit, PLATFORM_ID} from '@angular/core';
-import {NgOptimizedImage} from '@angular/common';
-import {Button} from 'primeng/button';
-import {TabMenuModule} from 'primeng/tabmenu';
-import {MenuItem} from 'primeng/api';
-import {Router} from '@angular/router';
+import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { NgOptimizedImage } from '@angular/common';
+import { Button } from 'primeng/button';
+import { TabMenuModule } from 'primeng/tabmenu';
+import { MenuItem } from 'primeng/api';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [
-    NgOptimizedImage,
-    Button,
-    TabMenuModule,
-  ],
+  imports: [NgOptimizedImage, Button, TabMenuModule],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrl: './header.component.css',
 })
 export class HeaderComponent implements OnInit {
-
   private readonly router = inject(Router);
 
   items: MenuItem[] = [
-    {id: "main", label: 'Inicio', routerLink: '/', styleClass: 'styleTab2'},
-    {id: "events", label: 'Eventos', routerLink: '/events'},
-    {id: "premises", label: 'Locales', routerLink: '/premises'},
-    {id: "account#logged", label: 'Mi cuenta', routerLink: '/my-account'},
-    {id: "logout#logged", label: 'Logout', routerLink: '/logout'},
-    {id: "login#loggin", label: 'Login', routerLink: '/login',},
-    {id: "signup#loggin",label: 'Register', routerLink: '/register'}
+    { id: 'main', label: 'Inicio', routerLink: '/', styleClass: 'styleTab2' },
+    { id: 'events', label: 'Eventos', routerLink: '/events' },
+    { id: 'premises', label: 'Locales', routerLink: '/premises' },
+    { id: 'account#logged', label: 'Mi cuenta', routerLink: '/my-account' },
+    { id: 'logout#logged', label: 'Logout', routerLink: '/logout' },
+    { id: 'login#loggin', label: 'Login', routerLink: '/login' },
+    { id: 'signup#loggin', label: 'Register', routerLink: '/register' },
   ];
 
-  private readonly menuVisible = { //obj de dos propiedades, los itemsid públicos y los de logueado.
-    login: this.items.filter(value => value.id?.includes('#logged')).map(value => value.id),
-    logout: this.items.filter(value => value.id?.includes('#loggin')).map(value => value.id),
-  }
-
-
+  private readonly menuVisible = {
+    //obj de dos propiedades, los itemsid públicos y los de logueado.
+    login: this.items
+      .filter(value => value.id?.includes('#logged'))
+      .map(value => value.id),
+    logout: this.items
+      .filter(value => value.id?.includes('#loggin'))
+      .map(value => value.id),
+  };
 
   ngOnInit(): void {
-   // this.controlRolMenu();
+    // this.controlRolMenu();
     this.router.events.subscribe(value => {
       this.controlRolMenu();
-    })
-
+    });
 
     /**
      * (this.items.find(value => value.label === 'Login') as MenuItem).visible = !!localStorage?.getItem('token');
@@ -68,11 +65,10 @@ export class HeaderComponent implements OnInit {
   private controlRolMenu() {
     this.items.forEach(value => {
       if (this.menuVisible.login.includes(value.id)) {
-        value.visible = !!localStorage.getItem('token')
+        value.visible = !!localStorage.getItem('token');
       } else if (this.menuVisible.logout.includes(value.id)) {
         value.visible = localStorage.getItem('token') === null;
       }
-    })
+    });
   }
 }
-

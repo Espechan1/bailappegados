@@ -1,20 +1,26 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {Style} from '../../models/style';
-import {StylesService} from '../../services/styles.service';
-import {JsonPipe, NgForOf, NgIf, NgOptimizedImage} from '@angular/common';
-import {take} from 'rxjs';
-import {ContainerList} from '../../models/container';
-import {RouterLink} from '@angular/router';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
-import {InputTextModule} from 'primeng/inputtext';
-import {CalendarModule} from 'primeng/calendar';
-import {RadioButtonModule} from 'primeng/radiobutton';
-import {PasswordModule} from 'primeng/password';
-import {DividerModule} from 'primeng/divider';
-import {FloatLabelModule} from 'primeng/floatlabel';
-import {CheckboxModule} from 'primeng/checkbox';
-import {Ripple} from 'primeng/ripple';
-import {MultiSelectModule} from 'primeng/multiselect';
+import { Component, inject, OnInit } from '@angular/core';
+import { Style } from '../../models/style';
+import { StylesService } from '../../services/styles.service';
+import { JsonPipe, NgForOf, NgIf, NgOptimizedImage } from '@angular/common';
+import { take } from 'rxjs';
+import { ContainerList } from '../../models/container';
+import { RouterLink } from '@angular/router';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
+import { CalendarModule } from 'primeng/calendar';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { PasswordModule } from 'primeng/password';
+import { DividerModule } from 'primeng/divider';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { CheckboxModule } from 'primeng/checkbox';
+import { Ripple } from 'primeng/ripple';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @Component({
   selector: 'app-register',
@@ -35,15 +41,16 @@ import {MultiSelectModule} from 'primeng/multiselect';
     RouterLink,
     MultiSelectModule,
     JsonPipe,
-    NgIf
+    NgIf,
   ],
   providers: [StylesService],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  styleUrl: './register.component.css',
 })
-export class RegisterComponent implements OnInit{ //
+export class RegisterComponent implements OnInit {
+  //
 
-  stylesList: Style[]=[];
+  stylesList: Style[] = [];
   style?: Style;
 
   private readonly stylesService = inject(StylesService); //= constructor(private readonly stylesService: RegisterService?) {
@@ -57,44 +64,53 @@ export class RegisterComponent implements OnInit{ //
     genre: new FormControl(),
     birthday: new FormControl(),
     confirm: new FormControl(false, Validators.required),
-    password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.max(20),
-      Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/)])
-  })
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(8),
+      Validators.max(20),
+      Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/),
+    ]),
+  });
 
   ngOnInit(): void {
-    this.getAllStyles()
+    this.getAllStyles();
   }
 
-  readonly  genders = [{
-    key: 'H',
-    name: 'Hombre',
-  }, {
-    key: 'F',
-    name: 'Mujer',
-  }, {
-    key: 'O',
-    name: 'Otros',
-  }];
+  readonly genders = [
+    {
+      key: 'H',
+      name: 'Hombre',
+    },
+    {
+      key: 'F',
+      name: 'Mujer',
+    },
+    {
+      key: 'O',
+      name: 'Otros',
+    },
+  ];
 
-  onRegister():void{
-    if(this.signUpForm.invalid){
-      console.log("Algo ta mal")
-      for (let controlsKey in this.signUpForm.controls) {
-        this.signUpForm.get(controlsKey)?.markAsDirty()
-        this.signUpForm.get(controlsKey)?.updateValueAndValidity()
+  onRegister(): void {
+    if (this.signUpForm.invalid) {
+      console.log('Algo ta mal');
+      for (const controlsKey in this.signUpForm.controls) {
+        this.signUpForm.get(controlsKey)?.markAsDirty();
+        this.signUpForm.get(controlsKey)?.updateValueAndValidity();
       }
-      return
+      return;
     }
-    console.log("funciono")
+    console.log('funciono');
   }
 
   getAllStyles(): Style[] {
-    this.stylesService.getStyles()
+    this.stylesService
+      .getStyles()
       .pipe(take(1))
       .subscribe((value: ContainerList<Style>) => {
-        this.stylesList = value.data
-        console.log(this.stylesList) //Array de obj, hay que quitar created_at
-        console.log( value);
+        this.stylesList = value.data;
+        console.log(this.stylesList); //Array de obj, hay que quitar created_at
+        console.log(value);
       });
     return this.stylesList;
   }
@@ -106,6 +122,4 @@ export class RegisterComponent implements OnInit{ //
   //       this.style = value.data
   //     })
   // }
-
-
 }

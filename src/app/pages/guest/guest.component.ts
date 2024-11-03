@@ -1,18 +1,13 @@
-import {Component} from '@angular/core';
-import { NgOptimizedImage} from '@angular/common';
-import {EventsService} from '../../services/events.service';
+import { Component } from '@angular/core';
+import { NgOptimizedImage } from '@angular/common';
+import { EventsService } from '../../services/events.service';
 
 @Component({
   selector: 'app-guest',
   standalone: true,
-  imports: [
-    NgOptimizedImage
-  ],
+  imports: [NgOptimizedImage],
   providers: [EventsService],
   templateUrl: './guest.component.html',
-  styleUrl: './guest.component.css'
+  styleUrl: './guest.component.css',
 })
-export class GuestComponent {
-
-
-}
+export class GuestComponent {}

@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import "primeicons/primeicons.css";
+@import 'primeicons/primeicons.css';
 
 :root {
   --colorBg: #fdeae6;
@@ -20,7 +20,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.styleTab2 > a{
+.styleTab2 > a {
   background: var(--pinky);
   border: 1px solid #d600d9;
   color: var(--myRed);

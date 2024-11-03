@@ -1,4 +1,4 @@
 export interface Style {
-  id: number
-  name: string
+  id: number;
+  name: string;
 }
