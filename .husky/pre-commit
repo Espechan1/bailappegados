@@ -1,0 +1,2 @@
+prettier - write "src/**/*.{ts,html,scss}"
+npx lint-staged

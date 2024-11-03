@@ -1,0 +1,20 @@
+// .prettierrc
+// Prettier es una herramienta de formateo de código que ayuda a mantener un estilo de código consistente y legible en proyectos de desarrollo de software.
+//{
+//  "arrowParens": "avoid", //  Elimina los paréntesis () en funciones de flecha cuando solo se utiliza un argumento y no se especifica su tipo.
+//  "bracketSpacing": true, // Añade un espacio antes y después del contenido dentro de las llaves {}
+//  "printWidth": 80, // Define que el número máximo de caracteres por línea es de 80
+//  "semi": true, //  Asegura que cada sentencia termine con un punto y coma
+//  "singleQuote": true, // Prefiere el uso de comillas simples en lugar de comillas dobles
+//  "tabWidth": 2, // Establece que cada tabulación ocupará 2 espacios
+//  "trailingComma": "all" // Añade una coma al final de la última propiedad en objetos y arrays
+//}
+
+// ESLint
+// ESLint es una herramienta de análisis estático para JavaScript y TypeScript que ayuda a identificar errores, mejorar la calidad del código y aplicar convenciones de codificación consistentes. A diferencia de Prettier, que se enfoca en el formateo, ESLint detecta errores de sintaxis, variables no utilizadas y problemas de rendimiento, además de fomentar buenas prácticas de programación.
+// Se añade configuracion en eslint.config.js
+// Se añade comando en package "lint": "ng lint"
+
+
+// Husky
+// Es una herramienta que permite ejecutar scripts de Git Hooks de forma sencilla. Los git hooks son scripts que git ejecuta antes o después de ciertos eventos, como commits, push o merges.

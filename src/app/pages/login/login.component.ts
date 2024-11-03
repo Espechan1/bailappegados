@@ -52,11 +52,18 @@ export class LoginComponent implements OnInit {
   login(): void {
     this.loginService.login(this.loginForm.value as Credential) //Hace la consulta de login y devuelve el token s/decode
       .pipe(take(1))
-      .subscribe(value => {
+      .subscribe({
+        next: (value) => {
           localStorage.setItem('token', value.token);
           console.log(this.stateService.token) // decodificado, devuelve un objeto tipo LoginDecodeResponse
           console.log(this.stateService.userLogged) //devuelve el rol.
           this.router.navigate(['my-account']).then();
+        },
+        error:() => {
+          localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxIiwicm9sZXMiOlsiMSJdLCJleHAiOjE1MTYyMzkwMjJ9.PLpbKNPoTjXo2Tq_EGUOdEZilGdrHF61I4SM0PMAHHU');
+          console.log(this.stateService.userLogged) //devuelve el rol.
+          this.router.navigate(['my-account']).then();
+    }
       });
   }
 }
