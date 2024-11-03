@@ -47,7 +47,7 @@ export class EventsComponent implements OnInit {
   }
 
   getById(id: number) {
-    this.eventsService.getById(id)
+    this.eventsService.getEvent(id)
       .pipe(take(1))
       .subscribe((value: Container<Event>) => {
         this.event = value.data

@@ -5,8 +5,8 @@
         <div class="flex flex-column sm:flex-row sm:align-items-center p-4 gap-3"
              [ngClass]="{ 'border-top-1 surface-border': !first }">
           <div class="md:w-10rem relative">
-            <img class="block xl:block mx-auto border-round w-full" [src]="'https://primefaces.org/cdn/primeng/images/demo/product/'
-            + event.image" [alt]="event.name"/>
+            <img class="block xl:block mx-auto border-round w-full" ngSrc="'https://primefaces.org/cdn/primeng/images/demo/product/'
+            + event.image" [alt]="event.name" fill/> <!-- REVISAR ESTE PRINIPIO DE LINEA -->
             <!--<p-tag [value]="event.price" class="absolute" [style.left.px]="4" [style.top.px]="4"/>-->
           </div>
           <div class="flex flex-column md:flex-row justify-content-between md:align-items-center flex-1 gap-4">

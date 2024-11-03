@@ -16,7 +16,7 @@ export class EventsService {
   getEvents(): Observable<ContainerList<Event>> {
     return this.http.get<ContainerList<Event>>(this.url)
   }
-  getById(id: number): Observable<Container<Event>>{
+  getEvent(id: number): Observable<Container<Event>>{
     return this.http.get<Container<Event>>(`${this.url}/${id}`)
   }
 
