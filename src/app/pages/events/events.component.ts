@@ -9,6 +9,7 @@ import {Button, ButtonDirective} from 'primeng/button';
 import {formatDate, NgClass, NgForOf, NgOptimizedImage} from '@angular/common';
 import {Ripple} from 'primeng/ripple';
 
+
 @Component({
   selector: 'app-events',
   standalone: true,
@@ -41,8 +42,9 @@ export class EventsComponent implements OnInit {
   getAll(): void {
     this.eventsService.getEvents()
       .pipe(take(1))
-      .subscribe((value: ContainerList<Event>) => {
+      .subscribe((value: ContainerList<Event>) => { //status y data
         this.eventsList = value.data
+        console.log(`Esto es eventsList ${this.eventsList[6].images[0].url}`)
       })
   }
 
@@ -51,7 +53,6 @@ export class EventsComponent implements OnInit {
       .pipe(take(1))
       .subscribe((value: Container<Event>) => {
         this.event = value.data
-        console.log(this.event)
       })
   }
 }
