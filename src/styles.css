@@ -16,7 +16,8 @@ html {
 }
 
 body {
-  margin-top: 20px;
+  padding: 0;
+  margin: 20px 0 0;
   background-color: var(--colorBg);
   font-family: var(--font-family), serif;
   font-weight: normal;
