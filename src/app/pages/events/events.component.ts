@@ -6,8 +6,11 @@ import {Container, ContainerList} from '../../models/container';
 import {DataViewModule} from 'primeng/dataview';
 import {TagModule} from 'primeng/tag';
 import {Button, ButtonDirective} from 'primeng/button';
-import {formatDate, NgClass, NgForOf, NgOptimizedImage} from '@angular/common';
+import {NgClass, NgForOf, NgOptimizedImage} from '@angular/common';
 import {Ripple} from 'primeng/ripple';
+import {StylesService} from '../../services/styles.service';
+import { Style } from '../../models/style';
+import {ImageModule} from 'primeng/image';
 
 
 @Component({
@@ -21,16 +24,20 @@ import {Ripple} from 'primeng/ripple';
     NgClass,
     ButtonDirective,
     Ripple,
-    NgOptimizedImage
+    NgOptimizedImage,
+    ImageModule
   ],
   templateUrl: './events.component.html',
   styleUrl: './events.component.css',
-  providers: [EventsService]
+  providers: [EventsService, StylesService]
 })
 export class EventsComponent implements OnInit {
   eventsList: Event[] = [];
   event?: Event;
+  styleName?: string;
+
   private readonly eventsService = inject(EventsService);
+  private readonly stylesService = inject(StylesService);
 
   constructor( @Inject(LOCALE_ID) public locale: string){}
   //formatDate(value.data.opening, "dd/MM/YYYY HH:MM", this.locale)
@@ -44,8 +51,7 @@ export class EventsComponent implements OnInit {
       .pipe(take(1))
       .subscribe((value: ContainerList<Event>) => { //status y data
         this.eventsList = value.data
-        console.log(`Esto es eventsList ${this.eventsList[6].images[0].url}`)
-      })
+      });
   }
 
   getById(id: number) {
@@ -53,6 +59,14 @@ export class EventsComponent implements OnInit {
       .pipe(take(1))
       .subscribe((value: Container<Event>) => {
         this.event = value.data
+      });
+  }
+
+  getStyle(id: number){
+    this.stylesService.getStyle(id)
+      .pipe(take(1))
+      .subscribe((value: Container<Style>)=> {
+        this.styleName = value.data.name
       })
   }
 }

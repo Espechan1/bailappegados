@@ -1,3 +1,6 @@
 table, th, td {
   border:1px solid black;
 }
+.p-dataView-container {
+  width: 100%;
+}

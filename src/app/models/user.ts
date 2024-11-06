@@ -1,17 +1,18 @@
 import {Style} from './style';
 import {Role} from './role';
+import {Image} from './image';
 
 export interface User {
-  id: number,
-  name: string,
-  description?: string,
-  email: string,
-  location?: string,
-  birthday?: Date,
-  password: string,
-  genre: "male" | "female" | "others",
-  roles: Role[],
-  image_custom?: string,
+  id: number;
+  name: string;
+  description?: string;
+  email: string;
+  location?: string;
+  birthday?: Date;
+  password: string;
+  genre: "male" | "female" | "others";
+  roles: Role[];
+  images: Image[];
   styles: Style[]; //Array de ids de estilos. Cada obj tiene su id y el nombre.
 }
 

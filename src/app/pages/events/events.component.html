@@ -1,65 +1,55 @@
-<p-dataView #dv [value]="eventsList" [rows]="5" [paginator]="true">
-  <ng-template pTemplate="list" let-eventsList>
-    <div class="grid grid-nogutter">
-      <div *ngFor="let event of eventsList; let first = first" class="col-12">
-        <div class="flex flex-column sm:flex-row sm:align-items-center p-4 gap-3"
-             [ngClass]="{ 'border-top-1 surface-border': !first }">
-          <div class="md:w-10rem relative">
-            <img class="block xl:block mx-auto border-round w-full" ngSrc="{{event.images.length > 0 ? event.images[0].url : '/noimage.jpg'}}" [alt]="event.name" height="150" width="200"/> <!-- REVISAR ESTE PRINIPIO DE LINEA -->
-            <!--<p-tag [value]="event.price" class="absolute" [style.left.px]="4" [style.top.px]="4"/>-->
-          </div>
-          <div class="flex flex-column md:flex-row justify-content-between md:align-items-center flex-1 gap-4">
-            <div class="flex flex-row md:flex-column justify-content-between align-items-start gap-2">
-              <div>
-                <span class="font-medium text-secondary text-sm">{{ event.style }}</span>
-                <!---------------------------------- STYLE-->
-                <div class="text-lg font-medium text-900 mt-2">{{ event.name }}</div>
-                <!------------------------------------------ NAME -->
+<div class="container">
+  <div class="p-dataView-container">
+    <p-dataView #dv [value]="eventsList" [rows]="5" [paginator]="true">
+      <ng-template pTemplate="list" let-eventsList>
+        <div class="grid grid-nogutter">
+          <!--la clase grid-nogutter sirve para eliminar los espacios entre las columnas de una cuadrícula-->
+          <div *ngFor="let event of eventsList; let first = first" class="col-12">
+            <div class="flex flex-column sm:flex-row sm:align-items-center p-4 gap-3"
+                 [ngClass]="{ 'border-top-1 surface-border': !first }">
+              <div class="md:w-10rem relative">
+                <p-image class="block xl:block mx-auto border-round w-full"
+                         src="{{event.images.length > 0 ? event.images[0].url : '/noimage.jpg'}}"
+                         alt="{{event.name}}"
+                         width="150"
+                         [preview]="true"/>
+                <ng-template pTemplate="indicator">
+                  <i class="pi pi-search"></i>
+                </ng-template>
               </div>
-              <div class="surface-100 p-1" style="border-radius: 30px">
-                <div class="surface-0 flex align-items-center gap-2 justify-content-center py-1 px-2"
-                     style="border-radius: 30px; box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.04), 0px 1px 2px 0px
+              <div class="flex flex-column md:flex-row justify-content-between md:align-items-center flex-1 gap-4">
+                <div class="flex flex-row md:flex-column justify-content-between align-items-start gap-2 ">
+                  <div>
+                    <span class="font-medium text-secondary text-sm">{{ styleName }}</span>
+                    <!---------------------------------- STYLE-->
+                    <div class="text-lg font-medium text-900 mt-2">{{ event.name }}</div>
+                    <!----------------------------------- NAME -->
+                  </div>
+                  <div class="surface-100 p-1" style="border-radius: 30px">
+                    <div class="surface-0 flex align-items-center gap-2 justify-content-center py-1 px-2"
+                         style="border-radius: 30px; box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.04), 0px 1px 2px 0px
                      rgba(0, 0, 0, 0.06)">
-                  <span class="text-900 font-medium text-sm">{{ event.dance_instructors }}</span>
-                  <span class="text-900 font-medium text-sm">{{ event.dj }}</span>
-                  <!-- <------------------------------------VALORACIONES  -->
-                  <i class="pi pi-star-fill text-yellow-500"></i>
-                </div>
-              </div>
-              <div class="flex flex-column md:align-items-end gap-5">
-                <span class="text-xl font-semibold text-900">{{ event.price + '€' }}</span>
-                <!-- <-------------------------------------- PRECIO -->
-                <div class="flex flex-row-reverse md:flex-row gap-2">
-                  <p-button icon="pi pi-heart" [outlined]="true"/>
-                  <p-button icon="pi pi-shopping-cart" class="flex-auto md:flex-initial white-space-nowrap"
-                            label=""/> <!-- botón -->
+                      <span class="text-900 font-medium text-sm">{{ event.dance_instructors }}</span>
+                      <span class="text-900 font-medium text-sm">{{ event.dj }}</span>
+                      <!-- <------------------------------------VALORACIONES  -->
+                      <i class="pi pi-star-fill text-yellow-500"></i>
+                    </div>
+                  </div>
+                  <div class="flex flex-column md:align-items-end gap-5">
+                    <span class="text-xl font-semibold text-900">{{styleName}}</span>
+                    <!-- <-------------------------------------- PRECIO -->
+                    <div class="flex flex-row-reverse md:flex-row gap-2">
+                      <p-button icon="pi pi-heart" [outlined]="true"/>
+                      <p-button icon="pi pi-search" class="flex-auto md:flex-initial white-space-nowrap"
+                                label=""/> <!-- botón -->
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </ng-template>
-</p-dataView>
-
-<br/>
-<br/>
-<div class="grid grid-nogutter surface-section text-800">
-  <div class="col-12 md:col-6 p-6 text-center md:text-left flex align-items-center ">
-    <section>
-      <span class="block text-6xl font-bold mb-1">Create the screens</span>
-      <div class="text-6xl text-primary font-bold mb-3">your visitors deserve to see</div>
-      <p class="mt-0 mb-4 text-700 line-height-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-
-      <button pButton pRipple label="Learn More" type="button" class="mr-3 p-button-raised"></button>
-      <button pButton pRipple label="Live Demo" type="button" class="p-button-outlined"></button>
-    </section>
-  </div>
-  <div class="col-12 md:col-6 overflow-hidden">
-    <img ngSrc="../public/logo.png" alt="Image" class="md:ml-auto block md:h-full" style="clip-path: polygon(8% 0, 100% 0%, 100% 100%, 0 100%)"
-         height="362" width="463">
+      </ng-template>
+    </p-dataView>
   </div>
 </div>
-
-

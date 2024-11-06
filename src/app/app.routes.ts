@@ -12,6 +12,8 @@ import {MyAccountComponent} from './pages/my-account/my-account.component';
 import {inject} from '@angular/core';
 import {StateService} from './services/state.service';
 import {CookiesComponent} from './pages/cookies/cookies.component';
+import {PrivacityComponent} from './pages/privacity/privacity.component';
+import {ConditionsComponent} from './pages/conditions/conditions.component';
 
 // const stateService = inject(StateService)
 
@@ -28,6 +30,8 @@ export const routes: Routes = [
   {path: 'premises', component: PremisesComponent},
   {path: 'events', component: EventsComponent},
   {path: 'cookies', component: CookiesComponent},
+  {path: 'privacity', component: PrivacityComponent},
+  {path: 'conditions', component: ConditionsComponent},
   {path: 'contact', component: ContactComponent},
   {path: 'home', component: HomeComponent, canActivate: [()=>{ // es como el condicional para que revise el token.
       return checkToken();

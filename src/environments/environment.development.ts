@@ -1,5 +1,5 @@
 export const environment = {
-  api: 'http://127.0.0.1:8000/api'
-
+  api: 'http://127.0.0.1:8000/api',
+  media: 'http://127.0.0.1:8000'
 };
 

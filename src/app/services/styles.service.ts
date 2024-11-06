@@ -16,7 +16,7 @@ export class StylesService {
     return this.http.get<ContainerList<Style>>(this.url)
   }
 
-  getById(id: number): Observable<Container<Style>>{
+  getStyle(id: number): Observable<Container<Style>>{
     return this.http.get<Container<Style>>(`${this.url}/${id}`)
   }
 }

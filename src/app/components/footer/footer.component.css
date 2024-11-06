@@ -1,20 +1,19 @@
-footer {
-  background: linear-gradient(to bottom, #fdeae6, #ffb4f7);
+.container {
+  /*max-width: 1200px; !* Ancho máximo del contenedor para centrar el contenido *!*/
+  width: auto;
+  margin: auto;
+  /*background: linear-gradient(to bottom, #fdeae6, #ffb4f7);*/
+  background: var(--pinky);
   color: #333;
-  padding: 2rem; /* Espacio alrededor del contenido del footer */
   text-align: center;
-}
+  justify-content: center;
   li {
     display: inline-block;
     padding: 1em;
     justify-content: space-around;
   }
-
-
-.container {
-  max-width: 1200px; /* Ancho máximo del contenedor para centrar el contenido */
-  margin: 0 auto;
 }
+
 
 .input-group {
   display: flex;
@@ -26,7 +25,7 @@ input[type="email"] {
   padding: 1rem;
   border: none;
   border-radius: 5px;
-  flex: 1; /* El input se expande para ocupar todo el espacio disponible */
+  flex: 1; /* El input se expande para ocupar el espacio disponible */
 }
 
 button {
@@ -69,5 +68,7 @@ button {
   footer {
     padding: 1rem;
   }
-  /* ... otros ajustes según sea necesario ... */
+}
+@media(max-width: 1200px){
+
 }

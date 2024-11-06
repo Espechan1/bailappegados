@@ -67,7 +67,7 @@ export class MyAccountComponent implements OnInit {
     this.getUserById()
   }
 
-  getAllStyles(): void { //Todos los estilos por los botones de opciones
+  getAllStyles(): void {
     this.stylesService.getStyles()
       .pipe(take(1))
       .subscribe((value: ContainerList<Style>) => {
@@ -75,15 +75,14 @@ export class MyAccountComponent implements OnInit {
       })
   }
 
-  getUserById() { // Consulta datos del usuario
+  getUserById() {
     console.log(this.stateService.token)
-    this.usersService.getById((this.stateService.token as LoginDecodeResponse).userId)
+    this.usersService.getUser((this.stateService.token as LoginDecodeResponse).userId)
       .pipe(take(1))
       .subscribe((value: Container<User>) => {
         this.myUser = value.data;
         console.log(this.myUser, value.data)
-        this.selectedStyles = value.data.styles;//.map(value1 => value1.id);
-        console.log(this.selectedStyles, value.data.styles);
+        this.selectedStyles = value.data.styles;//.map(value1 => value1.id);?
         this.myAccountForm = this.initForm(this.myUser)
       })
   }

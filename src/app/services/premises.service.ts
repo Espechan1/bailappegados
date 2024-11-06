@@ -1,7 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
-import {Observable} from 'rxjs';
+import {map, Observable} from 'rxjs';
 import {Premise} from '../models/premise';
 import {Container, ContainerList} from '../models/container';
 
@@ -9,15 +9,34 @@ import {Container, ContainerList} from '../models/container';
 export class PremisesService {
 
   private readonly url = `${environment.api}/premises`;
+  private readonly imgUrl = environment.media
 
   private readonly http = inject(HttpClient); // = constructor(private http: HttpClient) {}
 
   getPremises(): Observable<ContainerList<Premise>> {
-    return this.http.get<ContainerList<Premise>>(this.url)
+    return this.http.get<ContainerList<Premise>>(this.url).pipe(
+      map(arrayPremises => {
+        arrayPremises.data.forEach(premise => {
+          if (premise.images.length > 0){
+            premise.images.forEach(img => {
+              img.url = `${this.imgUrl}/${img.url}`;
+            })
+          }
+        });
+        return arrayPremises;
+      })
+    )
   }
 
-  getById(id: number): Observable<Container<Premise>>{
-    return this.http.get<Container<Premise>>(`${this.url}/${id}`)
+  getPremise(id: number): Observable<Container<Premise>>{
+    return this.http.get<Container<Premise>>(`${this.url}/${id}`).pipe(
+      map(premise => {
+        if (premise.data && premise.data.images.length > 0) {
+          premise.data.images[0].url = `${this.url}/${premise.data.images[0].url}`;
+        }
+        return premise;
+      })
+    )
   }
 }
 /*

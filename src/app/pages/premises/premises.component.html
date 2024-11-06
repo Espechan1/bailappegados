@@ -1,3 +1,13 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Locales</title>
+</head>
+<body>
 <h1>LOCALES</h1>
 <p-table [value]="premisesList" [reorderableColumns]="true" [tableStyle]="{ 'min-width': '50rem' }">
   <ng-template pTemplate="header">
@@ -15,7 +25,7 @@
   </ng-template>
   <ng-template pTemplate="body" let-premise>
     <tr>
-      <td (click)=getById(premise.id)>{{ premise.name }}</td>
+      <td (click)=getById(premise.id)> {{ premise.name }}</td>
       <td>{{ premise.address }}</td>
       <td>{{ premise.phone_number }}</td>
       <td>{{ premise.web }}</td>
@@ -23,19 +33,41 @@
   </ng-template>
 </p-table>
 
-<div class="flex" *ngFor="let premise of premisesList" >
-  <p-card header="{{premise.name}}" subheader="{{premise.address}}" [style]="{ width: '360px' }">
-    <ng-template pTemplate="header">
-      <img alt="Card" src="/logo.png"/> <!--{{premise.imgUrl}}-->
-    </ng-template>
-    <p>
-      {{ premise.schedule }}
-    </p>
-    <ng-template pTemplate="footer">
-      <div class="flex gap-3 mt-1">
-        <p-button label="Próximos eventos" routerLink="events" severity="secondary" class="w-full" styleClass="w-full"/>
-        <p-button label="{{premise.web}}" class="w-full" styleClass="w-full"/>
+<br/>
+<br/>
+<br/>
+
+<div class="grid p-dataView-container" *ngFor="let premise of premisesList">
+  <div class="col-4">
+    <p-card header="{{premise.name}}" subheader="{{premise.address}}" [style]="{ width: '360px' }">
+      <ng-template pTemplate="header">
+        <p-image class="block xl:block mx-auto border-round w-full"
+                 src="{{premise.images.length > 0 ? premise.images[0].url : '/noimage.jpg'}}"
+                 alt="{{premise.name}}"
+                 width="150">
+          <ng-template pTemplate="indicator">
+            <i class="pi pi-search"></i>
+          </ng-template>
+        </p-image>
+      </ng-template>
+      <div >
+        <p> Lunes: {{premise.schedule?.Monday ? premise.schedule?.Monday : 'Cerrado'}} </p>
+        <p> Martes: {{premise.schedule?.Tuesday ? premise.schedule?.Tuesday : 'Cerrado'}}</p>
+        <p> Miércoles: {{premise.schedule?.Wednesday ? premise.schedule?.Wednesday : 'Cerrado'}}</p>
+        <p> Jueves: {{premise.schedule?.Thursday ? premise.schedule?.Thursday : 'Cerrado'}}</p>
+        <p> Viernes: {{premise.schedule?.Friday ? premise.schedule?.Friday : 'Cerrado'}}</p>
+        <p> Sábado: {{premise.schedule?.Saturday ? premise.schedule?.Saturday : 'Cerrado'}}</p>
+        <p> Domingo {{premise.schedule?.Sunday ? premise.schedule?.Sunday : 'Cerrado'}}</p>
       </div>
-    </ng-template>
-  </p-card>
+      <ng-template pTemplate="footer">
+        <div class="flex gap-3 mt-1">
+          <p-button label="Próximos eventos" routerLink="events" severity="secondary" class="w-full" styleClass="w-full"/>
+          <p-button label="{{premise.web ? premise.web : 'Sin página web'}}" class="w-full" styleClass="w-full"/>
+        </div>
+      </ng-template>
+    </p-card>
+  </div>
 </div>
+</body>
+</html>
+

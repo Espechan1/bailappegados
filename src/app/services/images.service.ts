@@ -16,7 +16,7 @@ export class ImagesService {
     return this.http.get<ContainerList<Image>>(this.url)
   }
 
-  getById(id: number, type: string): Observable<Container<Image>>{
+  getImage(id: number, type: string): Observable<Container<Image>>{
     return this.http.get<Container<Image>>(`${this.url}/${id}/${type}`)
   }
 }

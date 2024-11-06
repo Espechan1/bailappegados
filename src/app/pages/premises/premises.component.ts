@@ -1,5 +1,5 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {Premise} from '../../models/premise';
+import {Premise, Schedule} from '../../models/premise';
 import {PremisesService} from '../../services/premises.service';
 import {JsonPipe, NgForOf, NgOptimizedImage} from '@angular/common';
 import {take} from 'rxjs';
@@ -8,6 +8,7 @@ import {RouterLink} from '@angular/router';
 import {TableModule} from 'primeng/table';
 import {CardModule} from 'primeng/card';
 import {Button} from 'primeng/button';
+import {ImageModule} from 'primeng/image';
 
 @Component({
   selector: 'app-premises',
@@ -19,7 +20,8 @@ import {Button} from 'primeng/button';
     Button,
     RouterLink,
     JsonPipe,
-    NgOptimizedImage
+    NgOptimizedImage,
+    ImageModule
   ],
   templateUrl: './premises.component.html',
   styleUrl: './premises.component.css',
@@ -39,14 +41,13 @@ export class PremisesComponent implements OnInit {
   getAll(): void {
     this.premisesService.getPremises()
       .pipe(take(1))
-      .subscribe((value: ContainerList<Premise>) => {
-        this.premisesList = value.data
-        console.log(this.premisesList, value)
-      })
+      .subscribe((value: ContainerList<Premise>) => { //value = status y data
+        this.premisesList = value.data //array de objetos de tipo premise
+        });
   }
 
   getById(id: number) {
-    this.premisesService.getById(id)
+    this.premisesService.getPremise(id)
       .pipe(take(1))
       .subscribe((value: Container<Premise>) => {
         this.premise = value.data

@@ -1,7 +1,7 @@
 import {JwtPayload} from 'jwt-decode';
 
 export interface LoginResponse {
-  token: string
+  token: string;
 }
 export interface LoginDecodeResponse {
   userId: number;
