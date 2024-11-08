@@ -1,16 +1,4 @@
-:host {
-
-  .styleTab a {
-    background: var(--pinky);
-    border: 1px solid #d600d9;
-    color: var(--myRed);
-  }
-}
-#logo {
-
-}
-.styleTab2 > a{
-  background: var(--pinky);
-  border: 1px solid #d600d9;
-  color: var(--myRed);
-}
+/*.navStyle > a{*/
+/*  background: var(--yellorange);*/
+/*  color: var(--myRed);*/
+/*}*/

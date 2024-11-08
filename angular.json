@@ -31,7 +31,8 @@
               "node_modules/primeicons/primeicons.css",
               "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
-              "node_modules/primeflex/primeflex.min.css"
+              "node_modules/primeflex/primeflex.min.css",
+              "node_modules/normalize.css/normalize.css"
             ],
             "scripts": [],
             "server": "src/main.server.ts",

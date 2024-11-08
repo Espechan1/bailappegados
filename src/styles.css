@@ -7,6 +7,12 @@
   --myRed: #f21705;
   --yellorange: #fdcd12;
 }
+
+/*@font-face {*/
+/*  font-family: Accurist;*/
+/*  src: url(sansation_light.woff);*/
+/*}*/
+
 html {
   font-size: 14px;
   padding: 0;
@@ -16,8 +22,6 @@ html {
 }
 
 body {
-  padding: 0;
-  margin: 20px 0 0;
   background-color: var(--colorBg);
   font-family: var(--font-family), serif;
   font-weight: normal;
@@ -25,8 +29,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.styleTab2 > a{
-  background: var(--pinky);
-  border: 1px solid #d600d9;
+.navStyle a{
+  background: var(--yellorange);
   color: var(--myRed);
 }
