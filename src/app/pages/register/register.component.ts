@@ -15,6 +15,10 @@ import {FloatLabelModule} from 'primeng/floatlabel';
 import {CheckboxModule} from 'primeng/checkbox';
 import {Ripple} from 'primeng/ripple';
 import {MultiSelectModule} from 'primeng/multiselect';
+import {ImageCroppedEvent, ImageCropperComponent, LoadedImage} from 'ngx-image-cropper';
+import {SafeUrl} from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
+import {FileUploadModule} from 'primeng/fileupload';
 
 @Component({
   selector: 'app-register',
@@ -35,9 +39,11 @@ import {MultiSelectModule} from 'primeng/multiselect';
     RouterLink,
     MultiSelectModule,
     JsonPipe,
-    NgIf
+    NgIf,
+    ImageCropperComponent,
+    FileUploadModule
   ],
-  providers: [StylesService],
+  providers: [StylesService, ImageCropperComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
@@ -45,8 +51,12 @@ export class RegisterComponent implements OnInit{ //
 
   stylesList: Style[]=[];
   style?: Style;
+  imageChangedEvent: Event | null = null;
+  croppedImage: SafeUrl  = '';
 
   private readonly stylesService = inject(StylesService); //= constructor(private readonly stylesService: RegisterService?) {
+
+  constructor(private sanitizer: DomSanitizer) {}
 
   signUpForm = new FormGroup({
     name: new FormControl(undefined, Validators.required),
@@ -99,6 +109,25 @@ export class RegisterComponent implements OnInit{ //
     return this.stylesList;
   }
 
+  // fileChangeEvent(event: Event): void {
+  //   this.imageChangedEvent = event;
+  // }
+  //
+  // imageCropped(event: ImageCroppedEvent) {
+  //   this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(event.objectUrl);
+  //   // event.blob can be used to upload the cropped image
+  // }
+  //
+  // imageLoaded(image: LoadedImage) {
+  //   // show cropper
+  // }
+  // cropperReady() {
+  //   // cropper ready
+  // }
+  // loadImageFailed() {
+  //   // show message
+  // }
+
   // getById(id: number) {
   //   this.stylesService.getById(id)
   //     .pipe(take(1))
@@ -106,6 +135,7 @@ export class RegisterComponent implements OnInit{ //
   //       this.style = value.data
   //     })
   // }
+
 
 
 }

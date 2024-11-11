@@ -1,12 +1,22 @@
-table, th, td {
-  border:1px solid black;
-}
-
-#border{
+.border{
   justify-content: center;
   text-align-last: center;
   border:1px solid var(--myRed);
+  margin-top: 5px;
 }
+
+.HxW{
+  width: 375px;
+  height: 610px
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  justify-items: center;
+}
+
 .p-dataView-container {
   width: 100%;
 }
+
+

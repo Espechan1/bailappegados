@@ -9,65 +9,84 @@
 </head>
 <body>
 <h1>LOCALES</h1>
- <!-- TABLA-->
-<p-table [value]="premisesList" [reorderableColumns]="true" [tableStyle]="{ 'min-width': '50rem' }">
-  <ng-template pTemplate="header">
-    <tr>
-      <th pSortableColumn="name" pReorderableColumn>NAME
-        <p-sortIcon field="name"/>
-      </th>
-      <th pReorderableColumn>
-        <p-columnFilter type="text" field="address" display="menu"/>
-        ADDRESS
-      </th>
-      <th pReorderableColumn>PHONE NUMBER</th>
-      <th pReorderableColumn>WEB</th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-premise>
-    <tr>
-      <td (click)=getById(premise.id)> {{ premise.name }}</td>
-      <td>{{ premise.address }}</td>
-      <td>{{ premise.phone_number }}</td>
-      <td>{{ premise.web }}</td>
-    </tr>
-  </ng-template>
-</p-table>
-<!--FIN DE TABLA-->
-<br/>
-<br/>
-<br/>
-<div class="grid">
-  <div class="col-4" *ngFor="let premise of premisesList">
-    <p-card header="{{premise.name}}" subheader="{{premise.address}}" [style]="{width: '360px', margin: 'auto', }">
-      <ng-template pTemplate="header" style="text-red-200" >
-        <p-image class="block xl:block mx-auto border-round w-full rounded "
-                 src="{{premise.images.length > 0 ? premise.images[0].url : '/noimage.jpg'}}"
-                 alt="{{premise.name}}"
-                 width="150">
-        </p-image>
-      </ng-template>
-      <div id="border">
-        <span> Lunes: {{ premise.schedule?.Monday ? premise.schedule?.Monday : 'Cerrado' }} </span><br/>
-        <span> Martes: {{ premise.schedule?.Tuesday ? premise.schedule?.Tuesday : 'Cerrado' }}</span><br/>
-        <span> Miércoles: {{ premise.schedule?.Wednesday ? premise.schedule?.Wednesday : 'Cerrado' }}</span><br/>
-        <span> Jueves: {{ premise.schedule?.Thursday ? premise.schedule?.Thursday : 'Cerrado' }}</span><br/>
-        <span> Viernes: {{ premise.schedule?.Friday ? premise.schedule?.Friday : 'Cerrado' }}</span><br/>
-        <span> Sábado: {{ premise.schedule?.Saturday ? premise.schedule?.Saturday : 'Cerrado' }}</span><br/>
-        <span> Domingo {{ premise.schedule?.Sunday ? premise.schedule?.Sunday : 'Cerrado' }}</span><br/>
-      </div>
-      <ng-template pTemplate="footer">
-        <div class="flex gap-3 mt-1">
-          <p-button label="Próximos eventos" routerLink="events" severity="secondary" class="w-full "
-                    styleClass="w-full"/>
-          <p-button label="{{premise.web ? premise.web : 'Sin página web'}}" class="w-full" styleClass="w-full"
-                    severity="danger"/>
+<div class="container">
+  <div class="p-dataView-container bg-transparent">
+    <p-dataView [value]="premisesList" [rows]="6" [paginator]="true" [filterBy]="'name'">
+      <ng-template pTemplate="header">
+        <div class="flex flex-column md:flex-row md:justify-content-between">
+          <p-iconField iconPosition="left">
+            <p-inputIcon styleClass="pi pi-search"/>
+            <input type="text" pInputText placeholder="Buscador" (keyup)="filterPremises($event)"/>
+          </p-iconField>
+          <p-dataViewLayoutOptions/>
         </div>
       </ng-template>
-    </p-card>
+      <ng-template pTemplate="grid" let-premisesList>
+        <div class="grid grid-nogutter">
+          <div *ngFor="let premise of premisesList; let first = first" class="col-12 sm:col-6 md:col-4 xl:col-4 p-2">
+            <div class="p-4 border-1 surface-border surface-card border-round flex flex-column HxW ">
+              <div class="mx-auto relative">
+                <p-image class="block xl:block mx-auto w-full"
+                         src="{{premise.images.length > 0 ? premise.images[0].url : '/noimage.jpg'}}"
+                         alt="{{premise.name}}"
+                         width="200"
+                         height="200"
+                         [preview]="true"/>
+                <ng-template pTemplate="indicator">
+                  <i class="pi pi-search"></i>
+                </ng-template>
+              </div>
+              <div class="flex flex-column mx-auto md:flex-row justify-content-between md:align-items-center flex-1 gap-4">
+                <div class="flex flex-row mx-auto md:flex-column justify-content-between gap-2 ml-6" style="align-items: normal" y>
+                  <div class="text-lg font-medium text-900 mt-2 text-red-500 text-2xl font-bold align-self-center">{{ premise.name }}</div>
+                  <div class="surface-0 p-1" style="border-radius: 30px">
+                    <div class="surface-0 flex align-items-center gap-2 py-1 px-2"
+                         style="border-radius: 30px; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.06)">
+                      <i class="pi pi-map-marker text-yellow-500"></i>
+                      <span class="text-900 font-medium text-sm">{{ premise.address }}</span>
+                    </div>
+                    <br/>
+                    <div class="surface-0 flex align-items-center gap-2 py-1 px-2" style="border-radius: 30px; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.06)">
+                      <i class="pi pi-envelope text-yellow-500"></i>
+                      <span class="text-900 font-medium text-sm">{{ premise.email }}</span>
+                    </div>
+                    <br/>
+                    <div class="surface-0 flex align-items-center gap-2 py-1 px-2" style="border-radius: 30px; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.06)">
+                      <i class="pi pi-phone text-yellow-500"></i>
+                      <span class="text-900 font-medium text-sm">{{ premise.phone_number }}</span>
+                    </div>
+                    <br/>
+                    <div class="surface-0 flex align-items-center gap-2 py-1 px-2" style="border-radius: 30px; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.06)">
+                      <i class="pi pi-at text-yellow-500"></i>
+                      <span class="text-900 font-medium text-sm">{{ premise.web ? premise.web : 'Sin página web' }}</span>
+                    </div>
+                  </div>
+                  <div class="border">
+                    <span> Lunes: {{ premise.schedule?.Monday ? premise.schedule?.Monday : 'Cerrado' }} </span><br/>
+                    <span> Martes: {{ premise.schedule?.Tuesday ? premise.schedule?.Tuesday : 'Cerrado' }}</span><br/>
+                    <span> Miércoles: {{ premise.schedule?.Wednesday ? premise.schedule?.Wednesday : 'Cerrado' }}</span><br/>
+                    <span> Jueves: {{ premise.schedule?.Thursday ? premise.schedule?.Thursday : 'Cerrado' }}</span><br/>
+                    <span> Viernes: {{ premise.schedule?.Friday ? premise.schedule?.Friday : 'Cerrado' }}</span><br/>
+                    <span> Sábado: {{ premise.schedule?.Saturday ? premise.schedule?.Saturday : 'Cerrado' }}</span><br/>
+                    <span> Domingo {{ premise.schedule?.Sunday ? premise.schedule?.Sunday : 'Cerrado' }}</span><br/>
+                  </div>
+                  <div class="flex flex-row-reverse md:flex-row gap-2 justify-content-center">
+                    <p-button label="Próximos eventos" routerLink="events" severity="danger" class="w-15rem mt-3"
+                              styleClass="w-full"/>
+<!--                    <p-button label="" class="w-full"-->
+<!--                              styleClass="w-full"-->
+<!--                              severity="danger"/>-->
+                    <!--(click)="navigatePremise()"-->
+                  </div>
+                  <!--                  </div>-->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-dataView>
   </div>
-
 </div>
 </body>
 </html>
-

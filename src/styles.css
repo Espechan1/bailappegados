@@ -9,9 +9,14 @@
 }
 
 /*@font-face {*/
-/*  font-family: Accurist;*/
-/*  src: url(sansation_light.woff);*/
-/*}*/
+/*  font-family: Accuratist;*/
+/*  src: url("../public/Accuratist.ttf");}*/
+
+
+h1 {
+  /*font-family: Accuratist, Helvetica, sans-serif;*/
+  color: var(--myRed);
+}
 
 html {
   font-size: 14px;
