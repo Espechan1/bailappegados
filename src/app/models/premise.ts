@@ -9,6 +9,7 @@ export interface Premise {
   phone_number: string;
   web?: string;
   person_contact?: string;
+  location: Location
   images: Image[];
   // created_at: Date;
   // updated_at?: Date; hacer el hidden en el back
@@ -23,3 +24,5 @@ export interface Schedule {
   Saturday?: string;
   Sunday?: string;
 }
+
+

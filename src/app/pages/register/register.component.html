@@ -16,7 +16,6 @@
       <label for="nameRegister" class="block text-900 font-medium mb-2">Nombre: </label>
       <input [formControlName]="'name'" type="text" placeholder="Escribe tu nombre" pInputText id="nameRegister"
              aria-describedby="name-help" class="w-full mb-3"/>
-
       <small *ngIf="signUpForm.get('name')?.dirty && signUpForm.get('name')?.hasError('required')"
              id="name-help">{{ signUpForm.get('name')?.getError('required') }} </small>
       <label for="description" class="block text-900 font-medium mb-2">Descripción: </label>

@@ -53,6 +53,7 @@ export class PremisesComponent implements OnInit {
       .pipe(take(1))
       .subscribe((value: ContainerList<Premise>) => { //value = status y data
         this.premisesList = value.data //array de objetos de tipo premise
+        console.log(value.data)
         });
   }
 

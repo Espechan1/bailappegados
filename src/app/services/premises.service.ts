@@ -40,7 +40,8 @@ export class PremisesService {
   }
 
   postPremise(newPremise: Premise): Observable<Container<Premise>> {
-    return this.http.post<Container<Premise>>(this.url, newPremise).pipe(
+    return this.http.post<Container<Premise>>(this.url, newPremise)
+    .pipe(
       map(premise => {
         if (premise.data && premise.data.images.length > 0) {
           premise.data.images[0].url = `${this.url}/${premise.data.images[0].url}`;

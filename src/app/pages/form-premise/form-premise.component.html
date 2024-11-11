@@ -1,1 +1,29 @@
-<p>form-premise works!</p>
+<h1>DA DE ALTA TU PROPIO LOCAL</h1>
+
+<form [formGroup]="createPremiseForm" (ngSubmit)="onCreate()">
+  <label for="namePremise" class="block text-900 font-medium mb-2">Nombre: </label>
+  <input [formControlName]="'name'" type="text" placeholder="Nombre del local" pInputText id="namePremise"
+         aria-describedby="name-help" class="w-full mb-3">
+
+  <label for="email" class="block text-900 font-medium mb-2">Email: </label>
+  <input [formControlName]="'email'" id="email" type="email" placeholder="correo@dominio.com"
+         pInputText class="w-full mb-3">
+
+  <label for="address" class="block text-900 font-medium mb-2">Dirección: </label>
+  <input [formControlName]="'address'" type="text" placeholder="Escribe tu dirección" pInputText id="address"
+         aria-describedby="name-help" class="w-full mb-3"/>
+
+  <label for="location" class="block text-900 font-medium mb-2">Latitud y longitud: </label>
+  <input [formControlName]="'name'" type="text" placeholder="Nombre del local" pInputText id="location"
+         aria-describedby="name-help" class="w-full mb-3">
+
+
+  <label for="phone" class="block text-900 font-medium mb-2">Teléfono: </label>
+  <input [formControlName]="'phone_number'" type="tel" pattern="^(\+34|0034|34)?[6-9]\d{8}$" pInputText id="phone"
+         placeholder="Escribe tu teléfono" aria-describedby="name-help" class="w-full mb-3"/>
+
+  <label for="web" class="block text-900 font-medium mb-2">Web: </label>
+  <input [formControlName]="'web'" type="text" placeholder="Web o red social" pInputText id="web"
+         aria-describedby="name-help" class="w-full mb-3">
+
+</form>
