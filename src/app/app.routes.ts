@@ -14,6 +14,7 @@ import {StateService} from './services/state.service';
 import {CookiesComponent} from './pages/cookies/cookies.component';
 import {PrivacityComponent} from './pages/privacity/privacity.component';
 import {ConditionsComponent} from './pages/conditions/conditions.component';
+import {FormPremiseComponent} from './pages/form-premise/form-premise.component';
 
 // const stateService = inject(StateService)
 
@@ -32,6 +33,7 @@ export const routes: Routes = [
   {path: 'cookies', component: CookiesComponent},
   {path: 'privacity', component: PrivacityComponent},
   {path: 'conditions', component: ConditionsComponent},
+  {path: 'form-premises', component: FormPremiseComponent},
   {path: 'contact', component: ContactComponent},
   {path: 'home', component: HomeComponent, canActivate: [()=>{ // es como el condicional para que revise el token.
       return checkToken();

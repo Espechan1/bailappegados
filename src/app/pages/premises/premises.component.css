@@ -5,6 +5,10 @@
   margin-top: 5px;
 }
 
+.myRed{
+  color: var(--myRed);
+}
+
 .HxW{
   width: 375px;
   height: 610px

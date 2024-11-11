@@ -10,8 +10,8 @@ export interface Premise {
   web?: string;
   person_contact?: string;
   images: Image[];
-  created_at: Date;
-  updated_at?: Date;
+  // created_at: Date;
+  // updated_at?: Date; hacer el hidden en el back
 }
 
 export interface Schedule {
