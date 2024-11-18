@@ -1,0 +1,12 @@
+image-cropper {
+  max-height: 33vh;
+  width: 500px;
+}
+
+.cropper-wrapper {
+  /*min-height: 300px;*/
+  max-width: 500px;
+  width: 300px;
+  object-fit: fill;
+  position: relative;
+}

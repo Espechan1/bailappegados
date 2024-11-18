@@ -1,5 +1,5 @@
 interface ContainerCommons {
-  status: number|string;
+  status: number | string;
 }
 
 export interface ContainerList<T> extends ContainerCommons {

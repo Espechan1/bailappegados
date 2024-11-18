@@ -1,42 +1,55 @@
-import {inject, Injectable} from '@angular/core';
-import {environment} from '../../environments/environment';
-import {HttpClient} from '@angular/common/http';
-import {map, Observable} from 'rxjs';
-import {Container, ContainerList} from '../models/container';
-import {Event} from '../models/event';
-
+import { inject, Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { map, Observable } from 'rxjs';
+import { Container, ContainerList } from '../models/container';
+import { Event } from '../models/event';
 
 @Injectable()
 export class EventsService {
-
   private readonly url = `${environment.api}/events`;
-  private readonly imgUrl = environment.media
+  private readonly imgUrl = environment.media;
 
   private readonly http = inject(HttpClient);
 
-  getEvents(): Observable<ContainerList<Event>> {
+  getAll(): Observable<ContainerList<Event>> {
     return this.http.get<ContainerList<Event>>(this.url).pipe(
-      map(eventList => { //de cada contenedor del listado
-        eventList.data.forEach(event => { //hago un forEach y si existe images
-          if (event.images.length > 0) {
+      map(arrayEvents => {
+        arrayEvents.data.forEach(event => {
+          if (event.images && event.images.length > 0) {
             event.images.forEach(img => {
-             img.url = `${this.imgUrl}/${img.url}`; //modifico la url en base al environment.
-            })
+              img.url = `${this.imgUrl}/${img.url}`;
+            });
           }
         });
-        return eventList;
-      })
-    )
+        return arrayEvents;
+      }),
+    );
   }
 
-  getEvent(id: number): Observable<Container<Event>> {
+  getById(id: number): Observable<Container<Event>> {
     return this.http.get<Container<Event>>(`${this.url}/${id}`).pipe(
       map(event => {
-        if (event.data && event.data.images.length > 0) {
-          event.data.images[0].url = `${this.url}/${event.data.images[0].url}`;
+        if (event.data.images && event.data.images.length > 0) {
+          event.data.images.forEach(img => {
+            img.url = `${this.imgUrl}/${img.url}`;
+          });
         }
         return event;
-      })
-    )
+      }),
+    );
+  }
+
+  create(newEvent: Event): Observable<Container<Event>> {
+    return this.http.post<Container<Event>>(this.url, newEvent).pipe(
+      map(event => {
+        if (event.data.images && event.data.images.length > 0) {
+          event.data.images.forEach(img => {
+            img.url = `${this.imgUrl}/${img.url}`;
+          });
+        }
+        return event;
+      }),
+    );
   }
 }

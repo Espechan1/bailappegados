@@ -5,8 +5,6 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './privacity.component.html',
-  styleUrl: './privacity.component.css'
+  styleUrl: './privacity.component.css',
 })
-export class PrivacityComponent {
-
-}
+export class PrivacityComponent {}

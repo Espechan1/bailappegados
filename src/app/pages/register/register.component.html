@@ -3,33 +3,87 @@
 <h2>Crea tu cuenta para salir a bailar</h2>
 
 <div class="flex justify-content-center flex-wrap">
-  <div class=" p-4 shadow-2 border-round w-full lg:w-6 ">
+  <div class="p-4 shadow-2 border-round w-full lg:w-6">
     <div class="text-center mb-5">
-      <img ngSrc="/imgRegisterBig.png" alt="Image" height="200" width="250" class="mb-3">
-      <div class="text-900 text-3xl font-medium mb-3">Bienvenid&#64;s, bailarines!</div>
-      <span class="text-600 font-medium line-height-3">¿Ya tienes una cuenta?</span>
-      <a routerLink="/login" class="font-medium no-underline ml-2 text-blue-500 cursor-pointer">Pincha y accede</a>
+      <img
+        ngSrc="/imgRegisterBig.png"
+        alt="Image"
+        height="200"
+        width="250"
+        class="mb-3"
+      />
+      <div class="text-900 text-3xl font-medium mb-3">
+        Bienvenid&#64;s, bailarines!
+      </div>
+      <span class="text-600 font-medium line-height-3"
+        >¿Ya tienes una cuenta?</span
+      >
+      <a
+        routerLink="/login"
+        class="font-medium no-underline ml-2 text-blue-500 cursor-pointer"
+        >Pincha y accede</a
+      >
+      <br />
+      <span class="text-600 font-medium line-height-3"
+        >¿Quieres dar de alta un local?</span
+      >
+      <a
+        routerLink="/form-premise"
+        class="font-medium no-underline ml-2 text-blue-500 cursor-pointer"
+        >Pincha y créalo</a
+      >
     </div>
 
     <form [formGroup]="signUpForm" (ngSubmit)="onRegister()">
+      <label for="nameRegister" class="block text-900 font-medium mb-2"
+        >Nombre:
+      </label>
+      <input
+        [formControlName]="'name'"
+        type="text"
+        placeholder="Escribe tu nombre"
+        pInputText
+        id="nameRegister"
+        aria-describedby="name-help"
+        class="w-full mb-3"
+      />
+      <small
+        *ngIf="
+          signUpForm.get('name')?.dirty &&
+          signUpForm.get('name')?.hasError('required')
+        "
+        id="name-help"
+        >{{ signUpForm.get('name')?.getError('required') }}
+      </small>
+      <label for="description" class="block text-900 font-medium mb-2"
+        >Descripción:
+      </label>
+      <input
+        [formControlName]="'description'"
+        id="description"
+        type="text"
+        placeholder="Descríbete brevemente"
+        pInputText
+        class="w-full mb-3"
+      />
 
-      <label for="nameRegister" class="block text-900 font-medium mb-2">Nombre: </label>
-      <input [formControlName]="'name'" type="text" placeholder="Escribe tu nombre" pInputText id="nameRegister"
-             aria-describedby="name-help" class="w-full mb-3"/>
-      <small *ngIf="signUpForm.get('name')?.dirty && signUpForm.get('name')?.hasError('required')"
-             id="name-help">{{ signUpForm.get('name')?.getError('required') }} </small>
-      <label for="description" class="block text-900 font-medium mb-2">Descripción: </label>
-      <input [formControlName]="'description'" id="description" type="text" placeholder="Descríbete brevemente"
-             pInputText class="w-full mb-3">
-
-      <label for="location" class="block text-900 font-medium mb-2">Localidad: </label>
-      <input [formControlName]="'location'" type="text" placeholder="Escribe tu localidad" pInputText id="location"
-             aria-describedby="name-help" class="w-full mb-3"/>
-      <br/>
-      <br/>
-      <label>Género: </label>
-      <br/>
-      <br/>
+      <label for="location" class="block text-900 font-medium mb-2"
+        >Localidad:
+      </label>
+      <input
+        [formControlName]="'location'"
+        type="text"
+        placeholder="Escribe tu localidad"
+        pInputText
+        id="location"
+        aria-describedby="name-help"
+        class="w-full mb-3"
+      />
+      <br />
+      <br />
+      <label for="Male">Género: </label>
+      <br />
+      <br />
       <div class="flex flex-wrap gap-3">
         <div class="flex align-items-center">
           <p-radioButton
@@ -37,10 +91,9 @@
             value="Male"
             [formControlName]="'genre'"
             inputId="Male"
-            id="Male"/>
-          <label for="Male" class="ml-2">
-            Hombre
-          </label>
+            id="Male"
+          />
+          <label for="Male" class="ml-2"> Hombre </label>
         </div>
 
         <div class="flex align-items-center">
@@ -49,10 +102,9 @@
             value="Female"
             [formControlName]="'genre'"
             inputId="Female"
-            id="Female"/>
-          <label for="Female" class="ml-2">
-            Mujer
-          </label>
+            id="Female"
+          />
+          <label for="Female" class="ml-2"> Mujer </label>
         </div>
 
         <div class="flex align-items-center">
@@ -61,47 +113,70 @@
             value="Others"
             [formControlName]="'genre'"
             inputId="Others"
-            id="Others"/>
-          <label for="Others" class="ml-2">
-            Otros
-          </label>
+            id="Others"
+          />
+          <label for="Others" class="ml-2"> Otros </label>
         </div>
       </div>
 
-      <br/>
-      <br/>
-      <label for="email1" class="block text-900 font-medium mb-2">Email: </label>
-      <input [formControlName]="'email'" id="email1" type="text" placeholder="ejemplo@mail.com" pInputText
-             class="w-full mb-3">
+      <br />
+      <br />
+      <label for="email1" class="block text-900 font-medium mb-2"
+        >Email:
+      </label>
+      <input
+        [formControlName]="'email'"
+        id="email1"
+        type="text"
+        placeholder="ejemplo@mail.com"
+        pInputText
+        class="w-full mb-3"
+      />
 
-      <label class="block text-900 font-medium mb-2">Cumpleaños: </label>
-      <p-calendar [formControlName]="'birthday'" [showIcon]="true" placeholder="DD/MM/YYYY" dateFormat="dd.mm.yy" class="w-full mb-3"/>
+      <label for="birthday" class="block text-900 font-medium mb-2"
+        >Cumpleaños:
+      </label>
+      <p-calendar
+        [formControlName]="'birthday'"
+        [showIcon]="true"
+        placeholder="DD/MM/YYYY"
+        dateFormat="dd.mm.yy"
+        class="w-full mb-3"
+        id="birthday"
+      />
       <!--[iconDisplay]="'input'" Esconde el icono-->
 
-      <br/>
-      <br/>
-      <label for="password1" class="block text-900 font-medium mb-2">Password: </label>
+      <br />
+      <br />
+      <label for="password1" class="block text-900 font-medium mb-2"
+        >Password:
+      </label>
 
-      <p-password [formControlName]="'password'" [toggleMask]="true" id="password1">
+      <p-password
+        [formControlName]="'password'"
+        [toggleMask]="true"
+        id="password1"
+      >
         <ng-template pTemplate="header">
           <h6>Escoge una contraseña</h6>
         </ng-template>
         <ng-template pTemplate="footer">
-          <p-divider/>
+          <p-divider />
           <p class="mt-2">Sugerencias</p>
           <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
             <li>Al menos una minúscula</li>
             <li>Al menos una mayúscula</li>
             <li>Al menos un número</li>
             <li>Mínimo 8 caracteres</li>
+            <li>Máximo 20 caracteres</li>
           </ul>
         </ng-template>
       </p-password>
-      <br/>
-      <br/>
-      <br/>
-      <label for="styles">¿Qué estilos sabes bailar?  </label>
-      <br/>
+      <br />
+      <br />
+      <br />
+      <label for="styles">¿Qué estilos sabes bailar? </label>
+      <br />
       <p-multiSelect
         id="styles"
         [options]="stylesList"
@@ -109,53 +184,53 @@
         placeholder="Seleccionalos"
         optionLabel="name"
         display="chip"
-        [showClear]="true"/>
-      <br/>
-      <br/>
+        [showClear]="true"
+      />
+      <br />
+      <br />
+      <input type="file" (change)="fileChangeEvent($event)" />
+
+      <image-cropper
+        [imageChangedEvent]="imageChangedEvent"
+        [maintainAspectRatio]="true"
+        [aspectRatio]="4 / 3"
+        format="png"
+        (imageCropped)="imageCropped($event)"
+      >
+      </image-cropper>
+
+      <br />
+      <br />
       <div class="flex align-items-center justify-content-between mb-6">
         <div class="flex align-items-center">
-          <p-checkbox [formControlName]="'confirm'"
-                      [label]="'Confirmo que soy mayor de 18 años y acepto los términos y condiciones'"
-                      class="text-900" inputId="confirm">
+          <p-checkbox
+            [formControlName]="'confirm'"
+            [label]="
+              'Confirmo que soy mayor de 18 años y acepto los términos y condiciones'
+            "
+            value="yes"
+            class="text-900"
+            inputId="confirm"
+          >
           </p-checkbox>
         </div>
-        <br/><br/>
+        <br /><br />
       </div>
       {{ signUpForm.errors }}
       <div class="flex align-items-center justify-content-around mb-6">
-        <p-button type="submit" label="Crear cuenta" class="p-button-success" severity="success"></p-button>
-        <p-button (click)="signUpForm.reset()" label="Borrar datos" severity="danger"/>
+        <p-button
+          (click)="postUser()"
+          type="submit"
+          label="Crear cuenta"
+          class="p-button-success"
+          severity="success"
+        ></p-button>
+        <p-button
+          (click)="signUpForm.reset()"
+          label="Borrar datos"
+          severity="danger"
+        />
       </div>
-
-<!--      <p-fileUpload-->
-<!--        name="demo[]"-->
-<!--        url="https://www.primefaces.org/cdn/api/upload.php"-->
-<!--        (onUpload)="onUpload($event)"-->
-<!--        [multiple]="true"-->
-<!--        accept="image/*"-->
-<!--        maxFileSize="1000000">-->
-<!--        <ng-template pTemplate="content">-->
-<!--          <ul *ngIf="uploadedFiles.length">-->
-<!--            <li *ngFor="let file of uploadedFiles">-->
-<!--              {{ file.name }} - {{ file.size }} bytes-->
-<!--            </li>-->
-<!--          </ul>-->
-<!--        </ng-template>-->
-<!--      </p-fileUpload>-->
-<!--&lt;!&ndash;      <input type="file" (change)="fileChangeEvent($event)" />&ndash;&gt;-->
-<!--      <image-cropper-->
-<!--        [imageChangedEvent]="imageChangedEvent"-->
-<!--        [maintainAspectRatio]="true"-->
-<!--        [aspectRatio]="4 / 3"-->
-<!--        format="png"-->
-<!--        (imageCropped)="imageCropped($event)"-->
-<!--        (imageLoaded)="imageLoaded($event)"-->
-<!--        (cropperReady)="cropperReady()"-->
-<!--        (loadImageFailed)="loadImageFailed()"-->
-<!--      ></image-cropper>-->
-
-<!--      <img [src]="croppedImage"  alt="sdfg"/>-->
-
     </form>
   </div>
 </div>

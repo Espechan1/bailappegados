@@ -1,17 +1,17 @@
-.border{
+.border {
   justify-content: center;
   text-align-last: center;
-  border:1px solid var(--myRed);
+  border: 1px solid var(--myRed);
   margin-top: 5px;
 }
 
-.myRed{
+.myRed {
   color: var(--myRed);
 }
 
-.HxW{
+.HxW {
   width: 375px;
-  height: 610px
+  height: 610px;
 }
 .container {
   max-width: 1200px;
@@ -22,5 +22,3 @@
 .p-dataView-container {
   width: 100%;
 }
-
-

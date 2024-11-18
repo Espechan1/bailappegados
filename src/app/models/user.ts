@@ -1,6 +1,6 @@
-import {Style} from './style';
-import {Role} from './role';
-import {Image} from './image';
+import { Style } from './style';
+import { Role } from './role';
+import { Photo } from './photo';
 
 export interface User {
   id: number;
@@ -10,13 +10,13 @@ export interface User {
   location?: string;
   birthday?: Date;
   password: string;
-  genre: "male" | "female" | "others";
+  genre?: 'male' | 'female' | 'others';
   roles: Role[];
-  images: Image[];
-  styles: Style[]; //Array de ids de estilos. Cada obj tiene su id y el nombre.
+  images?: Photo[];
+  styles?: Style[]; //Array de ids de estilos. Cada obj tiene su id y el nombre.
 }
 
-export interface UserLogged{
+export interface UserLogged {
   isManager?: boolean;
   isLogged?: boolean; //raso
   isAdmin?: boolean;

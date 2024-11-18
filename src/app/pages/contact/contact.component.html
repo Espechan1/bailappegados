@@ -1,21 +1,58 @@
 <form [formGroup]="contactForm" (ngSubmit)="onContact()">
   <label for="name" class="block text-900 font-medium mb-2">Nombre: </label>
-  <input [formControlName]="'name'" type="text" placeholder="Escribe tu nombre" pInputText id="name"
-         aria-describedby="name-help" class="w-full mb-3"/>
+  <input
+    [formControlName]="'name'"
+    type="text"
+    placeholder="Escribe tu nombre"
+    pInputText
+    id="name"
+    aria-describedby="name-help"
+    class="w-full mb-3"
+  />
 
-  <label for="surname" class="block text-900 font-medium mb-2">Apellido: </label>
-  <input [formControlName]="'surname'" type="text" placeholder="Escribe tu apellido" pInputText id="surname"
-         aria-describedby="name-help" class="w-full mb-3"/>
+  <label for="surname" class="block text-900 font-medium mb-2"
+    >Apellido:
+  </label>
+  <input
+    [formControlName]="'surname'"
+    type="text"
+    placeholder="Escribe tu apellido"
+    pInputText
+    id="surname"
+    aria-describedby="name-help"
+    class="w-full mb-3"
+  />
 
   <label for="email" class="block text-900 font-medium mb-2">Email: </label>
-  <input [formControlName]="'email'" id="email" type="text" placeholder="ejemplo@mail.com" pInputText
-         class="w-full mb-3">
+  <input
+    [formControlName]="'email'"
+    id="email"
+    type="text"
+    placeholder="ejemplo@mail.com"
+    pInputText
+    class="w-full mb-3"
+  />
 
   <label for="message" class="block text-900 font-medium mb-2">Mensaje: </label>
-    <textarea [formControlName]="'message'" rows="5" cols="30" pInputTextarea id="message"></textarea>
+  <textarea
+    [formControlName]="'message'"
+    rows="5"
+    cols="30"
+    pInputTextarea
+    id="message"
+  ></textarea>
 
   <div class="flex align-items-center justify-content-around mb-6">
-    <p-button type="submit" label="Enviar mensaje" class="p-button-success" severity="success"></p-button>
-    <p-button (click)="contactForm.reset()" label="Borrar datos" severity="danger"/>
+    <p-button
+      type="submit"
+      label="Enviar mensaje"
+      class="p-button-success"
+      severity="success"
+    ></p-button>
+    <p-button
+      (click)="contactForm.reset()"
+      label="Borrar datos"
+      severity="danger"
+    />
   </div>
 </form>

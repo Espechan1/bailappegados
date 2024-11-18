@@ -1,24 +1,23 @@
-import {Component, Inject, inject, LOCALE_ID, OnInit} from '@angular/core';
-import {Event} from '../../models/event';
-import {EventsService} from '../../services/events.service';
-import {take} from 'rxjs';
-import {Container, ContainerList} from '../../models/container';
-import {DataViewModule} from 'primeng/dataview';
-import {TagModule} from 'primeng/tag';
-import {Button, ButtonDirective} from 'primeng/button';
-import {NgClass, NgForOf, NgOptimizedImage} from '@angular/common';
-import {Ripple} from 'primeng/ripple';
-import {StylesService} from '../../services/styles.service';
-import {Style} from '../../models/style';
-import {ImageModule} from 'primeng/image';
-import {InputTextModule} from 'primeng/inputtext';
-import {KeyFilterModule} from 'primeng/keyfilter';
-import {IconFieldModule} from 'primeng/iconfield';
-import {InputIconModule} from 'primeng/inputicon';
-import {MultiSelectModule} from 'primeng/multiselect';
-import {PremisesService} from '../../services/premises.service';
-import {Premise} from '../../models/premise';
-
+import { Component, Inject, inject, LOCALE_ID, OnInit } from '@angular/core';
+import { Event } from '../../models/event';
+import { EventsService } from '../../services/events.service';
+import { take } from 'rxjs';
+import { ContainerList } from '../../models/container';
+import { DataViewModule } from 'primeng/dataview';
+import { TagModule } from 'primeng/tag';
+import { Button, ButtonDirective } from 'primeng/button';
+import { DatePipe, NgClass, NgForOf, NgOptimizedImage } from '@angular/common';
+import { Ripple } from 'primeng/ripple';
+import { StylesService } from '../../services/styles.service';
+import { Style } from '../../models/style';
+import { ImageModule } from 'primeng/image';
+import { InputTextModule } from 'primeng/inputtext';
+import { KeyFilterModule } from 'primeng/keyfilter';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { PremisesService } from '../../services/premises.service';
+import { Premise } from '../../models/premise';
 
 @Component({
   selector: 'app-events',
@@ -37,11 +36,12 @@ import {Premise} from '../../models/premise';
     KeyFilterModule,
     IconFieldModule,
     InputIconModule,
-    MultiSelectModule
+    MultiSelectModule,
+    DatePipe,
   ],
   templateUrl: './events.component.html',
   styleUrl: './events.component.css',
-  providers: [EventsService, StylesService, PremisesService]
+  providers: [EventsService, StylesService, PremisesService],
 })
 export class EventsComponent implements OnInit {
   eventsListOriginal: Event[] = [];
@@ -55,8 +55,7 @@ export class EventsComponent implements OnInit {
   private readonly stylesService = inject(StylesService);
   private readonly premisesService = inject(PremisesService);
 
-  constructor(@Inject(LOCALE_ID) public locale: string) {
-  }
+  constructor(@Inject(LOCALE_ID) public locale: string) {}
 
   //formatDate(value.data.opening, "dd/MM/YYYY HH:MM", this.locale)
 
@@ -67,36 +66,43 @@ export class EventsComponent implements OnInit {
   }
 
   getStyles() {
-    this.stylesService.getStyles()
+    this.stylesService
+      .getAll()
       .pipe(take(1))
       .subscribe((value: ContainerList<Style>) => {
-        value.data.forEach(style => this.styles.set(style.id, style.name))
-      })
-  }
-
-  getPremises(){
-    this.premisesService.getPremises()
-      .pipe(take(1))
-      .subscribe((value: ContainerList<Premise>)=>{
-        value.data.forEach(premise => this.premises.set(premise.id, premise.name))
-      })
-  }
-
-  getAll(): void {
-    this.eventsService.getEvents()
-      .pipe(take(1))
-      .subscribe((value: ContainerList<Event>) => { //status y data
-        this.eventsListOriginal = value.data
-        this.eventsList = value.data
+        value.data.forEach(style => this.styles.set(style.id, style.name));
       });
   }
 
-  filterEvent(search: any): void {
-    if (search && search.target && search.target.value)
-      this.eventsList = this.eventsListOriginal.filter(value => value.name.toLowerCase().includes(search.target?.value.toLowerCase()))
-    else
-      this.eventsList = this.eventsListOriginal
+  getPremises() {
+    this.premisesService
+      .getAll()
+      .pipe(take(1))
+      .subscribe((value: ContainerList<Premise>) => {
+        value.data.forEach(premise =>
+          this.premises.set(premise.id as number, premise.name),
+        );
+      });
   }
+
+  getAll(): void {
+    this.eventsService
+      .getAll()
+      .pipe(take(1))
+      .subscribe((value: ContainerList<Event>) => {
+        //status y data
+        this.eventsListOriginal = value.data;
+        this.eventsList = value.data;
+      });
+  }
+
+  // filterEvent(search: any): void {
+  //   if (search && search.target && search.target.value)
+  //     this.eventsList = this.eventsListOriginal.filter(value =>
+  //       value.name.toLowerCase().includes(search.target?.value.toLowerCase()),
+  //     );
+  //   else this.eventsList = this.eventsListOriginal;
+  // }
   // navigatePremise(id:number){
   // }
 

@@ -1,29 +1,178 @@
 <h1>DA DE ALTA TU PROPIO LOCAL</h1>
 
-<form [formGroup]="createPremiseForm" (ngSubmit)="onCreate()">
-  <label for="namePremise" class="block text-900 font-medium mb-2">Nombre: </label>
-  <input [formControlName]="'name'" type="text" placeholder="Nombre del local" pInputText id="namePremise"
-         aria-describedby="name-help" class="w-full mb-3">
+<div class="flex justify-content-center flex-wrap">
+  <div class="p-4 shadow-2 border-round w-full lg:w-6">
+    <div class="text-center mb-5">
+      <img
+        ngSrc="/imgRegisterBig.png"
+        alt="Image"
+        height="200"
+        width="250"
+        class="mb-3"
+      />
+      <div class="text-900 text-3xl font-medium mb-3">
+        Bienvenid&#64;s, mánagers!
+      </div>
+      <span class="text-600 font-medium line-height-3"
+        >¿Ya tienes una cuenta?</span
+      >
+      <a
+        routerLink="/login"
+        class="font-medium no-underline ml-2 text-blue-500 cursor-pointer"
+        >Pincha y accede</a
+      >
+    </div>
 
-  <label for="email" class="block text-900 font-medium mb-2">Email: </label>
-  <input [formControlName]="'email'" id="email" type="email" placeholder="correo@dominio.com"
-         pInputText class="w-full mb-3">
+    <form [formGroup]="createPremiseForm" (ngSubmit)="onCreate()">
+      <label for="contact" class="block text-900 font-medium mb-2"
+        >Persona de contacto:
+      </label>
+      <input
+        [formControlName]="'person_contact'"
+        type="text"
+        placeholder="Nombre y/o apellido"
+        pInputText
+        id="contact"
+        aria-describedby="name-help"
+        class="w-full mb-3"
+      />
 
-  <label for="address" class="block text-900 font-medium mb-2">Dirección: </label>
-  <input [formControlName]="'address'" type="text" placeholder="Escribe tu dirección" pInputText id="address"
-         aria-describedby="name-help" class="w-full mb-3"/>
+      <label for="namePremise" class="block text-900 font-medium mb-2"
+        >Nombre del local:
+      </label>
+      <input
+        [formControlName]="'name'"
+        type="text"
+        placeholder="Nombre del local"
+        pInputText
+        id="namePremise"
+        aria-describedby="name-help"
+        class="w-full mb-3"
+      />
 
-  <label for="location" class="block text-900 font-medium mb-2">Latitud y longitud: </label>
-  <input [formControlName]="'name'" type="text" placeholder="Nombre del local" pInputText id="location"
-         aria-describedby="name-help" class="w-full mb-3">
+      <label for="email" class="block text-900 font-medium mb-2">Email: </label>
+      <input
+        [formControlName]="'email'"
+        id="email"
+        type="email"
+        placeholder="correo@dominio.com"
+        pInputText
+        class="w-full mb-3"
+      />
 
+      <label for="address" class="block text-900 font-medium mb-2"
+        >Dirección:
+      </label>
+      <input
+        [formControlName]="'address'"
+        type="text"
+        placeholder="Escribe tu dirección"
+        pInputText
+        id="address"
+        aria-describedby="name-help"
+        class="w-full mb-3"
+      />
 
-  <label for="phone" class="block text-900 font-medium mb-2">Teléfono: </label>
-  <input [formControlName]="'phone_number'" type="tel" pattern="^(\+34|0034|34)?[6-9]\d{8}$" pInputText id="phone"
-         placeholder="Escribe tu teléfono" aria-describedby="name-help" class="w-full mb-3"/>
+      <label for="phone" class="block text-900 font-medium mb-2"
+        >Teléfono:
+      </label>
+      <input
+        [formControlName]="'phone_number'"
+        type="tel"
+        pattern="^(\+34|0034|34)?[6-9]\d{8}$"
+        pInputText
+        id="phone"
+        placeholder="Escribe tu teléfono"
+        aria-describedby="name-help"
+        class="w-full mb-3"
+      />
 
-  <label for="web" class="block text-900 font-medium mb-2">Web: </label>
-  <input [formControlName]="'web'" type="text" placeholder="Web o red social" pInputText id="web"
-         aria-describedby="name-help" class="w-full mb-3">
+      <label for="web" class="block text-900 font-medium mb-2">Web: </label>
+      <input
+        [formControlName]="'web'"
+        type="text"
+        placeholder="Web o red social"
+        pInputText
+        id="web"
+        aria-describedby="name-help"
+        class="w-full mb-3"
+      />
 
-</form>
+      <label for="password1" class="block text-900 font-medium mb-2"
+        >Password:
+      </label>
+
+      <p-password
+        [formControlName]="'password'"
+        [toggleMask]="true"
+        id="password1"
+      >
+        <ng-template pTemplate="header">
+          <h6>Escoge una contraseña</h6>
+        </ng-template>
+        <ng-template pTemplate="footer">
+          <p-divider />
+          <p class="mt-2">Sugerencias</p>
+          <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+            <li>Al menos una minúscula</li>
+            <li>Al menos una mayúscula</li>
+            <li>Al menos un número</li>
+            <li>Mínimo 8 caracteres</li>
+            <li>Máximo 20 caracteres</li>
+          </ul>
+        </ng-template>
+      </p-password>
+
+      <br /><br />
+      <p>Añade una imagen de perfil en formato JPG o PNG</p>
+      <input type="file" (change)="fileChangeEvent($event)" />
+      <div class="cropper-wrapper" *ngIf="imageChangedEvent !== null">
+        <image-cropper
+          [imageChangedEvent]="imageChangedEvent"
+          [onlyScaleDown]="true"
+          [aspectRatio]="4 / 3"
+          [maintainAspectRatio]="false"
+          output="blob"
+          format="png"
+          (imageCropped)="imageCropped($event)"
+        >
+        </image-cropper>
+      </div>
+      <br />
+      <br />
+      <app-map (handleMapClick)="handleMapClick($event)"></app-map>
+      <div class="flex align-items-center justify-content-between mb-6">
+        <div class="flex align-items-center">
+          <p-checkbox
+            [binary]="true"
+            [(ngModel)]="isChecked"
+            [ngModelOptions]="{ standalone: true }"
+            [label]="
+              'Confirmo que soy mayor de 18 años y acepto los términos y condiciones'
+            "
+            class="text-900"
+            inputId="confirm"
+          >
+          </p-checkbox>
+        </div>
+        <br /><br />
+      </div>
+      {{ createPremiseForm.errors }}
+      <div class="flex align-items-center justify-content-around mb-6">
+        <p-button
+          [disabled]="!isChecked"
+          (click)="createPremise()"
+          type="submit"
+          label="Crear local"
+          class="p-button-success"
+          severity="success"
+        ></p-button>
+        <p-button
+          (click)="createPremiseForm.reset()"
+          label="Borrar datos"
+          severity="danger"
+        />
+      </div>
+    </form>
+  </div>
+</div>

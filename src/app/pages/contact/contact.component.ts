@@ -1,41 +1,38 @@
 import { Component } from '@angular/core';
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {InputTextModule} from 'primeng/inputtext';
-import {InputTextareaModule} from 'primeng/inputtextarea';
-import {Button} from 'primeng/button';
-
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { Button } from 'primeng/button';
 
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    InputTextModule,
-    InputTextareaModule,
-    Button
-
-  ],
+  imports: [ReactiveFormsModule, InputTextModule, InputTextareaModule, Button],
   templateUrl: './contact.component.html',
-  styleUrl: './contact.component.css'
+  styleUrl: './contact.component.css',
 })
 export class ContactComponent {
-
   contactForm = new FormGroup({
     name: new FormControl(),
     surname: new FormControl(),
-    email: new FormControl('',[Validators.required, Validators.email]),
+    email: new FormControl('', [Validators.required, Validators.email]),
     phoneNumber: new FormControl(),
-    message: new FormControl('',[Validators.required]),
-  })
+    message: new FormControl('', [Validators.required]),
+  });
 
-  onContact():void{
-    if(this.contactForm.invalid){
-      console.log("Algo ta mal")
-      for (let controlsKey in this.contactForm.controls) {
-        this.contactForm.get(controlsKey)?.markAsDirty()
-        this.contactForm.get(controlsKey)?.updateValueAndValidity()
+  onContact(): void {
+    if (this.contactForm.invalid) {
+      console.log('Algo ta mal');
+      for (const controlsKey in this.contactForm.controls) {
+        this.contactForm.get(controlsKey)?.markAsDirty();
+        this.contactForm.get(controlsKey)?.updateValueAndValidity();
       }
-      return
+      return;
     }
     //   if (this.contactForm.valid) {
     //     const formData = this.contactForm.value;
@@ -54,7 +51,6 @@ export class ContactComponent {
     //   }
     // }
 
-    console.log("funciono")
+    console.log('funciono');
   }
-
 }

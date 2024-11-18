@@ -1,4 +1,4 @@
-import {JwtPayload} from 'jwt-decode';
+import { JwtPayload } from 'jwt-decode';
 
 export interface LoginResponse {
   token: string;
@@ -8,7 +8,7 @@ export interface LoginDecodeResponse {
   roles: number[];
   exp?: number;
 }
-export interface TokenDecodeResponse extends JwtPayload{
+export interface TokenDecodeResponse extends JwtPayload {
   userId: number;
-  roles: {id: number}[];
+  roles: { id: number }[];
 }
