@@ -20,6 +20,7 @@ export class StateService {
 
     userLogged.isLogged = token !== undefined && roles.includes(3); //si tiene token
     userLogged.isManager = userLogged.isLogged && roles.includes(2);
+    userLogged.isTeacher = userLogged.isTeacher && roles.includes(4);
     userLogged.isAdmin = userLogged.isManager && roles.includes(1);
 
     return userLogged;

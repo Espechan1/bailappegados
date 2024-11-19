@@ -69,7 +69,8 @@
           pInputText
           class="w-full mb-3"
         />
-
+        <br />
+        <br />
         <!-- BIRTHDAY -->
         <label for="birthday" class="block text-900 font-medium mb-2"
           >Cumpleaños:
@@ -82,9 +83,13 @@
           class="w-full mb-3"
           id="birthday"
         />
+        <br />
+        <br />
+        <label for="styles" class="block text-900 font-medium mb-2"
+          >Estilos conocidos:
+        </label>
+        <!--        &lt;!&ndash; STYLES &ndash;&gt; |async pipe-->
 
-        <!-- STYLES -->
-        <!-- options: stylesList | async pipe  -->
         <p-multiSelect
           id="styles"
           [options]="stylesList"
@@ -94,12 +99,16 @@
           display="chip"
           [showClear]="true"
         />
-
+        <br />
+        <br />
+        <label for="password" class="block text-900 font-medium mb-2"
+          >Contraseña:
+        </label>
         <!-- PASSWORD -->
         <p-password
           [formControlName]="'password'"
           [toggleMask]="true"
-          id="password1"
+          id="password"
         >
           <ng-template pTemplate="header">
             <h6>Escoge una contraseña</h6>
@@ -115,7 +124,8 @@
             </ul>
           </ng-template>
         </p-password>
-
+        <br />
+        <br />
         <div class="flex align-items-center justify-content-around mb-6">
           <p-button
             type="submit"

@@ -20,6 +20,7 @@ export interface UserLogged {
   isManager?: boolean;
   isLogged?: boolean; //raso
   isAdmin?: boolean;
+  isTeacher?: boolean;
 }
 /* El tipo UserLogged se utiliza para representar el estado de autenticación del usuario en la aplicación. Contiene
 propiedades booleanas que indican si el usuario es un administrador, un gestor o simplemente está logueado.

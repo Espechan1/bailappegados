@@ -90,21 +90,23 @@ export class EventsComponent implements OnInit {
       .getAll()
       .pipe(take(1))
       .subscribe((value: ContainerList<Event>) => {
-        //status y data
         this.eventsListOriginal = value.data;
         this.eventsList = value.data;
       });
   }
 
-  // filterEvent(search: any): void {
-  //   if (search && search.target && search.target.value)
-  //     this.eventsList = this.eventsListOriginal.filter(value =>
-  //       value.name.toLowerCase().includes(search.target?.value.toLowerCase()),
-  //     );
-  //   else this.eventsList = this.eventsListOriginal;
+  // onSortChange(event: KeyboardEvent){
+  //   console.log(search)
   // }
-  // navigatePremise(id:number){
-  // }
+  filterPremise(search: KeyboardEvent): void {
+    if (search && search.target && (search.target as HTMLInputElement).value) {
+      this.eventsList = this.eventsListOriginal.filter(value =>
+        value.name
+          .toLowerCase()
+          .includes((search.target as HTMLInputElement).value?.toLowerCase()),
+      );
+    } else this.eventsList = this.eventsListOriginal;
+  }
 
   // getById(id: number) {
   //   this.eventsService.getEvent(id)

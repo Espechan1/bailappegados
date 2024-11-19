@@ -19,6 +19,8 @@ import { PasswordModule } from 'primeng/password';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { NgIf } from '@angular/common';
 import { LoginDecodeResponse } from '../../models/login-response';
+import { TabMenuModule } from 'primeng/tabmenu';
+import { TabViewModule } from 'primeng/tabview';
 
 @Component({
   selector: 'app-my-account',
@@ -31,6 +33,8 @@ import { LoginDecodeResponse } from '../../models/login-response';
     PasswordModule,
     MultiSelectModule,
     NgIf,
+    TabMenuModule,
+    TabViewModule,
   ],
   providers: [StylesService, UsersService, StateService],
   templateUrl: './my-account.component.html',
