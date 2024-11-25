@@ -1,0 +1,33 @@
+.bg {
+  background-image: linear-gradient(
+    to right top,
+    #fdcd12,
+    #ffb300,
+    #ff9800,
+    #fe7b00,
+    #fa5b00,
+    #ff4c2b,
+    #ff3f44,
+    #ff355a,
+    #ff568a,
+    #ff77b5,
+    #ff96da,
+    #ffb4f7
+  );
+}
+
+.bgRed {
+  background-color: var(--myRed);
+}
+
+.mxrem {
+  max-width: 65rem;
+  margin: 0 auto;
+}
+
+div > img {
+  border-radius: 8px;
+  width: 100%;
+  height: auto;
+  box-shadow: 0 0 30 #00000;
+}

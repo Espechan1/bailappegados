@@ -1,1 +1,295 @@
-<p>classrooms works!</p>
+<div class="container">
+  <div class="p-dataView-container">
+    <p-dataView
+      [value]="classroomList"
+      [rows]="6"
+      [paginator]="true"
+      [filterBy]="'name'"
+      [layout]="layout"
+    >
+      <ng-template pTemplate="header">
+        <div class="flex flex-column md:flex-row md:justify-content-between">
+          <p-iconField iconPosition="left">
+            <p-inputIcon styleClass="pi pi-search" />
+            <input
+              type="text"
+              pInputText
+              placeholder="Buscador"
+              (keyup)="filterPremise($event)"
+            />
+          </p-iconField>
+          <p-dataViewLayoutOptions />
+        </div>
+      </ng-template>
+      <ng-template pTemplate="list" let-classroomList>
+        <!-- LIST!! -->
+        <div class="grid grid-nogutter">
+          <div
+            *ngFor="let classroom of classroomList; let first = first"
+            class="col-12"
+          >
+            <div
+              class="flex flex-column sm:flex-row sm:align-items-center p-4 gap-3 border-top-1 surface-border"
+            >
+              <div class="md:w-10rem relative ml-4">
+                <p-image
+                  class="block xl:block mx-auto border-round w-full"
+                  src="{{
+                    classroom.images.length > 0
+                      ? classroom.images[0].url
+                      : '/noimage.jpg'
+                  }}"
+                  alt="{{ classroom.name }}"
+                  width="150"
+                  [preview]="true"
+                >
+                  <ng-template pTemplate="indicator">
+                    <i class="pi pi-search"></i>
+                  </ng-template>
+                </p-image>
+                <p-tag
+                  [value]="classroom.price"
+                  [severity]="'info'"
+                  class="absolute"
+                  [style.left.px]="4"
+                  [style.top.px]="4"
+                />
+              </div>
+              <div
+                class="flex flex-column md:flex-row justify-content-between md:align-items-center flex-1 gap-4 mx-4"
+              >
+                <div
+                  class="flex flex-row md:flex-column justify-content-between align-items-start gap-2"
+                >
+                  <div class="text-lg font-medium myRed mt-2">
+                    {{ classroom.name }}
+                  </div>
+                  <div class="surface-0 p-1" style="border-radius: 30px">
+                    <div
+                      class="surface-0 flex align-items-center gap-2 justify-content-left py-1 px-2"
+                      style="
+                        border-radius: 30px;
+                        box-shadow:
+                          0 1px 2px 0 rgba(0, 0, 0, 0.04),
+                          0 1px 2px 0 rgba(0, 0, 0, 0.06);
+                      "
+                    >
+                      <i class="pi pi-tag text-yellow-500"></i>
+                      <span class="text-900 font-medium text-sm">{{
+                        styles.get(classroom.style_id)
+                      }}</span>
+                    </div>
+                    <br />
+                    <div
+                      class="surface-0 flex align-items-center gap-2 justify-content-left py-1 px-2"
+                      style="
+                        border-radius: 30px;
+                        box-shadow:
+                          0 1px 2px 0 rgba(0, 0, 0, 0.04),
+                          0 1px 2px 0 rgba(0, 0, 0, 0.06);
+                      "
+                    >
+                      <i class="pi pi-phone text-yellow-500"></i>
+                      <span class="text-900 font-medium text-sm">{{
+                        classroom.phone_number
+                      }}</span>
+                    </div>
+                    <br />
+                    <div
+                      class="surface-0 flex align-items-center gap-2 py-1 px-2"
+                      style="
+                        border-radius: 30px;
+                        box-shadow:
+                          0 1px 2px 0 rgba(0, 0, 0, 0.04),
+                          0 1px 2px 0 rgba(0, 0, 0, 0.06);
+                      "
+                    >
+                      <i class="pi pi-user text-yellow-500"></i>
+                      <span class="text-900 font-medium text-sm">{{
+                        teachers.get(classroom.teacher_id)
+                      }}</span>
+                    </div>
+                    <br />
+                    <div
+                      class="surface-0 flex align-items-center gap-2 py-1 px-2"
+                      style="
+                        border-radius: 30px;
+                        box-shadow:
+                          0 1px 2px 0 rgba(0, 0, 0, 0.04),
+                          0 1px 2px 0 rgba(0, 0, 0, 0.06);
+                      "
+                    >
+                      <i class="pi pi-map-marker text-yellow-500"></i>
+                      <span class="text-900 font-medium text-sm">{{
+                        premisesName.get(classroom.premise_id)
+                      }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex flex-column md:align-items-end gap-5">
+                  <span class="text-l font-normal text-myRed-300"
+                    >Taller:
+                    {{ classroom.opening | date: 'dd-MM-yyyy h:mm a' }} hasta
+                    las {{ classroom.expiration | date: 'h:mm a' }}</span
+                  >
+                  <div class="flex flex-row-reverse md:flex-row gap-2">
+                    <p-button
+                      icon="pi pi-heart"
+                      [outlined]="true"
+                      severity="danger"
+                    />
+                    <p-button
+                      severity="danger"
+                      icon="pi pi-search"
+                      class="flex-auto md:flex-initial white-space-nowrap"
+                      label=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="grid" let-classroomList>
+        <div class="grid grid-nogutter">
+          <div
+            *ngFor="let classroom of classroomList; let first = first"
+            class="col-12 sm:col-6 md:col-4 xl:col-4 p-2"
+          >
+            <div
+              class="p-4 border-1 surface-border surface-card border-round flex flex-column border-top-1 surface-border"
+            >
+              <div class="md:w-10rem justify-content-center mx-auto relative">
+                <p-image
+                  class="block xl:block mx-auto border-round w-full"
+                  src="{{
+                    classroom.images.length > 0
+                      ? classroom.images[0].url
+                      : '/noimage.jpg'
+                  }}"
+                  alt="{{ classroom.name }}"
+                  width="150"
+                  [preview]="true"
+                />
+                <ng-template pTemplate="indicator">
+                  <i class="pi pi-search"></i>
+                </ng-template>
+              </div>
+              <div
+                class="flex flex-column mx-auto md:flex-row justify-content-between md:align-items-center flex-1 gap-4"
+              >
+                <div
+                  class="flex flex-row mx-auto md:flex-column justify-content-between align-items-start gap-2 ml-6"
+                >
+                  <div class="text-lg font-medium text-myRed-900 mt-2 myRed">
+                    {{ classroom.name }}
+                  </div>
+                  <div class="surface-0 p-1" style="border-radius: 30px">
+                    <div
+                      class="surface-0 flex align-items-start gap-2 justify-content-center py-1 px-2"
+                      style="
+                        border-radius: 30px;
+                        box-shadow:
+                          0 1px 2px 0 rgba(0, 0, 0, 0.04),
+                          0 1px 2px 0 rgba(0, 0, 0, 0.06);
+                      "
+                    >
+                      <i class="pi pi-tag text-yellow-500"></i>
+                      <span class="text-900 font-medium text-sm">{{
+                        styles.get(classroom.style_id)
+                      }}</span>
+                    </div>
+                    <br />
+                    <div
+                      class="surface-0 flex align-items-start gap-2 justify-content-center py-1 px-2"
+                      style="
+                        border-radius: 30px;
+                        box-shadow:
+                          0 1px 2px 0 rgba(0, 0, 0, 0.04),
+                          0 1px 2px 0 rgba(0, 0, 0, 0.06);
+                      "
+                    >
+                      <i class="pi pi-phone text-yellow-500"></i>
+                      <span class="text-900 font-medium text-sm">{{
+                        classroom.phone_number
+                      }}</span>
+                    </div>
+                    <br />
+                    <div
+                      class="surface-0 flex align-items-start gap-2 py-1 px-2 justify-content-center"
+                      style="
+                        border-radius: 30px;
+                        box-shadow:
+                          0 1px 2px 0 rgba(0, 0, 0, 0.04),
+                          0 1px 2px 0 rgba(0, 0, 0, 0.06);
+                      "
+                    >
+                      <i class="pi pi-user text-yellow-500"></i>
+                      <span class="text-900 font-medium text-sm">{{
+                        teachers.get(classroom.teacher_id)
+                      }}</span>
+                    </div>
+                    <br />
+                    <div
+                      class="surface-0 flex align-items-start gap-2 py-1 px-2"
+                      style="
+                        border-radius: 30px;
+                        box-shadow:
+                          0 1px 2px 0 rgba(0, 0, 0, 0.04),
+                          0 1px 2px 0 rgba(0, 0, 0, 0.06);
+                      "
+                    >
+                      <i class="pi pi-map-marker text-yellow-500"></i>
+                      <span class="text-900 font-medium text-sm">{{
+                        premisesName.get(classroom.premise_id)
+                      }}</span>
+                    </div>
+                    <br />
+                    <div
+                      class="surface-0 flex align-items-start gap-2 py-1 px-2 justify-content-center"
+                      style="
+                        border-radius: 30px;
+                        box-shadow:
+                          0 1px 2px 0 rgba(0, 0, 0, 0.04),
+                          0 1px 2px 0 rgba(0, 0, 0, 0.06);
+                      "
+                    >
+                      <i class="pi pi-calendar text-yellow-500"></i>
+                      <span class="text-900 font-medium text-sm"
+                        >Taller de:{{
+                          classroom.opening | date: 'dd-MM-yyyy h:mm a'
+                        }}
+                        a {{ classroom.expiration | date: 'h:mm a' }}</span
+                      >
+                    </div>
+                    <br />
+                  </div>
+                  <br />
+                  <div class="flex flex-column md:align-items-start w-full">
+                    <div
+                      class="flex flex-row-reverse md:flex-row gap-2 mx-auto"
+                    >
+                      <p-button
+                        icon="pi pi-heart"
+                        [outlined]="true"
+                        severity="danger"
+                      />
+                      <p-button
+                        icon="pi pi-search"
+                        severity="danger"
+                        class="flex-auto md:flex-initial white-space-nowrap"
+                      />
+                      <!--(click)="navigatePremise()"-->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-dataView>
+  </div>
+</div>

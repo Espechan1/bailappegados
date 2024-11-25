@@ -9,7 +9,6 @@ import { Event } from '../models/event';
 export class EventsService {
   private readonly url = `${environment.api}/events`;
   private readonly imgUrl = environment.media;
-
   private readonly http = inject(HttpClient);
 
   getAll(): Observable<ContainerList<Event>> {
@@ -51,5 +50,24 @@ export class EventsService {
         return event;
       }),
     );
+  }
+
+  update(eventToUpdate: Event, id: number): Observable<Container<Event>> {
+    return this.http
+      .post<Container<Event>>(`${this.url}/${id}`, eventToUpdate)
+      .pipe(
+        map(event1 => {
+          if (event1.data.images && event1.data.images.length > 0) {
+            event1.data.images.forEach(img => {
+              img.url = `${this.imgUrl}/${img.url}`;
+            });
+          }
+          return event1;
+        }),
+      );
+  }
+
+  remove(id: number): Observable<Container<string>> {
+    return this.http.delete<Container<string>>(`${this.url}/${id}`);
   }
 }

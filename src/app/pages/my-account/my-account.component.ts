@@ -65,13 +65,13 @@ export class MyAccountComponent implements OnInit {
     return new FormGroup({
       name: new FormControl(user.name, [
         Validators.required,
-        Validators.max(80),
+        Validators.max(50),
         Validators.min(2),
       ]),
       description: new FormControl(user.description),
       email: new FormControl(user.email, [
         Validators.required,
-        Validators.max(80),
+        Validators.max(50),
         Validators.email,
       ]),
       location: new FormControl(user.location),
@@ -101,8 +101,20 @@ export class MyAccountComponent implements OnInit {
       .pipe(take(1))
       .subscribe((value: Container<User>) => {
         this.myUser = value.data;
-        console.log(this.myUser, value.data);
         this.selectedStyles = value.data.styles; //.map(value1 => value1.id);?
+        this.myAccountForm = this.initForm(this.myUser);
+      });
+  }
+
+  modifyUser() {
+    this.usersService
+      .update(
+        this.myAccountForm.getRawValue(),
+        (this.stateService.token as LoginDecodeResponse).userId,
+      )
+      .pipe(take(1))
+      .subscribe(value => {
+        this.myUser = value.data;
         this.myAccountForm = this.initForm(this.myUser);
       });
   }
@@ -117,5 +129,14 @@ export class MyAccountComponent implements OnInit {
       return;
     }
     console.log('funciono');
+  }
+
+  deleteUser(): void {
+    confirm(
+      '¿Estás seguro que quieres borrar tu cuenta? Una vez confirmado, tendrás que crearte una cuenta nueva.',
+    );
+    this.usersService.remove(
+      (this.stateService.token as LoginDecodeResponse).userId,
+    );
   }
 }

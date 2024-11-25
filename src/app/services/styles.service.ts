@@ -22,4 +22,12 @@ export class StylesService {
   create(newStyle: Style): Observable<Container<Style>> {
     return this.http.post<Container<Style>>(this.url, newStyle);
   }
+
+  update(style: Style, id: number): Observable<Container<Style>> {
+    return this.http.put<Container<Style>>(`${this.url}/${id}`, style);
+  }
+
+  delete(id: number): Observable<Container<Style>> {
+    return this.http.delete<Container<Style>>(`${this.url}/${id}`);
+  }
 }

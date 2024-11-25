@@ -2,8 +2,21 @@
   /*max-width: 1200px; !* Ancho máximo del contenedor para centrar el contenido *!*/
   width: auto;
   margin: auto;
-  /*background: linear-gradient(to bottom, #fdeae6, #ffb4f7);*/
-  background: var(--pinky);
+  background-image: linear-gradient(
+    to top,
+    rgba(253, 205, 18, 0.5),
+    rgba(255, 179, 0, 0.5),
+    rgba(255, 152, 0, 0.5),
+    rgba(254, 123, 0, 0.5),
+    rgba(250, 91, 0, 0.5),
+    rgba(255, 76, 43, 0.5),
+    rgba(255, 59, 68, 0.5),
+    rgba(255, 53, 90, 0.5),
+    rgba(255, 86, 138, 0.5),
+    rgba(255, 119, 181, 0.5),
+    rgba(255, 150, 214, 0.5),
+    rgba(255, 180, 247, 0.5)
+  );
   color: #333;
   text-align: center;
   justify-content: center;
@@ -11,6 +24,7 @@
     display: inline-block;
     padding: 1em;
     justify-content: space-around;
+    font-size: medium;
   }
 }
 
@@ -39,11 +53,11 @@ button {
 .social-icons {
   display: flex;
   justify-content: center;
-  gap: 1rem; /* Espacio entre los iconos */
+  gap: 2rem; /* Espacio entre los iconos */
 }
 
 .social-icons a {
-  font-size: 1.5rem; /* Tamaño de los iconos */
+  font-size: 1rem; /* Tamaño de los iconos */
   color: #333;
 }
 

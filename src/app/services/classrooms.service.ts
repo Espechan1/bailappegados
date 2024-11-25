@@ -51,4 +51,26 @@ export class ClassroomsService {
       }),
     );
   }
+
+  update(
+    classToUpdate: Classroom,
+    id: number,
+  ): Observable<Container<Classroom>> {
+    return this.http
+      .post<Container<Classroom>>(`${this.url}/${id}`, classToUpdate)
+      .pipe(
+        map(classroom => {
+          if (classroom.data.images && classroom.data.images.length > 0) {
+            classroom.data.images.forEach(img => {
+              img.url = `${this.imgUrl}/${img.url}`;
+            });
+          }
+          return classroom;
+        }),
+      );
+  }
+
+  remove(id: number): Observable<Container<string>> {
+    return this.http.delete<Container<string>>(`${this.url}/${id}`);
+  }
 }

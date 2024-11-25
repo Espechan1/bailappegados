@@ -53,7 +53,24 @@ export class PremisesService {
     );
   }
 
-  // pdte update y remove.
+  update(premiseToUpdate: Premise, id: number): Observable<Container<Premise>> {
+    return this.http
+      .post<Container<Premise>>(`${this.url}/${id}`, premiseToUpdate)
+      .pipe(
+        map(premise => {
+          if (premise.data.images && premise.data.images.length > 0) {
+            premise.data.images.forEach(img => {
+              img.url = `${this.imgUrl}/${img.url}`;
+            });
+          }
+          return premise;
+        }),
+      );
+  }
+
+  remove(id: number): Observable<Container<string>> {
+    return this.http.delete<Container<string>>(`${this.url}/${id}`);
+  }
 }
 /*
 * formatDate(

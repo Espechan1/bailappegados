@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { inject } from '@angular/core';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
@@ -9,12 +10,14 @@ import { PremisesComponent } from './pages/premises/premises.component';
 import { EventsComponent } from './pages/events/events.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { MyAccountComponent } from './pages/my-account/my-account.component';
-import { inject } from '@angular/core';
 import { StateService } from './services/state.service';
 import { CookiesComponent } from './pages/cookies/cookies.component';
 import { PrivacityComponent } from './pages/privacity/privacity.component';
 import { ConditionsComponent } from './pages/conditions/conditions.component';
 import { FormPremiseComponent } from './pages/form-premise/form-premise.component';
+import { ClassroomsComponent } from './pages/classrooms/classrooms.component';
+import { RegistrationsComponent } from './pages/registrations/registrations.component';
+import { FormEventComponent } from './pages/form-event/form-event.component';
 
 // const stateService = inject(StateService)
 
@@ -34,13 +37,16 @@ export const routes: Routes = [
   { path: 'privacity', component: PrivacityComponent },
   { path: 'conditions', component: ConditionsComponent },
   { path: 'form-premise', component: FormPremiseComponent },
+  { path: 'form-event', component: FormEventComponent },
   { path: 'contact', component: ContactComponent },
+  { path: 'classrooms', component: ClassroomsComponent },
+  { path: 'registrations/:eventId', component: RegistrationsComponent },
   {
     path: 'home',
     component: HomeComponent,
     canActivate: [
       () => {
-        // es como el condicional para que revise el token.
+        // es como el condicional para que revise el token. Es como un guard.
         return checkToken();
       },
     ],

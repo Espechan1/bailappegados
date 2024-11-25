@@ -18,6 +18,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { PremisesService } from '../../services/premises.service';
 import { Premise } from '../../models/premise';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-events',
@@ -49,11 +50,13 @@ export class EventsComponent implements OnInit {
   event?: Event;
   styles: Map<number, string> = new Map<number, string>();
   premises: Map<number, string> = new Map<number, string>();
+  // schedulePremise:
   layout: 'list' | 'grid' = 'list';
 
   private readonly eventsService = inject(EventsService);
   private readonly stylesService = inject(StylesService);
   private readonly premisesService = inject(PremisesService);
+  private router = inject(Router);
 
   constructor(@Inject(LOCALE_ID) public locale: string) {}
 
@@ -95,9 +98,10 @@ export class EventsComponent implements OnInit {
       });
   }
 
-  // onSortChange(event: KeyboardEvent){
-  //   console.log(search)
-  // }
+  onEventSelected(eventId: number) {
+    this.router.navigate(['/registrations/' + eventId]).then();
+  }
+
   filterPremise(search: KeyboardEvent): void {
     if (search && search.target && (search.target as HTMLInputElement).value) {
       this.eventsList = this.eventsListOriginal.filter(value =>
@@ -115,4 +119,6 @@ export class EventsComponent implements OnInit {
   //       this.event = value.data
   //     });
   // }
+
+  protected readonly Number = Number;
 }

@@ -1,11 +1,14 @@
 <header class="flex justify-content-around flex-nowrap">
   <img
     id="logo"
-    ngSrc="/logo.png"
-    alt="Image"
+    ngSrc="/logo.jpg"
+    alt="Imagen del logo de BailAPPega2"
     height="100"
     width="130"
     class="mb-3"
+    tabindex="0"
+    (click)="onIndex()"
+    (keydown)="handleKeyDown($event)"
   />
-  <p-tabMenu [class]="'align-content-center styleTab2'" [model]="items" />
+  <p-tabMenu [class]="'align-content-center'" [model]="items" />
 </header>

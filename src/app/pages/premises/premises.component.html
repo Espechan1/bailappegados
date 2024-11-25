@@ -37,7 +37,7 @@
             </div>
           </ng-template>
           <ng-template pTemplate="grid" let-premisesList>
-            <div class="grid grid-nogutter">
+            <div class="grid grid-gutter">
               <div
                 *ngFor="let premise of premisesList; let first = first"
                 class="col-12 sm:col-6 md:col-4 xl:col-4 p-2"
@@ -47,11 +47,12 @@
                 >
                   <div class="mx-auto relative">
                     <p-image
+                      appBrokenImage
                       class="block xl:block mx-auto w-full"
                       src="{{
                         premise.images ? premise.images[0].url : '/noimage.jpg'
                       }}"
-                      alt="{{ premise.name }}"
+                      alt="Imagen de {{ premise.name }}"
                       width="200"
                       height="200"
                       [preview]="true"
@@ -133,7 +134,7 @@
                           }}</span>
                         </div>
                       </div>
-                      <div class="border">
+                      <div class="border width200 justify-content-center">
                         <span>
                           Lunes:
                           {{

@@ -1,7 +1,7 @@
 import { Photo } from './photo';
 
 export interface Event {
-  id: number;
+  id?: number;
   name: string;
   opening?: Date;
   expiration?: Date;
@@ -10,5 +10,5 @@ export interface Event {
   price?: number;
   premise_id: number;
   style_id: number;
-  images: Photo[];
+  images?: Photo[];
 }

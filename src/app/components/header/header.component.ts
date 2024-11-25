@@ -16,22 +16,23 @@ export class HeaderComponent implements OnInit {
   private readonly router = inject(Router);
 
   items: MenuItem[] = [
-    { id: 'main', label: 'Inicio', routerLink: '/', styleClass: 'styleTab2' },
+    // { id: 'main', label: 'Inicio', routerLink: '/', styleClass: 'styleTab2' },
     { id: 'events', label: 'Eventos', routerLink: '/events' },
+    { id: 'classrooms', label: 'Clases', routerLink: '/classrooms' },
     { id: 'premises', label: 'Locales', routerLink: '/premises' },
     { id: 'account#logged', label: 'Mi cuenta', routerLink: '/my-account' },
     { id: 'logout#logged', label: 'Logout', routerLink: '/logout' },
     { id: 'login#loggin', label: 'Login', routerLink: '/login' },
-    { id: 'signup#loggin', label: 'Register', routerLink: '/register' },
+    { id: 'signup#loggin', label: 'Registro', routerLink: '/register' },
   ];
 
   private readonly menuVisible = {
     //obj de dos propiedades, los items id públicos y los de logueado. Define la visibilidad de los items.
     login: this.items
-      .filter(value => value.id?.includes('#logged'))
+      .filter(value => value.id?.includes('#logged')) //logado user
       .map(value => value.id),
     logout: this.items
-      .filter(value => value.id?.includes('#loggin'))
+      .filter(value => value.id?.includes('#loggin')) //sin logar
       .map(value => value.id),
   };
 
@@ -41,10 +42,6 @@ export class HeaderComponent implements OnInit {
       console.log(value);
       this.controlRolMenu();
     });
-
-    /**
-     * (this.items.find(value => value.label === 'Login') as MenuItem).visible = !!localStorage?.getItem('token');
-     * Si consigue el token(devuelve un string y será parseado a true), visible es falso y no muestra 'Login'.*/
   }
 
   private controlRolMenu() {
@@ -55,5 +52,15 @@ export class HeaderComponent implements OnInit {
         value.visible = localStorage.getItem('token') === null;
       }
     });
+  }
+
+  onIndex() {
+    this.router.navigate(['']).then();
+  }
+
+  handleKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      this.onIndex();
+    }
   }
 }

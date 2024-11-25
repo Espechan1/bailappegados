@@ -31,9 +31,10 @@
             <div
               class="flex flex-column sm:flex-row sm:align-items-center p-4 gap-3 border-top-1 surface-border"
             >
-              <div class="md:w-10rem relative ml-4">
+              <div class="md:w-10rem relative ml-4 border-round-sm">
                 <p-image
-                  class="block xl:block mx-auto border-round w-full"
+                  imageClass="border-round-lg"
+                  class="block xl:block mx-auto w-full"
                   src="{{
                     event.images.length > 0
                       ? event.images[0].url
@@ -48,7 +49,7 @@
                   </ng-template>
                 </p-image>
                 <p-tag
-                  [value]="event.price"
+                  [value]="event.price + ' €'"
                   [severity]="'info'"
                   class="absolute"
                   [style.left.px]="4"
@@ -127,12 +128,14 @@
                   </div>
                 </div>
                 <div class="flex flex-column md:align-items-end gap-5">
-                  <span class="text-xl font-light text-900">{{
-                    event.opening | date: 'dd-MM-yyyy h:mm a'
-                  }}</span>
-                  <span class="text-xl font-light text-900">{{
-                    event.expiration | date: 'h:mm a dd-MM-yyyy'
-                  }}</span>
+                  <span class="text-l font-normal text-myRed-300"
+                    >Taller:
+                    {{ event.opening | date: 'dd-MM-yyyy h:mm a' }} hasta las
+                    {{ event.expiration | date: 'h:mm a' }}</span
+                  >
+                  <span class="text-l font-normal"
+                    >Horario local: inventado
+                  </span>
                   <div class="flex flex-row-reverse md:flex-row gap-2">
                     <p-button
                       icon="pi pi-heart"
@@ -140,6 +143,7 @@
                       severity="danger"
                     />
                     <p-button
+                      (click)="onEventSelected(Number(event.id))"
                       severity="danger"
                       icon="pi pi-search"
                       class="flex-auto md:flex-initial white-space-nowrap"
@@ -164,6 +168,7 @@
             >
               <div class="md:w-10rem justify-content-center mx-auto relative">
                 <p-image
+                  imageClass="border-round-lg"
                   class="block xl:block mx-auto border-round w-full"
                   src="{{
                     event.images.length > 0
@@ -187,9 +192,12 @@
                   <div class="text-lg font-medium text-myRed-900 mt-2 myRed">
                     {{ event.name }}
                   </div>
-                  <div class="surface-0 p-1" style="border-radius: 30px">
+                  <div
+                    class="surface-0 p-1 justify-content-start align-items-start"
+                    style="border-radius: 30px"
+                  >
                     <div
-                      class="surface-0 flex align-items-start gap-2 justify-content-center py-1 px-2"
+                      class="surface-0 flex align-items-start gap-2 justify-content-start py-1 px-2"
                       style="
                         border-radius: 30px;
                         box-shadow:
@@ -204,7 +212,7 @@
                     </div>
                     <br />
                     <div
-                      class="surface-0 flex align-items-start gap-2 justify-content-center py-1 px-2"
+                      class="surface-0 flex align-items-start gap-2 justify-content-start py-1 px-2"
                       style="
                         border-radius: 30px;
                         box-shadow:
@@ -219,7 +227,7 @@
                     </div>
                     <br />
                     <div
-                      class="surface-0 flex align-items-start gap-2 py-1 px-2 justify-content-center"
+                      class="surface-0 flex align-items-start gap-2 py-1 px-2 justify-content-start"
                       style="
                         border-radius: 30px;
                         box-shadow:
@@ -247,6 +255,24 @@
                         premises.get(event.premise_id)
                       }}</span>
                     </div>
+                    <br />
+                    <div
+                      class="surface-0 flex align-items-start gap-2 justify-content-center py-1 px-2"
+                      style="
+                        border-radius: 30px;
+                        box-shadow:
+                          0 1px 2px 0 rgba(0, 0, 0, 0.04),
+                          0 1px 2px 0 rgba(0, 0, 0, 0.06);
+                      "
+                    >
+                      <i class="pi pi-calendar text-yellow-500"></i>
+                      <span class="text-900 font-medium text-sm"
+                        >Taller:{{
+                          event.opening | date: 'dd-MM-yyyy h:mm a'
+                        }}
+                        - {{ event.expiration | date: 'h:mm a' }}</span
+                      >
+                    </div>
                   </div>
                   <br />
                   <div class="flex flex-column md:align-items-start w-full">
@@ -259,11 +285,11 @@
                         severity="danger"
                       />
                       <p-button
+                        (click)="onEventSelected(event.id)"
                         icon="pi pi-search"
                         severity="danger"
                         class="flex-auto md:flex-initial white-space-nowrap"
                       />
-                      <!--(click)="navigatePremise()"-->
                     </div>
                   </div>
                 </div>

@@ -23,7 +23,6 @@ import { PremisesService } from '../../services/premises.service';
 import { UsersService } from '../../services/users.service';
 import { Premise, Gps, Schedule } from '../../models/premise';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { User } from '../../models/user';
 import { Photo } from '../../models/photo';
 import { MapComponent } from '../../components/map/map.component';
 
@@ -54,7 +53,6 @@ import { MapComponent } from '../../components/map/map.component';
 })
 export class FormPremiseComponent {
   private readonly premisesService = inject(PremisesService);
-  private readonly usersService = inject(UsersService);
   private sanitizer = inject(DomSanitizer);
 
   gps?: Gps;
@@ -107,35 +105,12 @@ export class FormPremiseComponent {
     if (this.isChecked) {
       const form = this.createPremiseForm.get('scheduleForm');
       const scheduleData = form ? (form.value as Schedule) : null;
-      const newManager: User = {
-        id: undefined as unknown as number,
-        name: this.createPremiseForm.get('person_contact') as unknown as string,
-        description: undefined,
-        email: this.createPremiseForm.get('email') as unknown as string,
-        location: undefined,
-        birthday: undefined,
-        password: this.createPremiseForm.get('password') as unknown as string,
-        genre: undefined,
-        roles: [{ id: 2, role: 'manager' }],
-        images: undefined,
-        styles: undefined,
-      };
       const newPremise: Premise = {
         ...(this.createPremiseForm.getRawValue() as unknown as Premise),
         schedule: scheduleData,
         location: this.gps as unknown as Gps,
       };
-      this.usersService
-        .create(newManager)
-        .pipe(take(1))
-        .subscribe({
-          next: value => {
-            console.log(value);
-          },
-          error: err => {
-            console.log(err);
-          },
-        });
+
       this.premisesService
         .create(newPremise)
         .pipe(take(1))

@@ -3,10 +3,12 @@
   text-align-last: center;
   border: 1px solid var(--myRed);
   margin-top: 5px;
+  align-self: center;
+  padding: 6px;
 }
 
-.myRed {
-  color: var(--myRed);
+.width200 {
+  width: 200px;
 }
 
 .HxW {

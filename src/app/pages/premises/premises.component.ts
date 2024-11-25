@@ -13,6 +13,7 @@ import { DataViewModule } from 'primeng/dataview';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
+import { BrokenImageDirective } from '../../directives/broken-image.directive';
 
 @Component({
   selector: 'app-premises',
@@ -31,6 +32,7 @@ import { InputTextModule } from 'primeng/inputtext';
     IconFieldModule,
     InputIconModule,
     InputTextModule,
+    BrokenImageDirective,
   ],
   templateUrl: './premises.component.html',
   styleUrl: './premises.component.css',

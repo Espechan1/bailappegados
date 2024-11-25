@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Usuarios Registrados</title>
+  </head>
+  <body>
+    <p-table [value]="usersRegistered" [tableStyle]="{ 'min-width': '60rem' }">
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="image" style="width: 20%">
+            Image <p-sortIcon field="image" />
+          </th>
+          <th pSortableColumn="name" style="width: 20%">
+            Name <p-sortIcon field="name" />
+          </th>
+          <th pSortableColumn="location" style="width: 20%">
+            Localidad <p-sortIcon field="location" />
+          </th>
+          <th pSortableColumn="state" style="width: 20%">
+            Disponibilidad <p-sortIcon field="state" />
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-usersRegistered>
+        <tr>
+          <td>{{ usersRegistered.image }}</td>
+          <td>{{ usersRegistered.name }}</td>
+          <td>{{ usersRegistered.location }}</td>
+          <td><p-tag [value]="usersRegistered.status_match" /></td>
+          <!-- [severity]="getSeverity(usersRegistered.status_match)"-->
+        </tr>
+      </ng-template>
+    </p-table>
+  </body>
+</html>
