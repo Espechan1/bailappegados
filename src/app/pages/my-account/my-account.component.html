@@ -1,4 +1,4 @@
-<!--<p-tabView styleClass="tabview-custom">-->
+<!--<p-tabView styleClass="tabview-custom p-datatable-striped">-->
 <!--  <p-tabPanel header="Mis datos">-->
 <!--    <ng-template pTemplate="header">-->
 <!--      <div class="flex align-items-center gap-2">-->
@@ -152,6 +152,10 @@
 <!--        </div>-->
 <!--      </div>-->
 <!--    </div>-->
+
+<!--      <label for="delete">¿Quieres eliminar tu cuenta de usuario?</label>-->
+<!--      <input type="button" id="delete" (click)="deleteUser()">-->
+
 <!--  </p-tabPanel>-->
 <!--  <p-tabPanel header="Mis locales">-->
 <!--    <ng-template pTemplate="header">-->
@@ -160,7 +164,6 @@
 <!--        <span class="font-bold white-space-nowrap m-0">Mis locales</span>-->
 <!--      </div>-->
 <!--    </ng-template>-->
-<!--    <p-toast></p-toast>-->
 <!--    <p-table *ngIf="premisesList" [value]="premisesList" dataKey="id" editMode="row" [tableStyle]="{'min-width': '50rem'}">-->
 <!--      <ng-template pTemplate="header">-->
 <!--        <tr>-->
@@ -242,6 +245,46 @@
 <!--            </p-cellEditor>-->
 <!--          </td>-->
 <!--          <td>-->
+<!--            <p-cellEditor>-->
+<!--              <ng-template pTemplate="input">-->
+<!--                <input-->
+<!--                  pInputText type="text"-->
+<!--                  [formControlName]="premise.person_contact"-->
+<!--                  required />-->
+<!--              </ng-template>-->
+<!--              <ng-template pTemplate="output">-->
+<!--                {{premise.person_contact}}-->
+<!--              </ng-template>-->
+<!--            </p-cellEditor>-->
+<!--          </td>-->
+<!--          <td>-->
+<!--            <p-cellEditor>-->
+<!--              <ng-template pTemplate="output">-->
+<!--                <p-button (onClick)="showDialogSchedule()" label="Editar horario" />-->
+<!--              </ng-template>-->
+<!--            </p-cellEditor>-->
+<!--          </td>-->
+<!--          <td>-->
+<!--            <p-cellEditor>-->
+<!--              <ng-template pTemplate="output">-->
+<!--                <p-button (onClick)="showDialogGps()" label="Editar coord." />-->
+<!--              </ng-template>-->
+<!--            </p-cellEditor>-->
+<!--          </td>-->
+<!--          <td>-->
+<!--            <p-cellEditor>-->
+<!--              <ng-template pTemplate="input">-->
+<!--                <input-->
+<!--                  pInputText type="text"-->
+<!--                  [formControlName]="premise.image"-->
+<!--                  required />-->
+<!--              </ng-template>-->
+<!--              <ng-template pTemplate="output">-->
+<!--                {{premise.image}}-->
+<!--              </ng-template>-->
+<!--            </p-cellEditor>-->
+<!--          </td>-->
+<!--          <td>-->
 <!--            <div class="flex align-items-center justify-content-center gap-2">-->
 <!--              <button-->
 <!--                *ngIf="!editing"-->
@@ -278,4 +321,206 @@
 <!--      </ng-template>-->
 <!--    </p-table>-->
 <!--  </p-tabPanel>-->
+<!--&lt;!&ndash;  <p-tabPanel header="Mis eventos">&ndash;&gt;-->
+<!--&lt;!&ndash;    <ng-template pTemplate="header">&ndash;&gt;-->
+<!--&lt;!&ndash;      <div class="flex align-items-center gap-2">&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="pi pi-home" style="font-size: 1rem; color: var(&#45;&#45;myRed)"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;        <span class="font-bold white-space-nowrap m-0">Mis eventos</span>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </ng-template>&ndash;&gt;-->
+<!--&lt;!&ndash;    <p-table *ngIf="eventsList" [value]="eventsList" dataKey="id" editMode="row" [tableStyle]="{'min-width': '50rem'}">&ndash;&gt;-->
+<!--&lt;!&ndash;      <ng-template pTemplate="header">&ndash;&gt;-->
+<!--&lt;!&ndash;        <tr>&ndash;&gt;-->
+<!--&lt;!&ndash;          <th style="width:12.5%">Image</th>&ndash;&gt;-->
+<!--&lt;!&ndash;          <th style="width:12.5%">Nombre</th>&ndash;&gt;-->
+<!--&lt;!&ndash;          <th style="width:12.5%">Hora Inicio</th>&ndash;&gt;-->
+<!--&lt;!&ndash;          <th style="width:12.5%">Hora Fin</th>&ndash;&gt;-->
+<!--&lt;!&ndash;          <th style="width:12.5%">Instructores</th>&ndash;&gt;-->
+<!--&lt;!&ndash;          <th style="width:12.5%">DJ</th>&ndash;&gt;-->
+<!--&lt;!&ndash;          <th style="width:12.5%">Precio</th>&ndash;&gt;-->
+<!--&lt;!&ndash;          <th style="width:12.5%">Local</th>&ndash;&gt;-->
+<!--&lt;!&ndash;          <th style="width:12.5%">Estilo</th>&ndash;&gt;-->
+<!--&lt;!&ndash;        </tr>&ndash;&gt;-->
+<!--&lt;!&ndash;      </ng-template>&ndash;&gt;-->
+<!--&lt;!&ndash;      <ng-template pTemplate="body" let-event let-editing="editing" let-ri="rowIndex">&ndash;&gt;-->
+<!--&lt;!&ndash;        <tr [pEditableRow]="event">&ndash;&gt;-->
+<!--&lt;!&ndash;          <td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <p-cellEditor>&ndash;&gt;-->
+<!--&lt;!&ndash;              <ng-template pTemplate="input">&ndash;&gt;-->
+<!--&lt;!&ndash;                <input&ndash;&gt;-->
+<!--&lt;!&ndash;                  pInputText&ndash;&gt;-->
+<!--&lt;!&ndash;                  type="text"&ndash;&gt;-->
+<!--&lt;!&ndash;                  [formControlName]="event.name" />&ndash;&gt;-->
+<!--&lt;!&ndash;              </ng-template>&ndash;&gt;-->
+<!--&lt;!&ndash;              <ng-template pTemplate="output">&ndash;&gt;-->
+<!--&lt;!&ndash;                {{event.name}}&ndash;&gt;-->
+<!--&lt;!&ndash;              </ng-template>&ndash;&gt;-->
+<!--&lt;!&ndash;            </p-cellEditor>&ndash;&gt;-->
+<!--&lt;!&ndash;          </td>&ndash;&gt;-->
+<!--&lt;!&ndash;          <td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <p-cellEditor>&ndash;&gt;-->
+<!--&lt;!&ndash;              <ng-template pTemplate="input">&ndash;&gt;-->
+<!--&lt;!&ndash;                <input&ndash;&gt;-->
+<!--&lt;!&ndash;                  pInputText type="text"&ndash;&gt;-->
+<!--&lt;!&ndash;                  [formControlName]="event.address"&ndash;&gt;-->
+<!--&lt;!&ndash;                  required />&ndash;&gt;-->
+<!--&lt;!&ndash;              </ng-template>&ndash;&gt;-->
+<!--&lt;!&ndash;              <ng-template pTemplate="output">&ndash;&gt;-->
+<!--&lt;!&ndash;                {{event.address}}&ndash;&gt;-->
+<!--&lt;!&ndash;              </ng-template>&ndash;&gt;-->
+<!--&lt;!&ndash;            </p-cellEditor>&ndash;&gt;-->
+<!--&lt;!&ndash;          </td>&ndash;&gt;-->
+<!--&lt;!&ndash;          <td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <p-cellEditor>&ndash;&gt;-->
+<!--&lt;!&ndash;              <ng-template pTemplate="input">&ndash;&gt;-->
+<!--&lt;!&ndash;                <input&ndash;&gt;-->
+<!--&lt;!&ndash;                  pInputText&ndash;&gt;-->
+<!--&lt;!&ndash;                  type="text"&ndash;&gt;-->
+<!--&lt;!&ndash;                  [formControlName]="event.email" /> &lt;!&ndash;'email'&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;              </ng-template>&ndash;&gt;-->
+<!--&lt;!&ndash;              <ng-template pTemplate="output">&ndash;&gt;-->
+<!--&lt;!&ndash;                {{event.email}}&ndash;&gt;-->
+<!--&lt;!&ndash;              </ng-template>&ndash;&gt;-->
+<!--&lt;!&ndash;            </p-cellEditor>&ndash;&gt;-->
+<!--&lt;!&ndash;          </td>&ndash;&gt;-->
+<!--&lt;!&ndash;          <td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <p-cellEditor>&ndash;&gt;-->
+<!--&lt;!&ndash;              <ng-template pTemplate="input">&ndash;&gt;-->
+<!--&lt;!&ndash;                <input&ndash;&gt;-->
+<!--&lt;!&ndash;                  pInputText&ndash;&gt;-->
+<!--&lt;!&ndash;                  type="text"&ndash;&gt;-->
+<!--&lt;!&ndash;                  [formControlName]="event.web"/>&ndash;&gt;-->
+<!--&lt;!&ndash;              </ng-template>&ndash;&gt;-->
+<!--&lt;!&ndash;              <ng-template pTemplate="output">&ndash;&gt;-->
+<!--&lt;!&ndash;                {{event.web ? event.web : 'No definido'}}&ndash;&gt;-->
+<!--&lt;!&ndash;              </ng-template>&ndash;&gt;-->
+<!--&lt;!&ndash;            </p-cellEditor>&ndash;&gt;-->
+<!--&lt;!&ndash;          </td>&ndash;&gt;-->
+<!--&lt;!&ndash;          <td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <p-cellEditor>&ndash;&gt;-->
+<!--&lt;!&ndash;              <ng-template pTemplate="input">&ndash;&gt;-->
+<!--&lt;!&ndash;                <input&ndash;&gt;-->
+<!--&lt;!&ndash;                  pInputText&ndash;&gt;-->
+<!--&lt;!&ndash;                  type="text"&ndash;&gt;-->
+<!--&lt;!&ndash;                  [formControlName]="event.phone_number"/>&ndash;&gt;-->
+<!--&lt;!&ndash;              </ng-template>&ndash;&gt;-->
+<!--&lt;!&ndash;              <ng-template pTemplate="output">&ndash;&gt;-->
+<!--&lt;!&ndash;                {{event.phone_number}}&ndash;&gt;-->
+<!--&lt;!&ndash;              </ng-template>&ndash;&gt;-->
+<!--&lt;!&ndash;            </p-cellEditor>&ndash;&gt;-->
+<!--&lt;!&ndash;          </td>&ndash;&gt;-->
+<!--&lt;!&ndash;          <td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <p-cellEditor>&ndash;&gt;-->
+<!--&lt;!&ndash;              <ng-template pTemplate="output">&ndash;&gt;-->
+<!--&lt;!&ndash;                <p-button (onClick)="showDialogSchedule()" label="Editar horario" />&ndash;&gt;-->
+<!--&lt;!&ndash;              </ng-template>&ndash;&gt;-->
+<!--&lt;!&ndash;            </p-cellEditor>&ndash;&gt;-->
+<!--&lt;!&ndash;          </td>&ndash;&gt;-->
+<!--&lt;!&ndash;          <td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <p-cellEditor>&ndash;&gt;-->
+<!--&lt;!&ndash;              <ng-template pTemplate="output">&ndash;&gt;-->
+<!--&lt;!&ndash;                <p-button (onClick)="showDialogGps()" label="Editar coord." />&ndash;&gt;-->
+<!--&lt;!&ndash;              </ng-template>&ndash;&gt;-->
+<!--&lt;!&ndash;            </p-cellEditor>&ndash;&gt;-->
+<!--&lt;!&ndash;          </td>&ndash;&gt;-->
+<!--&lt;!&ndash;          <td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <p-cellEditor>&ndash;&gt;-->
+<!--&lt;!&ndash;              <ng-template pTemplate="input">&ndash;&gt;-->
+<!--&lt;!&ndash;                <input&ndash;&gt;-->
+<!--&lt;!&ndash;                  pInputText type="text"&ndash;&gt;-->
+<!--&lt;!&ndash;                  [formControlName]="premise.image"&ndash;&gt;-->
+<!--&lt;!&ndash;                  required />&ndash;&gt;-->
+<!--&lt;!&ndash;              </ng-template>&ndash;&gt;-->
+<!--&lt;!&ndash;              <ng-template pTemplate="output">&ndash;&gt;-->
+<!--&lt;!&ndash;                {{premise.image}}&ndash;&gt;-->
+<!--&lt;!&ndash;              </ng-template>&ndash;&gt;-->
+<!--&lt;!&ndash;            </p-cellEditor>&ndash;&gt;-->
+<!--&lt;!&ndash;          </td>&ndash;&gt;-->
+<!--&lt;!&ndash;          <td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="flex align-items-center justify-content-center gap-2">&ndash;&gt;-->
+<!--&lt;!&ndash;              <button&ndash;&gt;-->
+<!--&lt;!&ndash;                *ngIf="!editing"&ndash;&gt;-->
+<!--&lt;!&ndash;                pButton&ndash;&gt;-->
+<!--&lt;!&ndash;                pRipple&ndash;&gt;-->
+<!--&lt;!&ndash;                type="button"&ndash;&gt;-->
+<!--&lt;!&ndash;                pInitEditableRow&ndash;&gt;-->
+<!--&lt;!&ndash;                icon="pi pi-pencil"&ndash;&gt;-->
+<!--&lt;!&ndash;                (click)="onRowEditInit(premise)"&ndash;&gt;-->
+<!--&lt;!&ndash;                class="p-button-rounded p-button-text">&ndash;&gt;-->
+<!--&lt;!&ndash;              </button>&ndash;&gt;-->
+<!--&lt;!&ndash;              <button&ndash;&gt;-->
+<!--&lt;!&ndash;                *ngIf="editing"&ndash;&gt;-->
+<!--&lt;!&ndash;                pButton&ndash;&gt;-->
+<!--&lt;!&ndash;                pRipple&ndash;&gt;-->
+<!--&lt;!&ndash;                type="button"&ndash;&gt;-->
+<!--&lt;!&ndash;                pSaveEditableRow&ndash;&gt;-->
+<!--&lt;!&ndash;                icon="pi pi-check"&ndash;&gt;-->
+<!--&lt;!&ndash;                (click)="onRowEditSave(premise)"&ndash;&gt;-->
+<!--&lt;!&ndash;                class="p-button-rounded p-button-text p-button-success mr-2">&ndash;&gt;-->
+<!--&lt;!&ndash;              </button>&ndash;&gt;-->
+<!--&lt;!&ndash;              <button&ndash;&gt;-->
+<!--&lt;!&ndash;                *ngIf="editing"&ndash;&gt;-->
+<!--&lt;!&ndash;                pButton pRipple&ndash;&gt;-->
+<!--&lt;!&ndash;                type="button"&ndash;&gt;-->
+<!--&lt;!&ndash;                pCancelEditableRow&ndash;&gt;-->
+<!--&lt;!&ndash;                icon="pi pi-times"&ndash;&gt;-->
+<!--&lt;!&ndash;                (click)="onRowEditCancel(premise, ri)"&ndash;&gt;-->
+<!--&lt;!&ndash;                class="p-button-rounded p-button-text p-button-danger">&ndash;&gt;-->
+<!--&lt;!&ndash;              </button>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;          </td>&ndash;&gt;-->
+<!--&lt;!&ndash;        </tr>&ndash;&gt;-->
+<!--&lt;!&ndash;      </ng-template>&ndash;&gt;-->
+<!--&lt;!&ndash;    </p-table>&ndash;&gt;-->
+<!--&lt;!&ndash;  </p-tabPanel>&ndash;&gt;-->
 <!--</p-tabView>-->
+<!--<p-dialog header="Edit Profile" [modal]="true" [(visible)]="visibleScheduleModal" [style]="{ width: '25rem' }">-->
+<!--  <span class="p-text-secondary block mb-5">Modifica tus horarios</span>-->
+<!--  <div class="flex align-items-center gap-3 mb-3">-->
+<!--    <label for="monday" class="font-semibold w-6rem">Lunes</label>-->
+<!--    <input pInputText id="monday" class="flex-auto" placeholder="" autocomplete="off" />-->
+<!--  </div>-->
+<!--  <div class="flex align-items-center gap-3 mb-3">-->
+<!--    <label for="tuesday" class="font-semibold w-6rem">Martes</label>-->
+<!--    <input pInputText id="tuesday" class="flex-auto" autocomplete="off" />-->
+<!--  </div>-->
+<!--  <div class="flex align-items-center gap-3 mb-5">-->
+<!--    <label for="wednesday" class="font-semibold w-6rem">Miércoles</label>-->
+<!--    <input pInputText id="wednesday" class="flex-auto" autocomplete="off" />-->
+<!--  </div>-->
+<!--  <div class="flex align-items-center gap-3 mb-5">-->
+<!--    <label for="thursday" class="font-semibold w-6rem">Jueves</label>-->
+<!--    <input pInputText id="thursday" class="flex-auto" autocomplete="off" />-->
+<!--  </div>-->
+<!--  <div class="flex align-items-center gap-3 mb-5">-->
+<!--    <label for="friday" class="font-semibold w-6rem">Viernes</label>-->
+<!--    <input pInputText id="friday" class="flex-auto" autocomplete="off" />-->
+<!--  </div>-->
+<!--  <div class="flex align-items-center gap-3 mb-5">-->
+<!--    <label for="saturday" class="font-semibold w-6rem">Sábado</label>-->
+<!--    <input pInputText id="saturday" class="flex-auto" autocomplete="off" />-->
+<!--  </div>-->
+<!--  <div class="flex align-items-center gap-3 mb-5">-->
+<!--    <label for="sunday" class="font-semibold w-6rem">Domingo</label>-->
+<!--    <input pInputText id="sunday" class="flex-auto" autocomplete="off" />-->
+<!--  </div>-->
+<!--  <div class="flex justify-content-end gap-2">-->
+<!--    <p-button label="Cancelar" severity="secondary" (onClick)="visibleScheduleModal = false" />-->
+<!--    <p-button label="Guardar" (onClick)="visibleScheduleModal = false" />-->
+<!--  </div>-->
+<!--</p-dialog>-->
+<!--<p-dialog header="Edit Profile" [modal]="true" [(visible)]="visibleScheduleModal" [style]="{ width: '25rem' }">-->
+<!--  <span class="p-text-secondary block mb-5">Modifica tus coordenadas</span>-->
+<!--  <div class="flex align-items-center gap-3 mb-3">-->
+<!--    <label for="lat" class="font-semibold w-6rem">Latitud</label>-->
+<!--    <input pInputText id="lat" class="flex-auto" placeholder="39.25684" autocomplete="off" />-->
+<!--  </div>-->
+<!--  <div class="flex align-items-center gap-3 mb-3">-->
+<!--    <label for="long" class="font-semibold w-6rem">Longitud</label>-->
+<!--    <input pInputText id="long" class="flex-auto" placeholder="7.25684" autocomplete="off" />-->
+<!--  </div>-->
+<!--  <div class="flex justify-content-end gap-2">-->
+<!--    <p-button label="Cancelar" severity="secondary" (onClick)="visibleScheduleModal = false" />-->
+<!--    <p-button label="Guardar" (onClick)="visibleScheduleModal = false" />-->
+<!--  </div>-->
+<!--</p-dialog>-->
