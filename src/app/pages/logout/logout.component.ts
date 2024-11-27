@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-logout',
@@ -7,4 +8,12 @@ import { Component } from '@angular/core';
   templateUrl: './logout.component.html',
   styleUrl: './logout.component.css',
 })
-export class LogoutComponent {}
+export class LogoutComponent {
+  private router = inject(Router);
+
+  cleanLocalStorage() {
+    localStorage.clear();
+    alert('Cerrada sesión correctamente');
+    this.router.navigate(['/']).then();
+  }
+}

@@ -8,9 +8,10 @@ import { Container, ContainerList } from '../models/container';
 @Injectable()
 export class PremisesService {
   private readonly url = `${environment.api}/premises`;
+  private readonly urlPremisesById = `${environment.api}/premises/users`;
   private readonly imgUrl = environment.media;
 
-  private readonly http = inject(HttpClient); // = constructor(private http: HttpClient) {}
+  private readonly http = inject(HttpClient);
 
   getAll(): Observable<ContainerList<Premise>> {
     return this.http.get<ContainerList<Premise>>(this.url).pipe(
@@ -70,6 +71,23 @@ export class PremisesService {
 
   remove(id: number): Observable<Container<string>> {
     return this.http.delete<Container<string>>(`${this.url}/${id}`);
+  }
+
+  premisesByUserId(id: number): Observable<ContainerList<Premise>> {
+    return this.http
+      .get<ContainerList<Premise>>(`${this.urlPremisesById}/${id}`)
+      .pipe(
+        map(arrayPremises => {
+          arrayPremises.data.forEach(premise => {
+            if (premise.images && premise.images.length > 0) {
+              premise.images.forEach(img => {
+                img.url = `${this.imgUrl}/${img.url}`;
+              });
+            }
+          });
+          return arrayPremises;
+        }),
+      );
   }
 }
 /*

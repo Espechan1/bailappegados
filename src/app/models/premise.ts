@@ -11,8 +11,6 @@ export interface Premise {
   person_contact: string | null;
   location?: Gps;
   images?: Photo[];
-  // created_at: Date;
-  // updated_at?: Date; hacer el hidden en el back
 }
 
 export interface Schedule {
