@@ -31,6 +31,7 @@ export class GuestComponent implements OnInit {
   private router = inject(Router);
 
   eventsList: Event[] = [];
+
   responsiveOptions: CarouselResponsiveOptions[] = [
     {
       breakpoint: '1199px',
@@ -63,15 +64,4 @@ export class GuestComponent implements OnInit {
   onRegister() {
     this.router.navigate(['register']).then();
   }
-
-  // getSeverity(status: string) {
-  //   switch (status) {
-  //     case 'INSTOCK':
-  //       return 'success';
-  //     case 'LOWSTOCK':
-  //       return 'warning';
-  //     case 'OUTOFSTOCK':
-  //       return 'danger';
-  //   }
-  // }
 }

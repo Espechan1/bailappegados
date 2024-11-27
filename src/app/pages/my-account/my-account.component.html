@@ -161,7 +161,7 @@
 <!--      </div>-->
 <!--    </ng-template>-->
 <!--    <p-toast></p-toast>-->
-<!--    <p-table [value]="premisesList" dataKey="id" editMode="row" [tableStyle]="{'min-width': '50rem'}">-->
+<!--    <p-table *ngIf="premisesList" [value]="premisesList" dataKey="id" editMode="row" [tableStyle]="{'min-width': '50rem'}">-->
 <!--      <ng-template pTemplate="header">-->
 <!--        <tr>-->
 <!--          <th style="width:12.5%">Nombre</th>-->
@@ -182,7 +182,7 @@
 <!--                <input-->
 <!--                  pInputText-->
 <!--                  type="text"-->
-<!--                  [(formControlName)]="premise.name" />-->
+<!--                  [formControlName]="premise.name" />-->
 <!--              </ng-template>-->
 <!--              <ng-template pTemplate="output">-->
 <!--                {{premise.name}}-->
@@ -194,7 +194,7 @@
 <!--              <ng-template pTemplate="input">-->
 <!--                <input-->
 <!--                  pInputText type="text"-->
-<!--                  [(formControlName)]="premise.address"-->
+<!--                  [formControlName]="premise.address"-->
 <!--                  required />-->
 <!--              </ng-template>-->
 <!--              <ng-template pTemplate="output">-->
@@ -208,7 +208,7 @@
 <!--                <input-->
 <!--                  pInputText-->
 <!--                  type="text"-->
-<!--                  [(formControlName)]="premise.email" /> &lt;!&ndash;'email'&ndash;&gt;-->
+<!--                  [formControlName]="premise.email" /> &lt;!&ndash;'email'&ndash;&gt;-->
 <!--              </ng-template>-->
 <!--              <ng-template pTemplate="output">-->
 <!--                {{premise.email}}-->
@@ -221,7 +221,7 @@
 <!--                <input-->
 <!--                  pInputText-->
 <!--                  type="text"-->
-<!--                  [(formControlName)]="premise.web"/>-->
+<!--                  [formControlName]="premise.web"/>-->
 <!--              </ng-template>-->
 <!--              <ng-template pTemplate="output">-->
 <!--                {{premise.web ? premise.web : 'No definido'}}-->
@@ -234,7 +234,7 @@
 <!--                <input-->
 <!--                  pInputText-->
 <!--                  type="text"-->
-<!--                  [(formControlName)]="premise.phone_number"/>-->
+<!--                  [formControlName]="premise.phone_number"/>-->
 <!--              </ng-template>-->
 <!--              <ng-template pTemplate="output">-->
 <!--                {{premise.phone_number}}-->
@@ -250,7 +250,7 @@
 <!--                type="button"-->
 <!--                pInitEditableRow-->
 <!--                icon="pi pi-pencil"-->
-<!--                (click)="onRowEditInit(product)"-->
+<!--                (click)="onRowEditInit(premise)"-->
 <!--                class="p-button-rounded p-button-text">-->
 <!--              </button>-->
 <!--              <button-->
@@ -260,7 +260,7 @@
 <!--                type="button"-->
 <!--                pSaveEditableRow-->
 <!--                icon="pi pi-check"-->
-<!--                (click)="onRowEditSave(product)"-->
+<!--                (click)="onRowEditSave(premise)"-->
 <!--                class="p-button-rounded p-button-text p-button-success mr-2">-->
 <!--              </button>-->
 <!--              <button-->
@@ -269,7 +269,7 @@
 <!--                type="button"-->
 <!--                pCancelEditableRow-->
 <!--                icon="pi pi-times"-->
-<!--                (click)="onRowEditCancel(product, ri)"-->
+<!--                (click)="onRowEditCancel(premise, ri)"-->
 <!--                class="p-button-rounded p-button-text p-button-danger">-->
 <!--              </button>-->
 <!--            </div>-->
@@ -277,122 +277,5 @@
 <!--        </tr>-->
 <!--      </ng-template>-->
 <!--    </p-table>-->
-
-<!--  </p-tabPanel>-->
-<!--  <p-tabPanel header="Mis eventos">-->
-<!--    <ng-template pTemplate="header">-->
-<!--      <div class="flex align-items-center gap-2">-->
-<!--        <i-->
-<!--          class="pi pi-calendar"-->
-<!--          style="font-size: 1rem; color: var(&#45;&#45;myRed)"-->
-<!--        ></i>-->
-<!--        <span class="font-bold white-space-nowrap m-0">Mis eventos</span>-->
-<!--      </div>-->
-<!--    </ng-template>-->
-<!--    <p-toast></p-toast>-->
-<!--    <p-table [value]="eventsList" dataKey="id" editMode="row" [tableStyle]="{'min-width': '50rem'}">-->
-<!--      <ng-template pTemplate="header">-->
-<!--        <tr>-->
-<!--          <th style="width:20%">Name</th>-->
-<!--          <th style="width:20%">Code</th>-->
-<!--          <th style="width:20%">Inventory Status</th>-->
-<!--          <th style="width:20%">Price</th>-->
-<!--          <th style="width:20%"></th>-->
-<!--        </tr>-->
-<!--      </ng-template>-->
-<!--      <ng-template pTemplate="body" let-product let-editing="editing" let-ri="rowIndex">-->
-<!--        <tr [pEditableRow]="product">-->
-<!--          <td>-->
-<!--            <p-cellEditor>-->
-<!--              <ng-template pTemplate="input">-->
-<!--                <input-->
-<!--                  pInputText-->
-<!--                  type="text"-->
-<!--                  [(ngModel)]="product.code" />-->
-<!--              </ng-template>-->
-<!--              <ng-template pTemplate="output">-->
-<!--                {{product.code}}-->
-<!--              </ng-template>-->
-<!--            </p-cellEditor>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <p-cellEditor>-->
-<!--              <ng-template pTemplate="input">-->
-<!--                <input-->
-<!--                  pInputText type="text"-->
-<!--                  [(ngModel)]="product.name"-->
-<!--                  required />-->
-<!--              </ng-template>-->
-<!--              <ng-template pTemplate="output">-->
-<!--                {{product.name}}-->
-<!--              </ng-template>-->
-<!--            </p-cellEditor>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <p-cellEditor>-->
-<!--              <ng-template pTemplate="input">-->
-<!--                <p-dropdown-->
-<!--                  [options]="statuses"-->
-<!--                  appendTo="body"-->
-<!--                  [(ngModel)]="product.inventoryStatus"-->
-<!--                  [style]="{'width':'100%'}" />-->
-<!--              </ng-template>-->
-<!--              <ng-template pTemplate="output">-->
-<!--                <p-tag-->
-<!--                  [value]="product.inventoryStatus"-->
-<!--                  [severity]="getSeverity(product.inventoryStatus)" />-->
-<!--              </ng-template>-->
-<!--            </p-cellEditor>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <p-cellEditor>-->
-<!--              <ng-template pTemplate="input">-->
-<!--                <input-->
-<!--                  pInputText-->
-<!--                  type="text"-->
-<!--                  [(ngModel)]="product.price" />-->
-<!--              </ng-template>-->
-<!--              <ng-template pTemplate="output">-->
-<!--                {{product.price | currency: 'USD'}}-->
-<!--              </ng-template>-->
-<!--            </p-cellEditor>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <div class="flex align-items-center justify-content-center gap-2">-->
-<!--              <button-->
-<!--                *ngIf="!editing"-->
-<!--                pButton-->
-<!--                pRipple-->
-<!--                type="button"-->
-<!--                pInitEditableRow-->
-<!--                icon="pi pi-pencil"-->
-<!--                (click)="onRowEditInit(product)"-->
-<!--                class="p-button-rounded p-button-text">-->
-<!--              </button>-->
-<!--              <button-->
-<!--                *ngIf="editing"-->
-<!--                pButton-->
-<!--                pRipple-->
-<!--                type="button"-->
-<!--                pSaveEditableRow-->
-<!--                icon="pi pi-check"-->
-<!--                (click)="onRowEditSave(product)"-->
-<!--                class="p-button-rounded p-button-text p-button-success mr-2">-->
-<!--              </button>-->
-<!--              <button-->
-<!--                *ngIf="editing"-->
-<!--                pButton pRipple-->
-<!--                type="button"-->
-<!--                pCancelEditableRow-->
-<!--                icon="pi pi-times"-->
-<!--                (click)="onRowEditCancel(product, ri)"-->
-<!--                class="p-button-rounded p-button-text p-button-danger">-->
-<!--              </button>-->
-<!--            </div>-->
-<!--          </td>-->
-<!--        </tr>-->
-<!--      </ng-template>-->
-<!--    </p-table>-->
-
 <!--  </p-tabPanel>-->
 <!--</p-tabView>-->

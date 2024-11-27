@@ -3,14 +3,15 @@
 // import { StylesService } from '../../services/styles.service';
 // import { UsersService } from '../../services/users.service';
 // import { PremisesService } from '../../services/premises.service';
-// import { EventsService } from '../../services/events.service';
+// //import { EventsService } from '../../services/events.service';
 // import { LoginDecodeResponse } from '../../models/login-response';
 // import { Style } from '../../models/style';
 // import { User } from '../../models/user';
 // import { Premise } from '../../models/premise';
+// //import {Event} from '../../models/event';
 // import { take } from 'rxjs';
 // import { Container, ContainerList } from '../../models/container';
-// import { Router } from '@angular/router';
+// //import {Router} from '@angular/router';
 // import {
 //   FormControl,
 //   FormGroup,
@@ -25,10 +26,10 @@
 // import { NgIf } from '@angular/common';
 // import { TabMenuModule } from 'primeng/tabmenu';
 // import { TabViewModule } from 'primeng/tabview';
-// import {ToastModule} from 'primeng/toast';
-// import {TableModule} from 'primeng/table';
-// import {DropdownModule} from 'primeng/dropdown';
-// import {Ripple} from 'primeng/ripple';
+// import { ToastModule } from 'primeng/toast';
+// import { TableModule } from 'primeng/table';
+// import { DropdownModule } from 'primeng/dropdown';
+// import { Ripple } from 'primeng/ripple';
 //
 // @Component({
 //   selector: 'app-my-account',
@@ -48,7 +49,13 @@
 //     DropdownModule,
 //     Ripple,
 //   ],
-//   providers: [StylesService, UsersService, StateService, EventsService, PremisesService],
+//   providers: [
+//     StylesService,
+//     UsersService,
+//     StateService,
+//     //EventsService,
+//     PremisesService,
+//   ],
 //   templateUrl: './my-account.component.html',
 //   styleUrl: './my-account.component.css',
 // })
@@ -57,39 +64,22 @@
 //   private readonly stylesService = inject(StylesService);
 //   private readonly usersService = inject(UsersService);
 //   private readonly premisesService = inject(PremisesService);
-//   private readonly eventsService = inject(EventsService);
-//   private router = inject(Router);
+//   //private readonly eventsService = inject(EventsService);
+//   //private router = inject(Router);
 //
 //   stylesList: Style[] = [];
 //   style?: Style;
 //   myUser!: User;
 //   selectedStyles?: Style[] = [];
 //   premisesList?: Premise[] = [];
-//   eventsList?: Event[] = [];
+//   rowPremiseinEdit: Record<string, Premise> = {};
+//   //eventsList?: Event[] = [];
 //
 //   ngOnInit(): void {
 //     this.getAllStyles();
 //     this.getUserById();
 //     this.getPremises();
-//     this.getEvents();
-//   }
-//
-//   getPremises(): void {
-//     this.premisesService
-//       .getAll()
-//       .pipe(take(1))
-//       .subscribe((value: ContainerList<Premise>) => {
-//         this.premisesList = value.data;
-//       });
-//   }
-//
-//   getEvents(): void {
-//     this.eventsService
-//       .getAll()
-//       .pipe(take(1))
-//       .subscribe((value: ContainerList<Event>) => {
-//         this.eventsList = value.data;
-//       });
+//     //this.getEvents();
 //   }
 //
 //   myAccountForm = this.initForm();
@@ -121,6 +111,63 @@
 //       ]),
 //     });
 //   }
+//
+//   getPremises(): void {
+//     this.premisesService
+//       .premisesByUserId((this.stateService.token as LoginDecodeResponse).userId)
+//       .pipe(take(1))
+//       .subscribe((value: ContainerList<Premise>) => {
+//         this.premisesList = value.data;
+//       });
+//   }
+//
+//   onRowEditCancel(premise: Premise, index: number) {
+//     if (this.premisesList && this.premisesList[index]) {
+//       this.premisesList[index] =
+//         this.rowPremiseinEdit[premise.id as unknown as string];
+//       delete this.rowPremiseinEdit[premise.id as unknown as string];
+//     }
+//   }
+//
+//   onRowEditInit(premise: Premise) {
+//     this.rowPremiseinEdit[premise.id as unknown as string] = { ...premise };
+//   }
+//
+//   onRowEditSave(premise: Premise) {
+//     if (premise && premise.id) {
+//       // Verificar si el premise tiene datos válidos
+//       this.premisesService
+//         .update(premise, premise.id)
+//         .pipe(take(1))
+//         .subscribe(value => {
+//           if (value.status === 'Success') {
+//             alert('La modificación ha ido bien');
+//             if (this.premisesList) {
+//               // Encontrar el índice del premise en premisesList y actualizarlo
+//               const index = this.premisesList.findIndex(
+//                 p => p.id === premise.id,
+//               );
+//               if (index !== -1) {
+//                 // Actualizar el objeto premise en la lista
+//                 this.premisesList[index] = { ...premise };
+//               }
+//             }
+//             delete this.rowPremiseinEdit[premise.id?.toString() as string];
+//           } else {
+//             alert('Hubo un error al modificar el premise');
+//           }
+//         });
+//     }
+//   }
+//
+//   // getEvents(): void {
+//   //   this.eventsService
+//   //     .getAll()
+//   //     .pipe(take(1))
+//   //     .subscribe((value: ContainerList<Event>) => {
+//   //       this.eventsList = value.data;
+//   //     });
+//   // }
 //
 //   getAllStyles(): void {
 //     this.stylesService
@@ -167,13 +214,13 @@
 //     console.log('funciono');
 //   }
 //
-//   deleteUser(): void {
-//     confirm(
-//       '¿Estás seguro que quieres borrar tu cuenta? Una vez confirmado, tendrás que crearte una cuenta nueva.',
-//     );
-//     this.usersService.remove(
-//       (this.stateService.token as LoginDecodeResponse).userId);
-//       localStorage.clear();
-//       this.router.navigate(["/"]).then();
-//   }
+//   // deleteUser(): void {
+//   //   confirm(
+//   //     '¿Estás seguro que quieres borrar tu cuenta? Una vez confirmado, tendrás que crearte una cuenta nueva.',
+//   //   );
+//   //   this.usersService.remove(
+//   //     (this.stateService.token as LoginDecodeResponse).userId);
+//   //   localStorage.clear();
+//   //   this.router.navigate(["/"]).then();
+//   // }
 // }
