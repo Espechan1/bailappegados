@@ -7,7 +7,7 @@
 // import { LoginDecodeResponse } from '../../models/login-response';
 // import { Style } from '../../models/style';
 // import { User } from '../../models/user';
-// import {Premise} from '../../models/premise';
+// import {Gps, Premise, Schedule} from '../../models/premise';
 // import { Event as EventCustom } from '../../models/event';
 // import { take } from 'rxjs';
 // import { Container, ContainerList } from '../../models/container';
@@ -22,18 +22,19 @@
 // import { DividerModule } from 'primeng/divider';
 // import { PasswordModule } from 'primeng/password';
 // import { MultiSelectModule } from 'primeng/multiselect';
-// import {KeyValuePipe, NgForOf, NgIf} from '@angular/common';
+// import { KeyValuePipe, NgForOf, NgIf } from '@angular/common';
 // import { TabMenuModule } from 'primeng/tabmenu';
 // import { TabViewModule } from 'primeng/tabview';
 // import { TableModule } from 'primeng/table';
 // import { DropdownModule } from 'primeng/dropdown';
 // import { Ripple } from 'primeng/ripple';
-// import {DialogModule} from 'primeng/dialog';
-// import {Router} from '@angular/router';
-// import {RadioButtonModule} from 'primeng/radiobutton';
-// import {ImageModule} from 'primeng/image';
-// import {ImageCroppedEvent, ImageCropperComponent} from 'ngx-image-cropper';
-// import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
+// import { DialogModule } from 'primeng/dialog';
+// import { Router } from '@angular/router';
+// import { RadioButtonModule } from 'primeng/radiobutton';
+// import { ImageModule } from 'primeng/image';
+// import { ImageCroppedEvent, ImageCropperComponent } from 'ngx-image-cropper';
+// import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+// import {Photo} from '../../models/photo';
 //
 // @Component({
 //   selector: 'app-my-account',
@@ -78,18 +79,18 @@
 //   private sanitizer = inject(DomSanitizer);
 //   private router = inject(Router);
 //
-//   //schedulePremise: Schedule
 //   stylesList: Style[] = [];
 //   myUser!: User;
 //   selectedStyles?: Style[] = [];
 //   premisesList?: Premise[] = [];
+//   premise?: Premise;
 //   rowPremiseinEdit: Record<string, Premise> = {};
 //   visibleScheduleModal = false;
 //   visibleGpsModal = false;
 //   eventsList?: EventCustom[] = [];
 //   imageChangedEvent: Event | null = null;
 //   croppedImage: SafeUrl = '';
-//   //daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+//   schedulePremise: Schedule = {} as Schedule;
 //
 //   ngOnInit(): void {
 //     this.getAllStyles();
@@ -202,18 +203,43 @@
 //   }
 //
 //   //MIS LOCALES
-//
-//   scheduleForm = new FormGroup({
-//     Monday: new FormControl<string | null>(null),
-//     Tuesday: new FormControl<string | null>(null),
-//     Wednesday: new FormControl<string | null>(null),
-//     Thursday: new FormControl<string | null>(null),
-//     Friday: new FormControl<string | null>(null),
-//     Saturday: new FormControl<string | null>(null),
-//     Sunday: new FormControl<string | null>(null),
-//   })
+//   updatePremiseForm = new FormGroup({
+//     name: new FormControl<string | undefined>(this.premise.name, [
+//       Validators.required,
+//       Validators.maxLength(50),
+//       Validators.minLength(1),
+//     ]),
+//     email: new FormControl<string>(this.premise.email, [Validators.required, Validators.email]),
+//     address: new FormControl<string>(this.premise.address, Validators.required),
+//     phone_number: new FormControl<string>('', [
+//       Validators.required,
+//       Validators.maxLength(13),
+//     ]),
+//     web: new FormControl<string | null>(null, Validators.maxLength(50)),
+//     person_contact: new FormControl<string | null>(null, [
+//       Validators.maxLength(50),
+//     ]),
+//     images: new FormControl<Photo[] | null>(null), // undefined = {}
+//     location: new FormControl<Gps | null>(null),
+//     schedule: new FormGroup({
+//       monday: new FormControl<string | null>(null),
+//       tuesday: new FormControl<string | null>(null),
+//       wednesday: new FormControl<string | null>(null),
+//       thursday: new FormControl<string | null>(null),
+//       friday: new FormControl<string | null>(null),
+//       saturday: new FormControl<string | null>(null),
+//       sunday: new FormControl<string | null>(null),
+//     }),
+//     user_id: new FormControl<number | null>(null),
+//   });
 //
 //   onUpdateSchedule(){
+//     const values = this.scheduleForm.getRawValue();
+//     this.premisesService.update()
+//     this.visibleScheduleModal  = false
+//   }
+//
+//   onModifySchedule() {
 //     if (this.scheduleForm.invalid) {
 //       console.log('Algo del formulario no pasa validación');
 //       for (const controlsKey in this.scheduleForm.controls) {
@@ -231,13 +257,14 @@
 //       .pipe(take(1))
 //       .subscribe((value: ContainerList<Premise>) => {
 //         this.premisesList = value.data;
-//         //value.data.forEach(premise => {
-//           // if(premise.schedule) {
-//           //   this.schedulePremise = premise.schedule as Schedule
-//           // } else {
-//           //   this.schedulePremise = {} as Schedule
-//           // }
-//         //});
+//         value.data.forEach(premise => {
+//
+//           if (premise.schedule) {
+//             this.schedulePremise = premise.schedule as Schedule;
+//           } else {
+//             this.schedulePremise = {} as Schedule;
+//           }
+//         });
 //       });
 //   }
 //
@@ -298,5 +325,4 @@
 //   }
 //
 //   protected readonly Object = Object;
-//   protected readonly Array = Array;
 // }
