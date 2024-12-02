@@ -3,6 +3,11 @@ image-cropper {
   width: 500px;
 }
 
+#scheduleDiv {
+  border: 1px solid black;
+  padding: 10px;
+}
+
 .cropper-wrapper {
   /*min-height: 300px;*/
   max-width: 500px;

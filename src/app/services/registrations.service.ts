@@ -21,4 +21,20 @@ export class RegistrationsService {
   create(newRegistration: Registration): Observable<Container<Registration>> {
     return this.http.post<Container<Registration>>(this.url, newRegistration);
   }
+
+  update(
+    upRegistration: Registration,
+    registedId: number,
+  ): Observable<Container<Registration>> {
+    return this.http.put<Container<Registration>>(
+      `${this.url}/${registedId}`,
+      upRegistration,
+    );
+  }
+
+  remove(userId: number, eventId: number): Observable<Container<Registration>> {
+    return this.http.delete<Container<Registration>>(
+      `${this.url}/${userId}/${eventId}`,
+    );
+  }
 }

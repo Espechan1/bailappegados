@@ -50,7 +50,9 @@
                       appBrokenImage
                       class="block xl:block mx-auto w-full"
                       src="{{
-                        premise.images ? premise.images[0].url : '/noimage.jpg'
+                        premise.images.length > 0
+                          ? premise.images[0].url
+                          : '/noimage.jpg'
                       }}"
                       alt="Imagen de {{ premise.name }}"
                       width="200"

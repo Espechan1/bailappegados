@@ -20,11 +20,12 @@ import { RouterLink } from '@angular/router';
 import { ImageCroppedEvent, ImageCropperComponent } from 'ngx-image-cropper';
 import { take } from 'rxjs';
 import { PremisesService } from '../../services/premises.service';
-import { UsersService } from '../../services/users.service';
 import { Premise, Gps, Schedule } from '../../models/premise';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Photo } from '../../models/photo';
 import { MapComponent } from '../../components/map/map.component';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputMaskModule } from 'primeng/inputmask';
 
 @Component({
   selector: 'app-form-premise',
@@ -46,10 +47,12 @@ import { MapComponent } from '../../components/map/map.component';
     ImageCropperComponent,
     FormsModule,
     MapComponent,
+    DropdownModule,
+    InputMaskModule,
   ],
   templateUrl: './form-premise.component.html',
   styleUrl: './form-premise.component.css',
-  providers: [PremisesService, UsersService],
+  providers: [PremisesService],
 })
 export class FormPremiseComponent {
   private readonly premisesService = inject(PremisesService);
@@ -79,22 +82,15 @@ export class FormPremiseComponent {
     images: new FormControl<Photo[] | null>(null), // undefined = {}
     location: new FormControl<Gps | null>(null),
     schedule: new FormGroup({
-      Monday: new FormControl<string | null>(null),
-      Tuesday: new FormControl<string | null>(null),
-      Wednesday: new FormControl<string | null>(null),
-      Thursday: new FormControl<string | null>(null),
-      Friday: new FormControl<string | null>(null),
-      Saturday: new FormControl<string | null>(null),
-      Sunday: new FormControl<string | null>(null),
+      monday: new FormControl<string | null>(null),
+      tuesday: new FormControl<string | null>(null),
+      wednesday: new FormControl<string | null>(null),
+      thursday: new FormControl<string | null>(null),
+      friday: new FormControl<string | null>(null),
+      saturday: new FormControl<string | null>(null),
+      sunday: new FormControl<string | null>(null),
     }),
-    password: new FormControl('', [
-      Validators.required,
-      Validators.minLength(8),
-      Validators.max(20),
-      Validators.pattern(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[-!?@#$%^&*()_+])?[a-zA-Z\d-!?@#$%^&*()_+]{8,20}$/,
-      ),
-    ]),
+    user_id: new FormControl<number | null>(null),
   });
 
   handleMapClick(coords: Gps): void {

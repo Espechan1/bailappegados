@@ -38,8 +38,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     // this.controlRolMenu();
-    this.router.events.subscribe(value => {
-      console.log(value);
+    this.router.events.subscribe(() => {
       this.controlRolMenu();
     });
   }

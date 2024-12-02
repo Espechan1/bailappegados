@@ -24,7 +24,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { ImageCroppedEvent, ImageCropperComponent } from 'ngx-image-cropper';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { UsersService } from '../../services/users.service';
-import { User } from '../../models/user';
+import { UserOutput } from '../../models/user';
 
 @Component({
   selector: 'app-register',
@@ -87,6 +87,7 @@ export class RegisterComponent implements OnInit {
       Validators.max(20),
       Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/),
     ]),
+    images: new FormControl<Blob | undefined>(undefined),
   });
 
   ngOnInit(): void {
@@ -106,7 +107,12 @@ export class RegisterComponent implements OnInit {
   }
 
   postUser() {
-    this.usersService.create(this.signUpForm.getRawValue() as unknown as User);
+    this.usersService
+      .create(this.signUpForm.getRawValue() as unknown as UserOutput)
+      .pipe(take(1))
+      .subscribe(value => {
+        console.log(value);
+      });
   }
 
   getAllStyles(): Style[] {
@@ -115,8 +121,6 @@ export class RegisterComponent implements OnInit {
       .pipe(take(1))
       .subscribe((value: ContainerList<Style>) => {
         this.stylesList = value.data;
-        console.log(this.stylesList); //Array de obj, hay que quitar created_at
-        console.log(value);
       });
     return this.stylesList;
   }
@@ -133,6 +137,9 @@ export class RegisterComponent implements OnInit {
       this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(
         event.objectUrl,
       );
+      if (event.blob) {
+        this.signUpForm.controls['images'].setValue(event.blob);
+      }
     }
   }
 }

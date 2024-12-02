@@ -22,3 +22,17 @@ export interface UserLogged {
   isAdmin?: boolean;
   isTeacher?: boolean;
 }
+
+export interface UserOutput {
+  id: number;
+  name: string;
+  description?: string;
+  email: string;
+  location?: string;
+  birthday?: Date;
+  password: string;
+  genre?: 'male' | 'female' | 'others';
+  roles: Role[];
+  images?: Blob | string;
+  styles?: Style[];
+}

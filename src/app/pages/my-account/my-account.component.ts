@@ -7,8 +7,8 @@
 // import { LoginDecodeResponse } from '../../models/login-response';
 // import { Style } from '../../models/style';
 // import { User } from '../../models/user';
-// import { Premise } from '../../models/premise';
-// import {Event} from '../../models/event';
+// import {Premise} from '../../models/premise';
+// import { Event as EventCustom } from '../../models/event';
 // import { take } from 'rxjs';
 // import { Container, ContainerList } from '../../models/container';
 // import {
@@ -22,7 +22,7 @@
 // import { DividerModule } from 'primeng/divider';
 // import { PasswordModule } from 'primeng/password';
 // import { MultiSelectModule } from 'primeng/multiselect';
-// import { NgIf } from '@angular/common';
+// import {KeyValuePipe, NgForOf, NgIf} from '@angular/common';
 // import { TabMenuModule } from 'primeng/tabmenu';
 // import { TabViewModule } from 'primeng/tabview';
 // import { TableModule } from 'primeng/table';
@@ -30,6 +30,10 @@
 // import { Ripple } from 'primeng/ripple';
 // import {DialogModule} from 'primeng/dialog';
 // import {Router} from '@angular/router';
+// import {RadioButtonModule} from 'primeng/radiobutton';
+// import {ImageModule} from 'primeng/image';
+// import {ImageCroppedEvent, ImageCropperComponent} from 'ngx-image-cropper';
+// import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 //
 // @Component({
 //   selector: 'app-my-account',
@@ -48,6 +52,11 @@
 //     DropdownModule,
 //     Ripple,
 //     DialogModule,
+//     RadioButtonModule,
+//     ImageModule,
+//     ImageCropperComponent,
+//     NgForOf,
+//     KeyValuePipe,
 //   ],
 //   providers: [
 //     StylesService,
@@ -65,17 +74,22 @@
 //   private readonly usersService = inject(UsersService);
 //   private readonly premisesService = inject(PremisesService);
 //   private readonly eventsService = inject(EventsService);
+//
+//   private sanitizer = inject(DomSanitizer);
 //   private router = inject(Router);
 //
+//   //schedulePremise: Schedule
 //   stylesList: Style[] = [];
-//   style?: Style;
 //   myUser!: User;
 //   selectedStyles?: Style[] = [];
 //   premisesList?: Premise[] = [];
 //   rowPremiseinEdit: Record<string, Premise> = {};
 //   visibleScheduleModal = false;
 //   visibleGpsModal = false;
-//   eventsList?: Event[] = [];
+//   eventsList?: EventCustom[] = [];
+//   imageChangedEvent: Event | null = null;
+//   croppedImage: SafeUrl = '';
+//   //daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 //
 //   ngOnInit(): void {
 //     this.getAllStyles();
@@ -93,25 +107,25 @@
 //       return new FormGroup({});
 //     }
 //     return new FormGroup({
-//       name: new FormControl(user.name, [
+//       name: new FormControl<string | undefined>(user.name, [
 //         Validators.required,
 //         Validators.max(50),
 //         Validators.min(2),
 //       ]),
-//       description: new FormControl(user.description),
+//       description: new FormControl<string | undefined>(user.description),
 //       email: new FormControl(user.email, [
 //         Validators.required,
 //         Validators.max(50),
 //         Validators.email,
 //       ]),
-//       location: new FormControl(user.location),
-//       birthday: new FormControl(user.birthday),
+//       location: new FormControl<string | undefined>(user.location),
+//       birthday: new FormControl<Date | undefined>(user.birthday),
 //       genre: new FormControl(user.genre),
 //       styles: new FormControl(user.styles, [Validators.min(1)]),
-//       password: new FormControl(user.password, [
-//         Validators.required,
-//         Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/),
-//       ]),
+//       password: new FormControl<string | undefined>(user.password),
+//       images: new FormControl<string | Blob | undefined>(
+//         user.images && user.images?.length > 0 ? user.images[0].url : undefined,
+//       ),
 //     });
 //   }
 //
@@ -135,16 +149,6 @@
 //       });
 //   }
 //
-//   deleteUser(): void {
-//     confirm(
-//       '¿Estás seguro que quieres borrar tu cuenta? Una vez confirmado, tus datos se borrarán instantáneamente.',
-//     );
-//     this.usersService.remove(
-//       (this.stateService.token as LoginDecodeResponse).userId);
-//     localStorage.clear();
-//     this.router.navigate(["/"]).then();
-//   }
-//
 //   modifyUser() {
 //     this.usersService
 //       .update(
@@ -156,6 +160,33 @@
 //         this.myUser = value.data;
 //         this.myAccountForm = this.initForm(this.myUser);
 //       });
+//   }
+//
+//   fileChangeEvent(event: Event): void {
+//     this.imageChangedEvent = event;
+//   }
+//
+//   imageCropped(event: ImageCroppedEvent) {
+//     // Se dispara cuando finaliza el recorte de la imagen. El evento proporciona información sobre la imagen recortada, como su URL y datos en formato base64.
+//     if (event.objectUrl != null) {
+//       this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(
+//         event.objectUrl,
+//       );
+//       if (event.blob) {
+//         this.myAccountForm.controls['images'].setValue(event.blob);
+//       }
+//     }
+//   }
+//
+//   deleteUser(): void {
+//     confirm(
+//       '¿Estás seguro que quieres borrar tu cuenta? Una vez confirmado, tus datos se borrarán instantáneamente.',
+//     );
+//     this.usersService.remove(
+//       (this.stateService.token as LoginDecodeResponse).userId,
+//     );
+//     localStorage.clear();
+//     this.router.navigate(['/']).then();
 //   }
 //
 //   onUpdateUser(): void {
@@ -171,19 +202,52 @@
 //   }
 //
 //   //MIS LOCALES
+//
+//   scheduleForm = new FormGroup({
+//     Monday: new FormControl<string | null>(null),
+//     Tuesday: new FormControl<string | null>(null),
+//     Wednesday: new FormControl<string | null>(null),
+//     Thursday: new FormControl<string | null>(null),
+//     Friday: new FormControl<string | null>(null),
+//     Saturday: new FormControl<string | null>(null),
+//     Sunday: new FormControl<string | null>(null),
+//   })
+//
+//   onUpdateSchedule(){
+//     if (this.scheduleForm.invalid) {
+//       console.log('Algo del formulario no pasa validación');
+//       for (const controlsKey in this.scheduleForm.controls) {
+//         this.scheduleForm.get(controlsKey)?.markAsDirty();
+//         this.scheduleForm.get(controlsKey)?.updateValueAndValidity();
+//       }
+//       return;
+//     }
+//     console.log('funciono');
+//   }
+//
 //   getPremises(): void {
 //     this.premisesService
 //       .premisesByUserId((this.stateService.token as LoginDecodeResponse).userId)
 //       .pipe(take(1))
 //       .subscribe((value: ContainerList<Premise>) => {
 //         this.premisesList = value.data;
+//         //value.data.forEach(premise => {
+//           // if(premise.schedule) {
+//           //   this.schedulePremise = premise.schedule as Schedule
+//           // } else {
+//           //   this.schedulePremise = {} as Schedule
+//           // }
+//         //});
 //       });
 //   }
 //
-//   showDialogSchedule(){
+//   showDialogSchedule() {
 //     this.visibleScheduleModal = true;
 //   }
-//   showDialogGps(){this.visibleGpsModal = true;}
+//
+//   showDialogGps() {
+//     this.visibleGpsModal = true;
+//   }
 //
 //   onRowEditCancel(premise: Premise, index: number) {
 //     if (this.premisesList && this.premisesList[index]) {
@@ -228,8 +292,11 @@
 //     this.eventsService
 //       .getAll()
 //       .pipe(take(1))
-//       .subscribe((value: ContainerList<Event>) => {
+//       .subscribe((value: ContainerList<EventCustom>) => {
 //         this.eventsList = value.data;
 //       });
 //   }
+//
+//   protected readonly Object = Object;
+//   protected readonly Array = Array;
 // }

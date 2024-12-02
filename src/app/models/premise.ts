@@ -11,6 +11,7 @@ export interface Premise {
   person_contact: string | null;
   location?: Gps;
   images?: Photo[];
+  user_id: number;
 }
 
 export interface Schedule {

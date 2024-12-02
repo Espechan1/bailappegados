@@ -97,32 +97,65 @@
         aria-describedby="name-help"
         class="w-full mb-3"
       />
+      <br />
+      <div id="scheduleDiv">
+        <p>Horario semanal:</p>
+        <label for="monday">Lunes:</label><br />
+        <p-inputMask
+          id="monday"
+          mask="99:99 - 99:99"
+          [formControlName]="'monday'"
+          placeholder="00:00 - 23:59"
+        /><br />
 
-      <label for="password1" class="block text-900 font-medium mb-2"
-        >Password:
-      </label>
+        <label for="tuesday">Martes:</label><br />
+        <p-inputMask
+          id="tuesday"
+          mask="99:99 - 99:99"
+          [formControlName]="'tuesday'"
+          placeholder="00:00 - 23:59"
+        /><br />
 
-      <p-password
-        [formControlName]="'password'"
-        [toggleMask]="true"
-        id="password1"
-      >
-        <ng-template pTemplate="header">
-          <h6>Escoge una contraseña</h6>
-        </ng-template>
-        <ng-template pTemplate="footer">
-          <p-divider />
-          <p class="mt-2">Sugerencias</p>
-          <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
-            <li>Al menos una minúscula</li>
-            <li>Al menos una mayúscula</li>
-            <li>Al menos un número</li>
-            <li>Mínimo 8 caracteres</li>
-            <li>Máximo 20 caracteres</li>
-          </ul>
-        </ng-template>
-      </p-password>
+        <label for="wednesday">Miércoles:</label><br />
+        <p-inputMask
+          id="wednesday"
+          mask="99:99 - 99:99"
+          [formControlName]="'wednesday'"
+          placeholder="00:00 - 23:59"
+        /><br />
 
+        <label for="thursday">Jueves:</label><br />
+        <p-inputMask
+          id="thursday"
+          mask="99:99 - 99:99"
+          [formControlName]="'thursday'"
+          placeholder="00:00 - 23:59"
+        /><br />
+
+        <label for="friday">Viernes:</label><br />
+        <p-inputMask
+          id="friday"
+          mask="99:99 - 99:99"
+          [formControlName]="'friday'"
+          placeholder="00:00 - 23:59"
+        /><br />
+
+        <label for="saturday">Sábado:</label><br />
+        <p-inputMask
+          id="saturday"
+          mask="99:99 - 99:99"
+          [formControlName]="'saturday'"
+          placeholder="00:00 - 23:59"
+        /><br />
+
+        <label for="sunday">Domingo:</label><br />
+        <p-inputMask
+          id="sunday"
+          mask="99:99 - 99:99"
+          [formControlName]="'sunday'"
+          placeholder="00:00 - 23:59"
+        /><br />
+      </div>
       <br /><br />
       <p>Añade una imagen de perfil en formato JPG o PNG</p>
       <input type="file" (change)="fileChangeEvent($event)" />
@@ -140,7 +173,9 @@
       </div>
       <br />
       <br />
+
       <app-map (handleMapClick)="handleMapClick($event)"></app-map>
+
       <div class="flex align-items-center justify-content-between mb-6">
         <div class="flex align-items-center">
           <p-checkbox

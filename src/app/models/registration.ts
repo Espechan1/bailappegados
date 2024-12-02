@@ -1,4 +1,5 @@
 export interface Registration {
-  user_id: number;
-  event_id: number;
+  user_id?: number;
+  event_id?: number;
+  state_match?: 'Available' | 'Not Available' | 'In match';
 }

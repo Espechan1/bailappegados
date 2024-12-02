@@ -3,7 +3,7 @@ import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { Container, ContainerList } from '../models/container';
-import { User } from '../models/user';
+import { User, UserOutput } from '../models/user';
 
 @Injectable()
 export class UsersService {
@@ -40,8 +40,28 @@ export class UsersService {
     );
   }
 
-  create(newUser: User): Observable<Container<User>> {
-    return this.http.post<Container<User>>(this.url, newUser).pipe(
+  create(newUser: UserOutput): Observable<Container<User>> {
+    const formData = new FormData();
+    formData.set('name', newUser.name);
+    if (newUser.description) formData.set('description', newUser.description);
+    if (newUser.location) formData.set('location', newUser.location);
+    formData.set('email', newUser.email);
+    if (newUser.birthday)
+      formData.set('birthday', newUser.birthday.toISOString().split('T')[0]);
+    if (newUser.genre) formData.set('genre', newUser.genre.toString());
+    if (newUser.styles)
+      formData.set(
+        'styles',
+        JSON.stringify(
+          newUser.styles.map(s => {
+            return s.id;
+          }),
+        ),
+      );
+    if (newUser.password) formData.set('password', newUser.password);
+    if (newUser.images) formData.set('image', newUser.images);
+
+    return this.http.post<Container<User>>(this.url, formData).pipe(
       map(user => {
         if (user.data.images && user.data.images.length > 0) {
           user.data.images.forEach(img => {
@@ -53,19 +73,41 @@ export class UsersService {
     );
   }
 
-  update(userToUpdate: User, id: number): Observable<Container<User>> {
-    return this.http
-      .post<Container<User>>(`${this.url}/${id}`, userToUpdate)
-      .pipe(
-        map(user => {
-          if (user.data.images && user.data.images.length > 0) {
-            user.data.images.forEach(img => {
-              img.url = `${this.imgUrl}/${img.url}`;
-            });
-          }
-          return user;
-        }),
+  update(userToUpdate: UserOutput, id: number): Observable<Container<User>> {
+    const formData = new FormData();
+    formData.set('name', userToUpdate.name);
+    if (userToUpdate.description)
+      formData.set('description', userToUpdate.description);
+    if (userToUpdate.location) formData.set('location', userToUpdate.location);
+    formData.set('email', userToUpdate.email);
+    if (userToUpdate.birthday)
+      formData.set('birthday', userToUpdate.birthday.getDate().toString());
+    if (userToUpdate.genre)
+      formData.set('genre', userToUpdate.genre.toString());
+    if (userToUpdate.styles)
+      formData.set(
+        'styles',
+        JSON.stringify(
+          userToUpdate.styles.map(s => {
+            return s.id;
+          }),
+        ),
       );
+    if (userToUpdate.password) formData.set('password', userToUpdate.password);
+    if (userToUpdate.images && typeof userToUpdate.images !== 'string')
+      formData.set('image', userToUpdate.images);
+    console.log(typeof userToUpdate.images);
+
+    return this.http.post<Container<User>>(`${this.url}/${id}`, formData).pipe(
+      map(user => {
+        if (user.data.images && user.data.images.length > 0) {
+          user.data.images.forEach(img => {
+            img.url = `${this.imgUrl}/${img.url}`;
+          });
+        }
+        return user;
+      }),
+    );
   }
 
   remove(id: number): Observable<Container<string>> {
