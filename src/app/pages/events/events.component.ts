@@ -4,7 +4,7 @@ import { StylesService } from '../../services/styles.service';
 import { RegistrationsService } from '../../services/registrations.service';
 import { PremisesService } from '../../services/premises.service';
 import { StateService } from '../../services/state.service';
-import { Event } from '../../models/event';
+import { Event as EventCustom } from '../../models/event';
 import { Premise } from '../../models/premise';
 import { Registration } from '../../models/registration';
 import { take } from 'rxjs';
@@ -20,8 +20,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
-import { MultiSelectModule } from 'primeng/multiselect';
+import { MultiSelectChangeEvent, MultiSelectModule } from 'primeng/multiselect';
 import { Router } from '@angular/router';
+import { CalendarModule } from 'primeng/calendar';
 
 @Component({
   selector: 'app-events',
@@ -42,6 +43,7 @@ import { Router } from '@angular/router';
     InputIconModule,
     MultiSelectModule,
     DatePipe,
+    CalendarModule,
   ],
   templateUrl: './events.component.html',
   styleUrl: './events.component.css',
@@ -65,19 +67,24 @@ export class EventsComponent implements OnInit {
   constructor(@Inject(LOCALE_ID) public locale: string) {}
   //formatDate(value.data.opening, "dd/MM/YYYY HH:MM", this.locale)
 
-  eventsListOriginal: Event[] = [];
-  eventsList: Event[] = [];
-  event?: Event;
+  eventsListOriginal: EventCustom[] = [];
+  eventsList: EventCustom[] = [];
   styles: Map<number, string> = new Map<number, string>();
+  stylesList: Style[] = [];
   premises: Map<number, string> = new Map<number, string>();
+  premisesSelected: number[] = [];
+  premisesList: Premise[] = [];
+  stylesSelected: number[] = [];
   premisesMap = new Map<number, Premise>();
   registration: Registration = {};
   layout: 'list' | 'grid' = 'list';
+  filteredEvents: EventCustom[] = [];
 
   ngOnInit(): void {
     this.getStyles();
     this.getAll();
     this.getPremises();
+    this.filteredEvents = [...this.eventsList];
   }
 
   getStyles() {
@@ -85,6 +92,7 @@ export class EventsComponent implements OnInit {
       .getAll()
       .pipe(take(1))
       .subscribe((value: ContainerList<Style>) => {
+        this.stylesList = value.data;
         value.data.forEach(style => this.styles.set(style.id, style.name));
       });
   }
@@ -94,6 +102,7 @@ export class EventsComponent implements OnInit {
       .getAll()
       .pipe(take(1))
       .subscribe((value: ContainerList<Premise>) => {
+        this.premisesList = value.data;
         value.data.forEach(premise => {
           const id = premise.id as number;
           this.premises.set(id, premise.name);
@@ -102,7 +111,7 @@ export class EventsComponent implements OnInit {
       });
   }
 
-  getScheduleDayPremise(eventDay: Event): string {
+  getScheduleDayPremise(eventDay: EventCustom): string {
     const parsedDate = new Date(eventDay.opening as Date);
     const premise = this.premisesMap.get(eventDay.premise_id);
     if (premise) {
@@ -130,7 +139,7 @@ export class EventsComponent implements OnInit {
     this.eventsService
       .getAll()
       .pipe(take(1))
-      .subscribe((value: ContainerList<Event>) => {
+      .subscribe((value: ContainerList<EventCustom>) => {
         this.eventsListOriginal = value.data;
         this.eventsList = value.data;
       });
@@ -150,12 +159,16 @@ export class EventsComponent implements OnInit {
       } else {
         this.registration.state_match = 'Not Available';
       }
-      console.log(this.registration);
       this.registrationServices
         .create(this.registration)
         .pipe(take(1))
         .subscribe(value => {
-          alert(value.data);
+          if (value.status == 'Error') {
+            alert(value.data);
+          }
+          if (value.status == 'Success') {
+            alert(value.data);
+          }
         });
     } else {
       alert(
@@ -171,7 +184,7 @@ export class EventsComponent implements OnInit {
     this.router.navigate(['/registrations/' + eventId]).then();
   }
 
-  filterPremise(search: KeyboardEvent): void {
+  filterByName(search: KeyboardEvent): void {
     if (search && search.target && (search.target as HTMLInputElement).value) {
       this.eventsList = this.eventsListOriginal.filter(value =>
         value.name
@@ -179,5 +192,39 @@ export class EventsComponent implements OnInit {
           .includes((search.target as HTMLInputElement).value?.toLowerCase()),
       );
     } else this.eventsList = this.eventsListOriginal;
+  }
+
+  onChangeSelectedStyles(event: MultiSelectChangeEvent) {
+    this.stylesSelected = event.value.map((v: Style) => {
+      return v.id;
+    });
+    this.filterEvents();
+  }
+
+  onChangePremisesStyles(event: MultiSelectChangeEvent) {
+    this.premisesSelected = event.value.map((v: Style) => {
+      return v.id;
+    });
+    this.filterEvents();
+  }
+
+  onChangeByDate(event: Event) {
+    console.log(event);
+    // this.filteredEvents = [
+    //   ...this.eventsList.filter(ev => {
+    //     return (ev.opening?.getDate() >= event) as unknown as Date;
+    //   }),
+    // ];
+  }
+
+  filterEvents() {
+    this.eventsList = this.eventsListOriginal.filter(e => {
+      return (
+        (this.stylesSelected.length == 0 ||
+          this.stylesSelected.includes(e.style_id)) &&
+        (this.premisesSelected.length == 0 ||
+          this.premisesSelected.includes(e.premise_id))
+      );
+    });
   }
 }

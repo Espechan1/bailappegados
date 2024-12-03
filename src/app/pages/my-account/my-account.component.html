@@ -559,43 +559,44 @@
 <!--<p-dialog header="Modifica los horarios de tu local" [modal]="true"-->
 <!--          [(visible)]="visibleScheduleModal" [style]="{ width: '25rem' }"-->
 <!--&gt;-->
-<!--  <form [formGroup]="scheduleForm"-->
-<!--        (ngSubmit)="onModifySchedule()"-->
-<!--        *ngIf="schedulePremise">-->
+<!--  <form [formGroup]="updatePremiseForm.controls.schedule"-->
+<!--        *ngIf="updatePremiseForm">-->
 <!--    <div class="flex align-items-center gap-3 mb-3">-->
 <!--      <label for="d1" class="font-semibold w-6rem">Lunes</label>-->
 <!--      <input pInputText id="d1" class="flex-auto" [formControlName]="'Monday'"-->
-<!--             placeholder="{{schedulePremise.Monday ? schedulePremise.Monday : 'Cerrado'}}" autocomplete="off"/>-->
+<!--             placeholder="{{updatePremiseForm.controls | keyvalue }}" autocomplete="off"-->
+
+<!--      />-->
 <!--    </div>-->
 <!--    <div class="flex align-items-center gap-3 mb-3">-->
 <!--      <label for="d2" class="font-semibold w-6rem">Martes</label>-->
 <!--      <input pInputText id="d2" class="flex-auto" [formControlName]="'Tuesday'"-->
-<!--             placeholder="{{schedulePremise.Tuesday ? schedulePremise.Tuesday : 'Cerrado'}}" autocomplete="off"/>-->
+<!--             placeholder="{{updatePremiseForm.controls.schedule.get('Tuesday')?.value}}" autocomplete="off"/>-->
 <!--    </div>-->
 <!--    <div class="flex align-items-center gap-3 mb-3">-->
 <!--      <label for="d3" class="font-semibold w-6rem">Miércoles</label>-->
 <!--      <input pInputText id="d3" class="flex-auto" [formControlName]="'Wednesday'"-->
-<!--             placeholder="{{schedulePremise.Wednesday ? schedulePremise.Wednesday : 'Cerrado'}}" autocomplete="off"/>-->
+<!--             placeholder="{{updatePremiseForm.controls.schedule.get('Wednesday')?.value?.toString()}}" autocomplete="off"/>-->
 <!--    </div>-->
 <!--    <div class="flex align-items-center gap-3 mb-3">-->
 <!--      <label for="d4" class="font-semibold w-6rem">Jueves</label>-->
 <!--      <input pInputText id="d4" class="flex-auto" [formControlName]="'Thursday'"-->
-<!--             placeholder="{{schedulePremise.Thursday ? schedulePremise.Thursday : 'Cerrado'}}" autocomplete="off"/>-->
+<!--             placeholder="{{updatePremiseForm.controls.schedule.get('Thursday')?.value}}" autocomplete="off"/>-->
 <!--    </div>-->
 <!--    <div class="flex align-items-center gap-3 mb-3">-->
 <!--      <label for="d5" class="font-semibold w-6rem">Viernes</label>-->
 <!--      <input pInputText id="d5" class="flex-auto" [formControlName]="'Friday'"-->
-<!--             placeholder="{{schedulePremise.Friday ? schedulePremise.Friday : 'Cerrado'}}" autocomplete="off"/>-->
+<!--             placeholder="{{updatePremiseForm.controls.schedule.get('Friday')?.value}}" autocomplete="off"/>-->
 <!--    </div>-->
 <!--    <div class="flex align-items-center gap-3 mb-3">-->
 <!--      <label for="d6" class="font-semibold w-6rem">Sábado</label>-->
 <!--      <input pInputText id="d6" class="flex-auto" [formControlName]="'Saturday'"-->
-<!--             placeholder="{{schedulePremise.Saturday ? schedulePremise.Saturday : 'Cerrado'}}" autocomplete="off"/>-->
+<!--             placeholder="{{updatePremiseForm.controls.schedule.get('Saturday')?.value}}" autocomplete="off"/>-->
 <!--    </div>-->
 <!--    <div class="flex align-items-center gap-3 mb-3">-->
 <!--      <label for="d7" class="font-semibold w-6rem">Domingo</label>-->
 <!--      <input pInputText id="d7" class="flex-auto" [formControlName]="'Sunday'"-->
-<!--             placeholder="{{schedulePremise.Sunday ? schedulePremise.Sunday : 'Cerrado'}}" autocomplete="off"/>-->
+<!--             placeholder="{{updatePremiseForm.controls.schedule.get('Sunday')?.value}}" autocomplete="off"/>-->
 <!--    </div>-->
 <!--    <div class="flex justify-content-end gap-2">-->
 <!--      <p-button label="Cancelar" severity="secondary" (onClick)="visibleScheduleModal = false"/>-->

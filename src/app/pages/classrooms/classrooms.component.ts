@@ -18,6 +18,8 @@ import { PrimeTemplate } from 'primeng/api';
 import { TagModule } from 'primeng/tag';
 import { UsersService } from '../../services/users.service';
 import { User } from '../../models/user';
+import { CalendarModule } from 'primeng/calendar';
+import { MultiSelectChangeEvent, MultiSelectModule } from 'primeng/multiselect';
 
 @Component({
   selector: 'app-classrooms',
@@ -33,6 +35,8 @@ import { User } from '../../models/user';
     NgForOf,
     PrimeTemplate,
     TagModule,
+    CalendarModule,
+    MultiSelectModule,
   ],
   templateUrl: './classrooms.component.html',
   styleUrl: './classrooms.component.css',
@@ -49,7 +53,11 @@ export class ClassroomsComponent implements OnInit {
   //classroom?: Classroom;
   classroomListOriginal: Classroom[] = [];
   classroomList: Classroom[] = [];
-  styles: Map<number, string> = new Map<number, string>();
+  stylesList: Style[] = [];
+  premisesSelected: number[] = [];
+  premisesList: Premise[] = [];
+  stylesSelected: number[] = [];
+  stylesMap: Map<number, string> = new Map<number, string>();
   premisesName: Map<number, string> = new Map<number, string>();
   teachers: Map<number, string> = new Map<number, string>();
   layout: 'list' | 'grid' = 'list';
@@ -76,7 +84,8 @@ export class ClassroomsComponent implements OnInit {
       .getAll()
       .pipe(take(1))
       .subscribe((value: ContainerList<Style>) => {
-        value.data.forEach(style => this.styles.set(style.id, style.name));
+        this.stylesList = value.data;
+        value.data.forEach(style => this.stylesMap.set(style.id, style.name));
       });
   }
 
@@ -102,7 +111,7 @@ export class ClassroomsComponent implements OnInit {
       });
   }
 
-  filterPremise(search: KeyboardEvent): void {
+  filterName(search: KeyboardEvent): void {
     if (search && search.target && (search.target as HTMLInputElement).value) {
       this.classroomList = this.classroomListOriginal.filter(value =>
         value.name
@@ -110,5 +119,30 @@ export class ClassroomsComponent implements OnInit {
           .includes((search.target as HTMLInputElement).value?.toLowerCase()),
       );
     } else this.classroomList = this.classroomListOriginal;
+  }
+
+  onChangeSelectedStyles(event: MultiSelectChangeEvent) {
+    this.stylesSelected = event.value.map((v: Style) => {
+      return v.id;
+    });
+    this.filterClassrooms();
+  }
+
+  onChangePremisesStyles(event: MultiSelectChangeEvent) {
+    this.premisesSelected = event.value.map((v: Style) => {
+      return v.id;
+    });
+    this.filterClassrooms();
+  }
+
+  filterClassrooms() {
+    this.classroomList = this.classroomListOriginal.filter(e => {
+      return (
+        (this.stylesSelected.length == 0 ||
+          this.stylesSelected.includes(e.style_id)) &&
+        (this.premisesSelected.length == 0 ||
+          this.premisesSelected.includes(e.premise_id))
+      );
+    });
   }
 }

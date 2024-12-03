@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { EventsService } from '../../services/events.service';
 import { StylesService } from '../../services/styles.service';
+import { StateService } from '../../services/state.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import {
   FormControl,
@@ -46,11 +47,12 @@ import { CalendarModule } from 'primeng/calendar';
   ],
   templateUrl: './form-event.component.html',
   styleUrl: './form-event.component.css',
-  providers: [EventsService, StylesService],
+  providers: [EventsService, StylesService, StateService],
 })
 export class FormEventComponent implements OnInit {
   private readonly eventsService = inject(EventsService);
   private readonly stylesService = inject(StylesService);
+  private readonly stateservice = inject(StateService);
   private sanitizer = inject(DomSanitizer);
 
   isChecked = false;

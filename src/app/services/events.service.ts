@@ -8,14 +8,28 @@ import { Event } from '../models/event';
 @Injectable()
 export class EventsService {
   private readonly url = `${environment.api}/events`;
-  private readonly urlByPremise = `${this.url}/premise`;
-  private readonly urlByStyle = `${this.url}/style`;
+  private readonly urlIncoming = `${this.url}/incoming`;
 
   private readonly imgUrl = environment.media;
   private readonly http = inject(HttpClient);
 
   getAll(): Observable<ContainerList<Event>> {
     return this.http.get<ContainerList<Event>>(this.url).pipe(
+      map(arrayEvents => {
+        arrayEvents.data.forEach(event => {
+          if (event.images && event.images.length > 0) {
+            event.images.forEach(img => {
+              img.url = `${this.imgUrl}/${img.url}`;
+            });
+          }
+        });
+        return arrayEvents;
+      }),
+    );
+  }
+
+  getIncoming(): Observable<ContainerList<Event>> {
+    return this.http.get<ContainerList<Event>>(this.urlIncoming).pipe(
       map(arrayEvents => {
         arrayEvents.data.forEach(event => {
           if (event.images && event.images.length > 0) {
@@ -72,37 +86,5 @@ export class EventsService {
 
   remove(id: number): Observable<Container<string>> {
     return this.http.delete<Container<string>>(`${this.url}/${id}`);
-  }
-
-  getByPremise(id: number): Observable<ContainerList<Event>> {
-    return this.http
-      .get<ContainerList<Event>>(`${this.urlByPremise}/${id}`)
-      .pipe(
-        map(arrayEvents => {
-          arrayEvents.data.forEach(event => {
-            if (event.images && event.images.length > 0) {
-              event.images.forEach(img => {
-                img.url = `${this.imgUrl}/${img.url}`;
-              });
-            }
-          });
-          return arrayEvents;
-        }),
-      );
-  }
-
-  getByStyle(id: number): Observable<ContainerList<Event>> {
-    return this.http.get<ContainerList<Event>>(`${this.urlByStyle}/${id}`).pipe(
-      map(arrayEvents => {
-        arrayEvents.data.forEach(event => {
-          if (event.images && event.images.length > 0) {
-            event.images.forEach(img => {
-              img.url = `${this.imgUrl}/${img.url}`;
-            });
-          }
-        });
-        return arrayEvents;
-      }),
-    );
   }
 }

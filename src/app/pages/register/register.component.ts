@@ -4,7 +4,7 @@ import { StylesService } from '../../services/styles.service';
 import { JsonPipe, NgForOf, NgIf, NgOptimizedImage } from '@angular/common';
 import { take } from 'rxjs';
 import { ContainerList } from '../../models/container';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import {
   FormControl,
   FormGroup,
@@ -60,6 +60,7 @@ export class RegisterComponent implements OnInit {
 
   private readonly usersService = inject(UsersService);
   private readonly stylesService = inject(StylesService); //= constructor(private readonly stylesService: RegisterService?) {
+  private router = inject(Router);
   private sanitizer = inject(DomSanitizer); //constructor(private sanitizer: DomSanitizer) {}
 
   signUpForm = new FormGroup({
@@ -107,11 +108,15 @@ export class RegisterComponent implements OnInit {
   }
 
   postUser() {
+    console.log(this.signUpForm.getRawValue());
     this.usersService
       .create(this.signUpForm.getRawValue() as unknown as UserOutput)
       .pipe(take(1))
-      .subscribe(value => {
-        console.log(value);
+      .subscribe(() => {
+        alert(
+          'Se ha registrado correctamente. Accede a tu cuenta con tu correo y tu contraseña.',
+        );
+        this.router.navigate(['login']);
       });
   }
 
