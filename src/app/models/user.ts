@@ -17,6 +17,7 @@ export interface User {
 }
 
 export interface UserLogged {
+  roles?: number[];
   isManager?: boolean;
   isLogged?: boolean;
   isAdmin?: boolean;

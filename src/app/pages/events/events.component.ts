@@ -65,6 +65,7 @@ export class EventsComponent implements OnInit {
   protected readonly Number = Number;
 
   constructor(@Inject(LOCALE_ID) public locale: string) {}
+
   //formatDate(value.data.opening, "dd/MM/YYYY HH:MM", this.locale)
 
   eventsListOriginal: EventCustom[] = [];
@@ -73,6 +74,7 @@ export class EventsComponent implements OnInit {
   stylesList: Style[] = [];
   premises: Map<number, string> = new Map<number, string>();
   premisesSelected: number[] = [];
+  selectedDate?: Date;
   premisesList: Premise[] = [];
   stylesSelected: number[] = [];
   premisesMap = new Map<number, Premise>();
@@ -112,10 +114,9 @@ export class EventsComponent implements OnInit {
   }
 
   getScheduleDayPremise(eventDay: EventCustom): string {
-    const parsedDate = new Date(eventDay.opening as Date);
     const premise = this.premisesMap.get(eventDay.premise_id);
-    if (premise) {
-      switch (parsedDate.getDay()) {
+    if (premise && eventDay.opening) {
+      switch (eventDay.opening.getDay()) {
         case 0:
           return premise.schedule?.Sunday ?? '';
         case 1:
@@ -208,22 +209,20 @@ export class EventsComponent implements OnInit {
     this.filterEvents();
   }
 
-  onChangeByDate(event: Event) {
-    console.log(event);
-    // this.filteredEvents = [
-    //   ...this.eventsList.filter(ev => {
-    //     return (ev.opening?.getDate() >= event) as unknown as Date;
-    //   }),
-    // ];
+  onChangeByDate(date: Date) {
+    this.selectedDate = date;
+    this.filterEvents();
   }
 
   filterEvents() {
     this.eventsList = this.eventsListOriginal.filter(e => {
       return (
-        (this.stylesSelected.length == 0 ||
+        (this.stylesSelected.length === 0 ||
           this.stylesSelected.includes(e.style_id)) &&
-        (this.premisesSelected.length == 0 ||
-          this.premisesSelected.includes(e.premise_id))
+        (this.premisesSelected.length === 0 ||
+          this.premisesSelected.includes(e.premise_id)) &&
+        this.selectedDate?.toLocaleDateString() ==
+          e.opening?.toLocaleDateString()
       );
     });
   }

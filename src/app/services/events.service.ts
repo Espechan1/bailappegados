@@ -22,6 +22,7 @@ export class EventsService {
               img.url = `${this.imgUrl}/${img.url}`;
             });
           }
+          event.opening = new Date(event.opening as Date);
         });
         return arrayEvents;
       }),

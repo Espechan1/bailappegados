@@ -7,9 +7,29 @@
   text-align-last:left;
 }
 
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  /*justify-items: center;*/
+}
+
+.containerW{
+  width: 90%;
+}
+.goriStyles > div:first-child {
+  max-width: 1200px;
+  margin: 0 auto;
+  color: blue;
+}
+
 .img{
   height: 120px;
   width: 150px;
   max-width: 200px;
+}
+.p-tabview-nav-content {
+  width: 500px;
+  margin: auto;
+  align-content: center;
 }
 

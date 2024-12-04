@@ -57,6 +57,7 @@ export class RegisterComponent implements OnInit {
   style?: Style;
   imageChangedEvent: Event | null = null;
   croppedImage: SafeUrl = '';
+  errorsMap = new Map<string, string>();
 
   private readonly usersService = inject(UsersService);
   private readonly stylesService = inject(StylesService); //= constructor(private readonly stylesService: RegisterService?) {
@@ -101,10 +102,13 @@ export class RegisterComponent implements OnInit {
       for (const controlsKey in this.signUpForm.controls) {
         this.signUpForm.get(controlsKey)?.markAsDirty();
         this.signUpForm.get(controlsKey)?.updateValueAndValidity();
+        const errors = this.signUpForm.get(controlsKey)?.errors;
+        if (errors) {
+          this.errorsMap.set(controlsKey, Object.keys(errors)[0]);
+        }
       }
       return;
     }
-    console.log('funciono');
   }
 
   postUser() {

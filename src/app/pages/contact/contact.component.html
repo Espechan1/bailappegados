@@ -1,58 +1,73 @@
-<form [formGroup]="contactForm" (ngSubmit)="onContact()">
-  <label for="name" class="block text-900 font-medium mb-2">Nombre: </label>
-  <input
-    [formControlName]="'name'"
-    type="text"
-    placeholder="Escribe tu nombre"
-    pInputText
-    id="name"
-    aria-describedby="name-help"
-    class="w-full mb-3"
-  />
+<div class="container">
+  <div
+    class="surface-card p-4 shadow-2 border-round w-full lg:w-6 justify-items mb-4"
+  >
+    <form class="containerW" [formGroup]="contactForm" (ngSubmit)="onContact()">
+      <h1>Formulario de contacto</h1>
+      <p style="text-align: justify">
+        Si tiene problemas con su cuenta de usuario o alguna petición especial,
+        le responderemos lo antes posible.
+      </p>
+      <label for="name" class="block text-900 font-medium mb-2">Nombre: </label>
+      <input
+        [formControlName]="'name'"
+        type="text"
+        placeholder="Escribe tu nombre"
+        pInputText
+        id="name"
+        aria-describedby="name-help"
+        class="w-full mb-3"
+      />
 
-  <label for="surname" class="block text-900 font-medium mb-2"
-    >Apellido:
-  </label>
-  <input
-    [formControlName]="'surname'"
-    type="text"
-    placeholder="Escribe tu apellido"
-    pInputText
-    id="surname"
-    aria-describedby="name-help"
-    class="w-full mb-3"
-  />
+      <label for="surname" class="block text-900 font-medium mb-2"
+        >Apellido:
+      </label>
+      <input
+        [formControlName]="'surname'"
+        type="text"
+        placeholder="Escribe tu apellido"
+        pInputText
+        id="surname"
+        aria-describedby="name-help"
+        class="w-full mb-3"
+      />
 
-  <label for="email" class="block text-900 font-medium mb-2">Email: </label>
-  <input
-    [formControlName]="'email'"
-    id="email"
-    type="text"
-    placeholder="ejemplo@mail.com"
-    pInputText
-    class="w-full mb-3"
-  />
+      <label for="email" class="block text-900 font-medium mb-2">Email: </label>
+      <input
+        [formControlName]="'email'"
+        id="email"
+        type="text"
+        placeholder="ejemplo@mail.com"
+        pInputText
+        class="w-full mb-3"
+      />
 
-  <label for="message" class="block text-900 font-medium mb-2">Mensaje: </label>
-  <textarea
-    [formControlName]="'message'"
-    rows="5"
-    cols="30"
-    pInputTextarea
-    id="message"
-  ></textarea>
+      <label for="message" class="block text-900 font-medium mb-2"
+        >Mensaje:
+      </label>
+      <textarea
+        class="w-full"
+        [formControlName]="'message'"
+        rows="5"
+        cols="30"
+        pInputTextarea
+        id="message"
+        placeholder="Escriba su mensaje"
+      ></textarea>
 
-  <div class="flex align-items-center justify-content-around mb-6">
-    <p-button
-      type="submit"
-      label="Enviar mensaje"
-      class="p-button-success"
-      severity="success"
-    ></p-button>
-    <p-button
-      (click)="contactForm.reset()"
-      label="Borrar datos"
-      severity="danger"
-    />
+      <div class="flex align-items-center justify-content-around mb-6 mt-3">
+        <p-button
+          type="submit"
+          label="Enviar mensaje"
+          class="p-button-success"
+          severity="success"
+        ></p-button>
+        <p-button
+          (click)="contactForm.reset()"
+          label="Borrar datos"
+          severity="danger"
+        />
+      </div>
+    </form>
   </div>
-</form>
+</div>

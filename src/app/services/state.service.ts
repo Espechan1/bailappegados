@@ -31,7 +31,6 @@ export class StateService {
     if (token) {
       //tiene valor
       const tokenDecode = jwtDecode(token) as TokenDecodeResponse; //Puede o no existir por el tipo
-      console.log(tokenDecode);
       return {
         userId: tokenDecode.userId,
         roles: tokenDecode.roles.map(role => role.id),

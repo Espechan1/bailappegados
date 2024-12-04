@@ -14,7 +14,7 @@
             <input
               type="text"
               pInputText
-              placeholder="Buscador"
+              placeholder="Nombre de la clase"
               (keyup)="filterName($event)"
             />
           </p-iconField>
@@ -72,7 +72,7 @@
                   </ng-template>
                 </p-image>
                 <p-tag
-                  [value]="classroom.price"
+                  [value]="classroom.price + ' €'"
                   [severity]="'info'"
                   class="absolute"
                   [style.left.px]="4"

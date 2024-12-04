@@ -38,12 +38,3 @@ export class RegistrationsComponent implements OnInit {
     }
   }
 }
-
-// getSeverity(status_match: string) {
-//   switch (status_match) {
-//     case 'DISPONIBLE':
-//       return 'success';
-//     case 'EMPAREJADO':
-//       return 'danger';
-//   }
-// }

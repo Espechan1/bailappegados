@@ -38,6 +38,7 @@
       <label for="nameRegister" class="block text-900 font-medium mb-2"
         >Nombre:
       </label>
+      <small>{{ errorsMap.get('name') }}</small>
       <input
         [formControlName]="'name'"
         type="text"
@@ -47,14 +48,14 @@
         aria-describedby="name-help"
         class="w-full mb-3"
       />
-      <small
-        *ngIf="
-          signUpForm.get('name')?.dirty &&
-          signUpForm.get('name')?.hasError('required')
-        "
-        id="name-help"
-        >{{ signUpForm.get('name')?.getError('required') }}
-      </small>
+      <!--      <small-->
+      <!--        *ngIf="-->
+      <!--          signUpForm.get('name')?.dirty &&-->
+      <!--          signUpForm.get('name')?.hasError('required')-->
+      <!--        "-->
+      <!--        id="name-help"-->
+      <!--        >{{ signUpForm.get('name')?.getError('required') }}-->
+      <!--      </small>-->
       <label for="description" class="block text-900 font-medium mb-2"
         >Descripción:
       </label>
@@ -124,6 +125,7 @@
       <label for="email1" class="block text-900 font-medium mb-2"
         >Email:
       </label>
+      <span class="p-message-error">{{ errorsMap.get('email') }}</span>
       <input
         [formControlName]="'email'"
         id="email1"

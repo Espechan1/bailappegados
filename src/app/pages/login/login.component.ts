@@ -67,4 +67,14 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['my-account']).then();
       });
   }
+
+  onLogin() {
+    if (this.loginForm.invalid) {
+      for (const controlsKey in this.loginForm.controls) {
+        this.loginForm.get(controlsKey)?.markAsDirty();
+        this.loginForm.get(controlsKey)?.updateValueAndValidity();
+      }
+      return;
+    }
+  }
 }
