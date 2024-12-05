@@ -92,12 +92,12 @@ export class MyAccountComponent implements OnInit {
   premisesMap: Map<number, string> = new Map<number, string>();
   myUser!: User;
   selectedStyles?: Style[] = [];
-  premisesList?: Premise[] = [];
+  premisesList: Premise[] = [];
   rowPremiseinEdit: Record<string, Premise> = {};
   rowEventInEdit: Record<string, EventCustom> = {};
   visibleScheduleModal = false;
   visibleGpsModal = false;
-  eventsList?: EventCustom[] = [];
+  eventsList: EventCustom[] = [];
   imageChangedEvent: Event | null = null;
   croppedImage: SafeUrl = '';
 
@@ -106,7 +106,6 @@ export class MyAccountComponent implements OnInit {
     this.getUserById();
     this.getPremises();
     this.getEvents();
-    console.log(this.updatePremiseForm.controls);
   }
 
   //MIS DATOS
@@ -118,6 +117,7 @@ export class MyAccountComponent implements OnInit {
       return new FormGroup({});
     }
     return new FormGroup({
+      id: new FormControl<number | undefined>(user.id),
       name: new FormControl<string | undefined>(user.name, [
         Validators.required,
         Validators.max(50),
@@ -214,6 +214,7 @@ export class MyAccountComponent implements OnInit {
 
   //MIS LOCALES
   updatePremiseForm = new FormGroup({
+    id: new FormControl<number | null>(null),
     name: new FormControl<string>('', [
       Validators.required,
       Validators.maxLength(50),
@@ -267,6 +268,7 @@ export class MyAccountComponent implements OnInit {
       .pipe(take(1))
       .subscribe((value: ContainerList<Premise>) => {
         this.premisesList = value.data;
+        console.log(this.premisesList);
         value.data.forEach(premise =>
           this.premisesMap.set(premise.id as number, premise.name),
         );
@@ -297,28 +299,30 @@ export class MyAccountComponent implements OnInit {
   }
 
   onRowEditSaveP(premise: Premise) {
-    if (premise && premise.id) {
-      this.premisesService
-        .update(premise, premise.id)
-        .pipe(take(1))
-        .subscribe(value => {
-          if (value.status === 'Success') {
-            alert('La modificación ha ido bien');
-            if (this.premisesList) {
-              const index = this.premisesList.findIndex(
-                p => p.id === premise.id, // Encontrar el índice del premise en premisesList y actualizarlo
-              );
-              if (index !== -1) {
-                // Actualizar el objeto premise en la lista
-                this.premisesList[index] = { ...premise };
-              }
-            }
-            delete this.rowPremiseinEdit[premise.id?.toString() as string];
-          } else {
-            alert('Hubo un error al modificar el premise');
-          }
-        });
-    }
+    console.log(this.rowPremiseinEdit);
+    console.log(premise);
+    // if (premise && premise.id) {
+    //   this.premisesService
+    //     .update(premise, premise.id)
+    //     .pipe(take(1))
+    //     .subscribe(value => {
+    //       if (value.status === 'Success') {
+    //         alert('La modificación ha ido bien');
+    //         if (this.premisesList) {
+    //           const index = this.premisesList.findIndex(
+    //             p => p.id === premise.id, // Encontrar el índice del premise en premisesList y actualizarlo
+    //           );
+    //           if (index !== -1) {
+    //             // Actualizar el objeto premise en la lista
+    //             this.premisesList[index] = { ...premise };
+    //           }
+    //         }
+    //         delete this.rowPremiseinEdit[premise.id?.toString() as string];
+    //       } else {
+    //         alert('Hubo un error al modificar el premise');
+    //       }
+    //     });
+    // }
   }
 
   //MIS EVENTOS
