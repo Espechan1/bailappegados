@@ -82,13 +82,13 @@ export class FormPremiseComponent {
     images: new FormControl<Photo[] | null>(null), // undefined = {}
     location: new FormControl<Gps | null>(null),
     schedule: new FormGroup({
-      monday: new FormControl<string | null>(null),
-      tuesday: new FormControl<string | null>(null),
-      wednesday: new FormControl<string | null>(null),
-      thursday: new FormControl<string | null>(null),
-      friday: new FormControl<string | null>(null),
-      saturday: new FormControl<string | null>(null),
-      sunday: new FormControl<string | null>(null),
+      Monday: new FormControl<string | null>(null),
+      Tuesday: new FormControl<string | null>(null),
+      Wednesday: new FormControl<string | null>(null),
+      Thursday: new FormControl<string | null>(null),
+      Friday: new FormControl<string | null>(null),
+      Saturday: new FormControl<string | null>(null),
+      Sunday: new FormControl<string | null>(null),
     }),
     user_id: new FormControl<number | null>(null),
   });
