@@ -41,7 +41,6 @@ import { ImageModule } from 'primeng/image';
 import { ImageCroppedEvent, ImageCropperComponent } from 'ngx-image-cropper';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Photo } from '../../models/photo';
-import console from 'node:console';
 
 @Component({
   selector: 'app-my-account',
@@ -95,12 +94,12 @@ export class MyAccountComponent implements OnInit {
   selectedStyles?: Style[] = [];
   premisesList?: Premise[] = [];
   rowPremiseinEdit: Record<string, Premise> = {};
+  rowEventInEdit: Record<string, EventCustom> = {};
   visibleScheduleModal = false;
   visibleGpsModal = false;
   eventsList?: EventCustom[] = [];
   imageChangedEvent: Event | null = null;
   croppedImage: SafeUrl = '';
-  myPremise?: Premise;
 
   ngOnInit(): void {
     this.getAllStyles();
@@ -202,9 +201,8 @@ export class MyAccountComponent implements OnInit {
     this.router.navigate(['/']).then();
   }
 
-  onUpdateUser(): void {
+  onValidateFormUser(): void {
     if (this.myAccountForm.invalid) {
-      console.log('Algo del formulario no pasa validación');
       for (const controlsKey in this.myAccountForm.controls) {
         this.myAccountForm.get(controlsKey)?.markAsDirty();
         this.myAccountForm.get(controlsKey)?.updateValueAndValidity();
@@ -244,9 +242,6 @@ export class MyAccountComponent implements OnInit {
     }),
   });
 
-  onUpdateSchedule() {
-    this.visibleScheduleModal = false;
-  }
   premisesAllowed() {
     return (
       this.stateService.userLogged.isManager ||
@@ -254,7 +249,7 @@ export class MyAccountComponent implements OnInit {
     );
   }
 
-  onModifyPremiseForm() {
+  onValidatePremiseForm() {
     if (this.updatePremiseForm.invalid) {
       console.log('Algo del formulario no pasa validación');
       for (const controlsKey in this.updatePremiseForm.controls) {
@@ -281,24 +276,27 @@ export class MyAccountComponent implements OnInit {
   showDialogSchedule() {
     this.visibleScheduleModal = true;
   }
+  // onUpdateSchedule() {
+  //   this.visibleScheduleModal = false;
+  // }
 
   showDialogGps() {
     this.visibleGpsModal = true;
   }
 
-  onRowEditCancel(premise: Premise, index: number) {
+  onRowEditCancelP(premise: Premise, index: number) {
     if (this.premisesList && this.premisesList[index]) {
       this.premisesList[index] =
-        this.rowPremiseinEdit[premise.id as unknown as string];
-      delete this.rowPremiseinEdit[premise.id as unknown as string];
+        this.rowPremiseinEdit[premise.id?.toString() as string];
+      delete this.rowPremiseinEdit[premise.id?.toString() as string];
     }
   }
 
-  onRowEditInit(premise: Premise) {
-    this.rowPremiseinEdit[premise.id as unknown as string] = { ...premise };
+  onRowEditInitP(premise: Premise) {
+    this.rowPremiseinEdit[premise.id?.toString() as string] = { ...premise };
   }
 
-  onRowEditSave(premise: Premise) {
+  onRowEditSaveP(premise: Premise) {
     if (premise && premise.id) {
       this.premisesService
         .update(premise, premise.id)
@@ -324,6 +322,38 @@ export class MyAccountComponent implements OnInit {
   }
 
   //MIS EVENTOS
+  updateEventForm = new FormGroup({
+    name: new FormControl<string>('', [
+      Validators.required,
+      Validators.maxLength(50),
+      Validators.minLength(1),
+    ]),
+    opening: new FormControl<string | undefined>(''),
+    expiration: new FormControl<string | undefined>(''),
+    dance_instructors: new FormControl<string>('', [
+      Validators.required,
+      Validators.maxLength(50),
+      Validators.minLength(1),
+    ]),
+    dj: new FormControl<string>('', [
+      Validators.required,
+      Validators.maxLength(50),
+      Validators.minLength(1),
+    ]),
+    price: new FormControl<number | undefined>(undefined, [Validators.min(0)]),
+    premise_id: new FormControl<number | undefined>(undefined, [
+      Validators.min(1),
+      Validators.required,
+    ]),
+    style_id: new FormControl<number | undefined>(undefined, [
+      Validators.min(1),
+      Validators.required,
+    ]),
+    images: new FormControl<string | Blob | undefined>(
+      undefined,
+      // premise.images && premise.images?.length > 0 ? premise.images[0].url : undefined,
+    ),
+  });
 
   getEvents(): void {
     this.eventsService
@@ -332,6 +362,55 @@ export class MyAccountComponent implements OnInit {
       .subscribe((value: ContainerList<EventCustom>) => {
         this.eventsList = value.data;
       });
+  }
+
+  onRowEditCancelE(event: EventCustom, index: number) {
+    if (this.eventsList && this.eventsList[index]) {
+      this.eventsList[index] =
+        this.rowEventInEdit[event.id?.toString() as string];
+      delete this.rowEventInEdit[event.id?.toString() as string];
+    }
+  }
+
+  onRowEditInitE(event: EventCustom) {
+    this.rowEventInEdit[event.id?.toString() as string] = { ...event };
+  }
+
+  onRowEditSaveE(event: EventCustom) {
+    if (event && event.id) {
+      this.eventsService
+        .update(event, event.id)
+        .pipe(take(1))
+        .subscribe(value => {
+          if (value.status === 'Success') {
+            alert('La modificación ha ido bien');
+            if (this.eventsList) {
+              const index = this.eventsList.findIndex(
+                e => e.id === event.id, // Encontrar el índice del premise en premisesList y actualizarlo
+              );
+              if (index !== -1) {
+                // Actualizar el objeto premise en la lista
+                this.eventsList[index] = { ...event };
+              }
+            }
+            delete this.rowEventInEdit[event.id?.toString() as string];
+          } else {
+            alert('Hubo un error al modificar el premise');
+          }
+        });
+    }
+  }
+
+  onValidateEventForm() {
+    if (this.updateEventForm.invalid) {
+      console.log('Algo del formulario no pasa validación');
+      for (const controlsKey in this.updateEventForm.controls) {
+        this.updateEventForm.get(controlsKey)?.markAsDirty();
+        this.updateEventForm.get(controlsKey)?.updateValueAndValidity();
+      }
+      return;
+    }
+    console.log('funciono');
   }
 
   protected readonly Object = Object;

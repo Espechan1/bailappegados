@@ -96,6 +96,18 @@ export class RegisterComponent implements OnInit {
     this.getAllStyles();
   }
 
+  postUser() {
+    this.usersService
+      .create(this.signUpForm.getRawValue() as unknown as UserOutput)
+      .pipe(take(1))
+      .subscribe(() => {
+        alert(
+          'Se ha registrado correctamente. Accede a tu cuenta con tu correo y tu contraseña.',
+        );
+        this.router.navigate(['login']);
+      });
+  }
+
   onRegister(): void {
     if (this.signUpForm.invalid) {
       console.log('Algo ta mal');
@@ -109,19 +121,6 @@ export class RegisterComponent implements OnInit {
       }
       return;
     }
-  }
-
-  postUser() {
-    console.log(this.signUpForm.getRawValue());
-    this.usersService
-      .create(this.signUpForm.getRawValue() as unknown as UserOutput)
-      .pipe(take(1))
-      .subscribe(() => {
-        alert(
-          'Se ha registrado correctamente. Accede a tu cuenta con tu correo y tu contraseña.',
-        );
-        this.router.navigate(['login']);
-      });
   }
 
   getAllStyles(): Style[] {
