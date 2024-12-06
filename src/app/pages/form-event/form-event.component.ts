@@ -24,6 +24,11 @@ import { DropdownModule } from 'primeng/dropdown';
 import { Style } from '../../models/style';
 import { take } from 'rxjs';
 import { CalendarModule } from 'primeng/calendar';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { PremisesService } from '../../services/premises.service';
+import { Premise } from '../../models/premise';
+import { ContainerList } from '../../models/container';
+import { Event as EventCustom } from '../../models/event';
 
 @Component({
   selector: 'app-form-event',
@@ -44,22 +49,24 @@ import { CalendarModule } from 'primeng/calendar';
     ReactiveFormsModule,
     DropdownModule,
     CalendarModule,
+    InputNumberModule,
   ],
   templateUrl: './form-event.component.html',
   styleUrl: './form-event.component.css',
-  providers: [EventsService, StylesService, StateService],
+  providers: [EventsService, StylesService, StateService, PremisesService],
 })
 export class FormEventComponent implements OnInit {
   private readonly eventsService = inject(EventsService);
   private readonly stylesService = inject(StylesService);
+  private readonly premisesService = inject(PremisesService);
   private readonly stateservice = inject(StateService);
   private sanitizer = inject(DomSanitizer);
 
-  isChecked = false;
   imageChangedEvent: Event | null = null;
   croppedImage: SafeUrl = '';
   styles?: Style[] = [];
-  premise_id?: number;
+  errorsMap = new Map<string, string>();
+  premisesList?: { id: number | undefined; name: string }[];
 
   createEventForm = new FormGroup({
     name: new FormControl<string>('', [
@@ -92,6 +99,20 @@ export class FormEventComponent implements OnInit {
 
   ngOnInit() {
     this.getStyles();
+    this.getPremisesByUser();
+  }
+
+  getPremisesByUser() {
+    this.premisesService
+      .premisesByUserId(this.stateservice.token?.userId as number)
+      .pipe(take(1))
+      .subscribe((response: ContainerList<Premise>) => {
+        this.premisesList = response.data.map((premise: Premise) => ({
+          // Aplicamos el map sobre response.data, no sobre cada premise
+          id: premise.id,
+          name: premise.name,
+        }));
+      });
   }
 
   getStyles() {
@@ -104,22 +125,37 @@ export class FormEventComponent implements OnInit {
   }
 
   createEvent(): void {
-    if (this.isChecked) {
-      //  const newEvent: Event = {
-      //    ...(this.createEventForm.getRawValue() as unknown as Event),
-      // }
-      //this.eventsService.create(newEvent)
+    this.eventsService
+      .create(this.createEventForm.getRawValue() as EventCustom)
+      .pipe(take(1))
+      .subscribe(ev => {
+        alert('El evento se ha creado correctamente: ' + ev.data);
+      });
+  }
+
+  onValidateCreate() {
+    if (this.createEventForm.invalid) {
+      console.log('Algo ta mal');
+      for (const controlsKey in this.createEventForm.controls) {
+        this.createEventForm.get(controlsKey)?.markAsDirty();
+        this.createEventForm.get(controlsKey)?.updateValueAndValidity();
+        const errors = this.createEventForm.get(controlsKey)?.errors;
+        if (errors) {
+          this.errorsMap.set(controlsKey, Object.keys(errors)[0]);
+        }
+      }
+      return;
     }
   }
 
   fileChangeEvent(event: Event): void {
     this.imageChangedEvent = event;
-    console.log(event);
+    // console.log(event);
   }
 
   imageCropped(event: ImageCroppedEvent) {
     // Se dispara cuando finaliza el recorte de la imagen. El evento proporciona información sobre la imagen recortada, como su URL y datos en formato base64.
-    console.log(event);
+    // console.log(event);
     if (event.objectUrl != null) {
       this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(
         event.objectUrl,

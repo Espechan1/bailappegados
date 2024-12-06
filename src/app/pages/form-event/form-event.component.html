@@ -1,5 +1,3 @@
-<h1>DA DE ALTA UN EVENTO EN TU LOCAL</h1>
-
 <div class="flex justify-content-center flex-wrap">
   <div class="p-4 shadow-2 border-round w-full lg:w-6">
     <div class="text-center mb-5">
@@ -11,24 +9,15 @@
         class="mb-3"
       />
       <div class="text-900 text-3xl font-medium mb-3">
-        Bienvenid&#64;s, mánagers!
+        Crea un evento para tu local
       </div>
-      <span class="text-600 font-medium line-height-3"
-        >¿Ya tienes una cuenta?</span
-      >
-      <a
-        routerLink="/login"
-        class="font-medium no-underline ml-2 text-blue-500 cursor-pointer"
-        >Pincha y accede</a
-      >
     </div>
 
-    <form [formGroup]="createEventForm">
-      <!--(ngSubmit)="onCreate()"-->
-
+    <form [formGroup]="createEventForm" (ngSubmit)="onValidateCreate()">
       <label for="nameEvent" class="block text-900 font-medium mb-2"
         >Nombre del evento:
       </label>
+      <small>{{ errorsMap.get('name') }}</small>
       <input
         [formControlName]="'name'"
         type="text"
@@ -86,10 +75,7 @@
         [showTime]="true"
         [hourFormat]="String(24)"
       />
-      <!--      <p-calendar-->
-      <!--        inputId="calendar-timeonly"-->
-      <!--        [(ngModel)]="time"-->
-      <!--        [timeOnly]="true" />-->
+
       <br /><br />
       <label for="styles">Elige el estilo del taller: </label>
       <p-dropdown
@@ -98,8 +84,26 @@
         [options]="styles"
         [optionLabel]="'name'"
         placeholder="Estilo del taller"
+      /><br /><br />
+      <label for="price">Precio: </label>
+      <p-inputNumber
+        [formControlName]="'price'"
+        mode="currency"
+        id="price"
+        inputId="currency-spain"
+        currency="EUR"
+        locale="es-ES"
       />
-
+      <br /><br />
+      <label for="premises">Elige el local al que lo quieres asociar: </label>
+      <p-dropdown
+        id="premises"
+        formControlName="selectedCity"
+        [options]="premisesList"
+        [formControlName]="'premise_id'"
+        optionLabel="name"
+        placeholder="Selecciona tu local"
+      />
       <br /><br />
       <p>Añade una imagen del cartel en formato JPG o PNG</p>
       <input type="file" (change)="fileChangeEvent($event)" />
@@ -123,10 +127,9 @@
       {{ createEventForm.errors }}
       <div class="flex align-items-center justify-content-around mb-6">
         <p-button
-          [disabled]="!isChecked"
           (click)="createEvent()"
           type="submit"
-          label="Crear local"
+          label="Crear evento"
           class="p-button-success"
           severity="success"
         ></p-button>

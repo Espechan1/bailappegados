@@ -98,13 +98,13 @@
         class="w-full mb-3"
       />
       <br />
-      <div id="scheduleDiv">
+      <div id="scheduleDiv" [formGroupName]="'schedule'">
         <p>Horario semanal:</p>
         <label for="monday">Lunes:</label><br />
         <p-inputMask
           id="monday"
           mask="99:99 - 99:99"
-          [formControlName]="'monday'"
+          [formControlName]="'Monday'"
           placeholder="00:00 - 23:59"
         /><br />
 
@@ -112,7 +112,7 @@
         <p-inputMask
           id="tuesday"
           mask="99:99 - 99:99"
-          [formControlName]="'tuesday'"
+          [formControlName]="'Tuesday'"
           placeholder="00:00 - 23:59"
         /><br />
 
@@ -120,7 +120,7 @@
         <p-inputMask
           id="wednesday"
           mask="99:99 - 99:99"
-          [formControlName]="'wednesday'"
+          [formControlName]="'Wednesday'"
           placeholder="00:00 - 23:59"
         /><br />
 
@@ -128,7 +128,7 @@
         <p-inputMask
           id="thursday"
           mask="99:99 - 99:99"
-          [formControlName]="'thursday'"
+          [formControlName]="'Thursday'"
           placeholder="00:00 - 23:59"
         /><br />
 
@@ -136,7 +136,7 @@
         <p-inputMask
           id="friday"
           mask="99:99 - 99:99"
-          [formControlName]="'friday'"
+          [formControlName]="'Friday'"
           placeholder="00:00 - 23:59"
         /><br />
 
@@ -144,7 +144,7 @@
         <p-inputMask
           id="saturday"
           mask="99:99 - 99:99"
-          [formControlName]="'saturday'"
+          [formControlName]="'Saturday'"
           placeholder="00:00 - 23:59"
         /><br />
 
@@ -152,7 +152,7 @@
         <p-inputMask
           id="sunday"
           mask="99:99 - 99:99"
-          [formControlName]="'sunday'"
+          [formControlName]="'Sunday'"
           placeholder="00:00 - 23:59"
         /><br />
       </div>

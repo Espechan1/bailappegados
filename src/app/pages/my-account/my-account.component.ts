@@ -7,7 +7,7 @@ import { EventsService } from '../../services/events.service';
 import { LoginDecodeResponse } from '../../models/login-response';
 import { Style } from '../../models/style';
 import { User } from '../../models/user';
-import { Gps, Premise } from '../../models/premise';
+import { Premise } from '../../models/premise';
 import { Event as EventCustom } from '../../models/event';
 import { take } from 'rxjs';
 import { Container, ContainerList } from '../../models/container';
@@ -231,7 +231,10 @@ export class MyAccountComponent implements OnInit {
       Validators.maxLength(50),
     ]),
     images: new FormControl<Photo[] | null>(null),
-    location: new FormControl<Gps | null>(null),
+    location: new FormGroup({
+      lat: new FormControl<number | undefined>(undefined),
+      lng: new FormControl<number | undefined>(undefined),
+    }),
     schedule: new FormGroup({
       Monday: new FormControl<string | null>(null),
       Tuesday: new FormControl<string | null>(null),
@@ -282,9 +285,10 @@ export class MyAccountComponent implements OnInit {
   showDialogScheduleEdit() {
     this.visibleScheduleModal = true;
   }
-  // onUpdateSchedule() {
-  //   this.visibleScheduleModal = false;
-  // }
+
+  onUpdateSchedule() {
+    this.visibleScheduleModal = false;
+  }
 
   showDialogGps() {
     this.visibleGpsModal = true;
