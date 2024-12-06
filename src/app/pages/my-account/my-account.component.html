@@ -277,19 +277,44 @@
               />
             </td>
             <td>
-              <div class="relative border-round-sm">
-                <p-image
-                  imageClass="border-round-lg mx-auto"
-                  src="{{
-                    premise.images && premise.images.length > 0
-                      ? premise.images![0].url
-                      : '/noimage.jpg'
-                  }}"
-                  alt="imagen de perfil"
-                  width="150"
-                  [preview]="true"
-                ></p-image>
-              </div>
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <label for="files" class="customButton"
+                    >Selecciona una imagen</label
+                  >
+                  <input
+                    type="file"
+                    id="files"
+                    hidden
+                    (change)="fileChangeEvent($event)"
+                  />
+
+                  <image-cropper
+                    [imageChangedEvent]="imageChangedEvent"
+                    [maintainAspectRatio]="true"
+                    [aspectRatio]="4 / 3"
+                    format="png"
+                    (imageCropped)="imageCropped($event)"
+                    style="width: fit-content"
+                  >
+                  </image-cropper>
+                </ng-template>
+                <ng-template pTemplate="output">
+                  <div class="relative border-round-sm">
+                    <p-image
+                      imageClass="border-round-lg mx-auto"
+                      src="{{
+                        premise.images && premise.images.length > 0
+                          ? premise.images![0].url
+                          : '/noimage.jpg'
+                      }}"
+                      alt="imagen de perfil"
+                      width="150"
+                      [preview]="true"
+                    ></p-image>
+                  </div>
+                </ng-template>
+              </p-cellEditor>
             </td>
             <td>
               <p-cellEditor>
@@ -367,10 +392,16 @@
             </td>
             <td>
               <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <p-button
+                    (onClick)="showDialogScheduleEdit()"
+                    label="Editar horario"
+                  />
+                </ng-template>
                 <ng-template pTemplate="output">
                   <p-button
                     (onClick)="showDialogSchedule()"
-                    label="Editar horario"
+                    label="Ver horario"
                   />
                 </ng-template>
               </p-cellEditor>

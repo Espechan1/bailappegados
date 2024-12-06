@@ -214,7 +214,7 @@ export class MyAccountComponent implements OnInit {
 
   //MIS LOCALES
   updatePremiseForm = new FormGroup({
-    id: new FormControl<number | null>(null),
+    id: new FormControl<number | undefined>(undefined),
     name: new FormControl<string>('', [
       Validators.required,
       Validators.maxLength(50),
@@ -278,6 +278,10 @@ export class MyAccountComponent implements OnInit {
   showDialogSchedule() {
     this.visibleScheduleModal = true;
   }
+
+  showDialogScheduleEdit() {
+    this.visibleScheduleModal = true;
+  }
   // onUpdateSchedule() {
   //   this.visibleScheduleModal = false;
   // }
@@ -296,10 +300,22 @@ export class MyAccountComponent implements OnInit {
 
   onRowEditInitP(premise: Premise) {
     this.rowPremiseinEdit[premise.id?.toString() as string] = { ...premise };
+    this.updatePremiseForm.controls.id.setValue(premise.id);
+    this.updatePremiseForm.controls.email.setValue(premise.email);
+    this.updatePremiseForm.controls.web.setValue(premise.web);
+    this.updatePremiseForm.controls.name.setValue(premise.name);
+    this.updatePremiseForm.controls.address.setValue(premise.address);
+    this.updatePremiseForm.controls.person_contact.setValue(
+      premise.person_contact,
+    );
+    this.updatePremiseForm.controls.phone_number.setValue(premise.phone_number);
+    if (premise.schedule)
+      this.updatePremiseForm.controls.schedule.setValue(premise.schedule);
+    if (premise.images.length > 0)
+      this.updatePremiseForm.controls.images.setValue(premise.images);
   }
 
   onRowEditSaveP(premise: Premise) {
-    console.log(this.rowPremiseinEdit);
     console.log(premise);
     // if (premise && premise.id) {
     //   this.premisesService

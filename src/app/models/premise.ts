@@ -10,7 +10,7 @@ export interface Premise {
   web: string | null;
   person_contact: string | null;
   location?: Gps;
-  images?: Photo[];
+  images: Photo[];
   user_id: number;
 }
 
