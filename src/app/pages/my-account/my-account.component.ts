@@ -101,6 +101,8 @@ export class MyAccountComponent implements OnInit {
   imageChangedEvent: Event | null = null;
   croppedImage: SafeUrl = '';
 
+  scheduleSelected: number | null = null;
+
   ngOnInit(): void {
     this.getAllStyles();
     this.getUserById();
@@ -278,8 +280,12 @@ export class MyAccountComponent implements OnInit {
       });
   }
 
-  showDialogSchedule() {
-    this.visibleScheduleModal = true;
+  showDialogSchedule(premiseId: number) {
+    console.log(premiseId);
+    // this.visibleScheduleModal = true;
+  }
+  handleScheduleClick(event: Event) {
+    console.log(event);
   }
 
   showDialogScheduleEdit() {

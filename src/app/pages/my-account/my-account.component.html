@@ -250,7 +250,7 @@
       >
         <ng-template pTemplate="header">
           <tr>
-            <th style="display: none">Foto</th>
+            <th style="display: none">Id</th>
             <th style="width: 11%">Foto</th>
             <th style="width: 12%">Nombre</th>
             <th style="width: 20%">Dirección</th>
@@ -288,7 +288,6 @@
                     hidden
                     (change)="fileChangeEvent($event)"
                   />
-
                   <image-cropper
                     [imageChangedEvent]="imageChangedEvent"
                     [maintainAspectRatio]="true"
@@ -393,14 +392,11 @@
             <td>
               <p-cellEditor>
                 <ng-template pTemplate="input">
-                  <p-button
-                    (onClick)="showDialogScheduleEdit()"
-                    label="Editar horario"
-                  />
+                  <p-button label="Editar horario" />
                 </ng-template>
                 <ng-template pTemplate="output">
                   <p-button
-                    (onClick)="showDialogSchedule()"
+                    (onClick)="showDialogSchedule(premise.id)"
                     label="Ver horario"
                   />
                 </ng-template>
@@ -409,7 +405,16 @@
             <td>
               <p-cellEditor>
                 <ng-template pTemplate="output">
-                  <p-button (onClick)="showDialogGps()" label="Editar coord." />
+                  <p-button
+                    (onClick)="showDialogGps()"
+                    label="Ver localización"
+                  />
+                </ng-template>
+                <ng-template pTemplate="input">
+                  <p-button
+                    (onClick)="showDialogGps()"
+                    label="Editar localización"
+                  />
                 </ng-template>
               </p-cellEditor>
             </td>
@@ -653,16 +658,20 @@
     </p-table>
   </p-tabPanel>
 </p-tabView>
+
+<!--Modal to edit schedules-->
 <p-dialog
-  header="Modifica los horarios de tu local"
+  header="Header"
   [modal]="true"
   [(visible)]="visibleScheduleModal"
   [style]="{ width: '25rem' }"
 >
-  <form
-    [formGroup]="updatePremiseForm.controls.schedule"
-    *ngIf="updatePremiseForm"
-  >
+  <ng-template pTemplate="header">
+    <div class="inline-flex align-items-center justify-content-center gap-2">
+      <span>Horarios del local</span>
+    </div>
+  </ng-template>
+  <form [formGroup]="updatePremiseForm.controls.schedule">
     <div class="flex align-items-center gap-3 mb-3">
       <label for="d1" class="font-semibold w-6rem">Lunes</label>
       <input
@@ -670,7 +679,9 @@
         id="d1"
         class="flex-auto"
         [formControlName]="'Monday'"
-        placeholder="{{ updatePremiseForm.controls | keyvalue }}"
+        placeholder="{{
+          updatePremiseForm.controls.schedule.controls.Monday.value || 'cerrado'
+        }}"
         autocomplete="off"
       />
     </div>
@@ -682,7 +693,7 @@
         class="flex-auto"
         [formControlName]="'Tuesday'"
         placeholder="{{
-          updatePremiseForm.controls.schedule.get('Tuesday')?.value
+          updatePremiseForm.controls.schedule.controls.Tuesday.value
         }}"
         autocomplete="off"
       />
@@ -695,9 +706,7 @@
         class="flex-auto"
         [formControlName]="'Wednesday'"
         placeholder="{{
-          updatePremiseForm.controls.schedule
-            .get('Wednesday')
-            ?.value?.toString()
+          updatePremiseForm.controls.schedule.controls.Wednesday.value
         }}"
         autocomplete="off"
       />
@@ -710,7 +719,7 @@
         class="flex-auto"
         [formControlName]="'Thursday'"
         placeholder="{{
-          updatePremiseForm.controls.schedule.get('Thursday')?.value
+          updatePremiseForm.controls.schedule.controls.Thursday.value
         }}"
         autocomplete="off"
       />
@@ -723,7 +732,7 @@
         class="flex-auto"
         [formControlName]="'Friday'"
         placeholder="{{
-          updatePremiseForm.controls.schedule.get('Friday')?.value
+          updatePremiseForm.controls.schedule.controls.Friday.value
         }}"
         autocomplete="off"
       />
@@ -736,7 +745,7 @@
         class="flex-auto"
         [formControlName]="'Saturday'"
         placeholder="{{
-          updatePremiseForm.controls.schedule.get('Saturday')?.value
+          updatePremiseForm.controls.schedule.controls.Saturday.value
         }}"
         autocomplete="off"
       />
@@ -749,7 +758,7 @@
         class="flex-auto"
         [formControlName]="'Sunday'"
         placeholder="{{
-          updatePremiseForm.controls.schedule.get('Sunday')?.value
+          updatePremiseForm.controls.schedule.controls.Sunday.value
         }}"
         autocomplete="off"
       />
@@ -765,40 +774,40 @@
   </form>
 </p-dialog>
 
-<p-dialog
-  header="Modifica tus coordenadas"
-  [modal]="true"
-  [(visible)]="visibleGpsModal"
-  [style]="{ width: '25rem' }"
->
-  <div [formGroupName]="'location'" class="flex align-items-center gap-3 mb-3">
-    <label for="lat" class="font-semibold w-6rem">Latitud</label>
-    <input
-      pInputText
-      id="lat"
-      class="flex-auto"
-      placeholder="39.25684"
-      autocomplete="off"
-      [formControlName]="'lat'"
-    />
-  </div>
-  <div class="flex align-items-center gap-3 mb-3">
-    <label for="long" class="font-semibold w-6rem">Longitud</label>
-    <input
-      pInputText
-      id="long"
-      class="flex-auto"
-      placeholder="7.25684"
-      autocomplete="off"
-      [formControlName]="'long'"
-    />
-  </div>
-  <div class="flex justify-content-end gap-2">
-    <p-button
-      label="Cancelar"
-      severity="secondary"
-      (onClick)="visibleGpsModal = false"
-    />
-    <p-button label="Guardar" (onClick)="visibleGpsModal = false" />
-  </div>
-</p-dialog>
+<!--<p-dialog-->
+<!--  header="Modifica tus coordenadas"-->
+<!--  [modal]="true"-->
+<!--  [(visible)]="visibleGpsModal"-->
+<!--  [style]="{ width: '25rem' }"-->
+<!--&gt;-->
+<!--  <div [formGroupName]="'location'" class="flex align-items-center gap-3 mb-3">-->
+<!--    <label for="lat" class="font-semibold w-6rem">Latitud</label>-->
+<!--    <input-->
+<!--      pInputText-->
+<!--      id="lat"-->
+<!--      class="flex-auto"-->
+<!--      placeholder="39.25684"-->
+<!--      autocomplete="off"-->
+<!--      [formControlName]="'lat'"-->
+<!--    />-->
+<!--  </div>-->
+<!--  <div class="flex align-items-center gap-3 mb-3">-->
+<!--    <label for="long" class="font-semibold w-6rem">Longitud</label>-->
+<!--    <input-->
+<!--      pInputText-->
+<!--      id="long"-->
+<!--      class="flex-auto"-->
+<!--      placeholder="7.25684"-->
+<!--      autocomplete="off"-->
+<!--      [formControlName]="'long'"-->
+<!--    />-->
+<!--  </div>-->
+<!--  <div class="flex justify-content-end gap-2">-->
+<!--    <p-button-->
+<!--      label="Cancelar"-->
+<!--      severity="secondary"-->
+<!--      (onClick)="visibleGpsModal = false"-->
+<!--    />-->
+<!--    <p-button label="Guardar" (onClick)="visibleGpsModal = false"/>-->
+<!--  </div>-->
+<!--</p-dialog>-->
