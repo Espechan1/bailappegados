@@ -7,6 +7,7 @@ import { EventsService } from '../../services/events.service';
 import { LoginDecodeResponse } from '../../models/login-response';
 import { Style } from '../../models/style';
 import { User } from '../../models/user';
+import { Photo } from '../../models/photo';
 import { Premise, PremiseOutput } from '../../models/premise';
 import { Event as EventCustom } from '../../models/event';
 import { EventOutput as EventOutput } from '../../models/event';
@@ -41,7 +42,6 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { ImageModule } from 'primeng/image';
 import { ImageCroppedEvent, ImageCropperComponent } from 'ngx-image-cropper';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { Photo } from '../../models/photo';
 
 @Component({
   selector: 'app-my-account',

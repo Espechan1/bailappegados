@@ -155,7 +155,7 @@
                 </div>
                 <div class="flex flex-column gap-5">
                   <span class="text-base font-medium"
-                    >Taller: {{ event.opening | date: 'dd-MM' }} <br />
+                    >Taller día: {{ event.opening | date: 'dd-MM' }} <br />
                     De {{ event.opening | date: 'HH:mm' }} a
                     {{ event.expiration | date: 'HH:mm' }}</span
                   >
@@ -173,11 +173,13 @@
                       [outlined]="true"
                       severity="danger"
                       label="Inscríbete al evento"
+                      *ngIf="!registeredEvents.includes(event.id)"
                       (click)="registrationUser(Number(event.id))"
                     />
 
                     <p-button
-                      (click)="onEventSelected(Number(event.id))"
+                      *ngIf="registeredEvents.includes(event.id)"
+                      (click)="viewParticipants(Number(event.id))"
                       severity="danger"
                       icon="pi pi-search"
                       class="flex-auto md:flex-initial white-space-nowrap"
@@ -299,8 +301,9 @@
                     >
                       <i class="pi pi-calendar text-yellow-500"></i>
                       <span class="text-base font-medium"
-                        >Taller:{{ event.opening | date: 'dd-MM / h:mm a' }} -
-                        {{ event.expiration | date: 'h:mm a' }}</span
+                        >Taller día: {{ event.opening | date: 'dd-MM' }} <br />
+                        De {{ event.opening | date: 'HH:mm' }} a
+                        {{ event.expiration | date: 'HH:mm' }}</span
                       >
                     </div>
                   </div>
@@ -313,12 +316,18 @@
                         icon="pi pi-heart"
                         [outlined]="true"
                         severity="danger"
+                        label="Inscríbete al evento"
+                        *ngIf="!registeredEvents.includes(event.id)"
+                        (click)="registrationUser(Number(event.id))"
                       />
+
                       <p-button
-                        (click)="onEventSelected(event.id)"
-                        icon="pi pi-search"
+                        *ngIf="registeredEvents.includes(event.id)"
+                        (click)="viewParticipants(Number(event.id))"
                         severity="danger"
+                        icon="pi pi-search"
                         class="flex-auto md:flex-initial white-space-nowrap"
+                        label="Ver inscritos"
                       />
                     </div>
                   </div>
