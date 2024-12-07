@@ -156,7 +156,6 @@ export class MyAccountComponent implements OnInit {
       .getById((this.stateService.token as LoginDecodeResponse).userId)
       .pipe(take(1))
       .subscribe((value: Container<User>) => {
-        console.log(this.myUser);
         this.myUser = value.data;
         this.selectedStyles = value.data.styles;
         this.myAccountForm = this.initForm(this.myUser);
@@ -216,9 +215,8 @@ export class MyAccountComponent implements OnInit {
 
   //MIS LOCALES
   updatePremiseForm = new FormGroup({
-    // id: new FormControl<number | null>(null),
+    id: new FormControl<number | undefined>(undefined),
     name: new FormControl<string>('', [
-      //<-- para que no de error
       Validators.required,
       Validators.maxLength(50),
       Validators.minLength(1),
@@ -281,9 +279,18 @@ export class MyAccountComponent implements OnInit {
       });
   }
 
-  showDialogSchedule() {
-    this.visibleScheduleModal = true;
-  }
+  // showDialogSchedule(premiseId: number) {
+  //   console.log(premiseId);
+  //   // this.visibleScheduleModal = true;
+  // }
+  // handleScheduleClick(event: Event) {
+  //   console.log(event);
+  // }
+  //
+  // showDialogScheduleEdit() {
+  //   this.visibleScheduleModal = true;
+  // }
+
   onUpdateSchedule() {
     this.visibleScheduleModal = false;
   }
@@ -306,6 +313,19 @@ export class MyAccountComponent implements OnInit {
     // const patata = premise;
     // delete patata.id
     // this.updatePremiseForm.setValue(patata as any)
+    this.updatePremiseForm.controls.id.setValue(premise.id);
+    this.updatePremiseForm.controls.email.setValue(premise.email);
+    this.updatePremiseForm.controls.web.setValue(premise.web);
+    this.updatePremiseForm.controls.name.setValue(premise.name);
+    this.updatePremiseForm.controls.address.setValue(premise.address);
+    this.updatePremiseForm.controls.person_contact.setValue(
+      premise.person_contact,
+    );
+    this.updatePremiseForm.controls.phone_number.setValue(premise.phone_number);
+    if (premise.schedule)
+      this.updatePremiseForm.controls.schedule.setValue(premise.schedule);
+    if (premise.images.length > 0)
+      this.updatePremiseForm.controls.images.setValue(premise.images);
   }
 
   onRowEditSaveP(premise: PremiseOutput) {

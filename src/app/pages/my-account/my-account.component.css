@@ -8,7 +8,7 @@
 }
 
 .text-align-last {
-  text-align-last:left;
+  text-align-last: left;
 }
 
 .container {
@@ -17,23 +17,35 @@
   /*justify-items: center;*/
 }
 
-.containerW{
+.containerW {
   width: 90%;
 }
+
 .goriStyles > div:first-child {
   max-width: 1200px;
   margin: 0 auto;
   color: blue;
 }
 
-.img{
+.img {
   height: 120px;
   width: 150px;
   max-width: 200px;
 }
+
 .p-tabview-nav-content {
   width: 500px;
   margin: auto;
   align-content: center;
+}
+
+.customButton {
+  color: white;
+  background-color: #db2777;
+  padding: 10px;
+  border-radius: 5px;
+  margin: auto;
+  display: block;
+  text-align: center;
 }
 
