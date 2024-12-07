@@ -9,7 +9,7 @@
         <span class="font-bold white-space-nowrap m-0">Mis datos</span>
       </div>
     </ng-template>
-    <div class="flex justify-content-center flex-wrap">
+    <div class="flex justify-content-center flex-wrap BgImg">
       <div class="p-4 shadow-2 border-round w-full lg:w-6 text-align-last">
         <div class="text-center mb-5">
           <form
@@ -227,8 +227,8 @@
     <!--      <label for="delete">¿Quieres eliminar tu cuenta de usuario?</label>-->
     <!--      <input type="button" id="delete" (click)="deleteUser()">-->
   </p-tabPanel>
-  <!--  *ngIf="premisesAllowed()"-->
-  <p-tabPanel header="Mis locales">
+
+  <p-tabPanel header="Mis locales" *ngIf="premisesAllowed()">
     <ng-template class="container" pTemplate="header">
       <div class="flex align-items-center gap-2">
         <i
@@ -238,19 +238,21 @@
         <span class="font-bold white-space-nowrap m-0">Mis locales</span>
       </div>
     </ng-template>
-    <form [formGroup]="updatePremiseForm">
+
+    <form [formGroup]="updatePremiseForm" (ngSubmit)="onValidatePremiseForm()">
       <p-table
         [value]="premisesList"
         [paginator]="true"
-        [rows]="5"
-        [rowsPerPageOptions]="[5, 10, 20]"
+        [rows]="2"
+        [rowsPerPageOptions]="[3, 4, 6]"
         dataKey="id"
         editMode="row"
         [tableStyle]="{ 'min-width': '50rem' }"
       >
         <ng-template pTemplate="header">
+          <a routerLink="/form-premise"> + Añadir un nuevo local </a>
+
           <tr>
-            <th style="display: none">Foto</th>
             <th style="width: 11%">Foto</th>
             <th style="width: 12%">Nombre</th>
             <th style="width: 20%">Dirección</th>
@@ -420,7 +422,7 @@
       </p-table>
     </form>
   </p-tabPanel>
-  <p-tabPanel header="Mis eventos">
+  <p-tabPanel header="Mis eventos" *ngIf="premisesAllowed()">
     <ng-template class="container" pTemplate="header">
       <div class="flex align-items-center gap-2">
         <i
@@ -434,7 +436,7 @@
       class="container"
       [paginator]="true"
       [rows]="2"
-      [rowsPerPageOptions]="[5, 10, 20]"
+      [rowsPerPageOptions]="[3, 4, 6]"
       *ngIf="eventsList"
       [value]="eventsList"
       dataKey="id"
@@ -442,6 +444,7 @@
       [tableStyle]="{ 'min-width': '50rem' }"
     >
       <ng-template pTemplate="header">
+        <a routerLink="/form-event"> + Añadir un nuevo evento </a>
         <tr>
           <th style="width: 11.11%; text-align-last: center">Foto</th>
           <th style="width: 11.11%">Nombre</th>
@@ -740,34 +743,38 @@
   [(visible)]="visibleGpsModal"
   [style]="{ width: '25rem' }"
 >
-  <div [formGroupName]="'location'" class="flex align-items-center gap-3 mb-3">
-    <label for="lat" class="font-semibold w-6rem">Latitud</label>
-    <input
-      pInputText
-      id="lat"
-      class="flex-auto"
-      placeholder="39.25684"
-      autocomplete="off"
-      [formControlName]="'lat'"
-    />
-  </div>
-  <div class="flex align-items-center gap-3 mb-3">
-    <label for="long" class="font-semibold w-6rem">Longitud</label>
-    <input
-      pInputText
-      id="long"
-      class="flex-auto"
-      placeholder="7.25684"
-      autocomplete="off"
-      [formControlName]="'long'"
-    />
-  </div>
-  <div class="flex justify-content-end gap-2">
-    <p-button
-      label="Cancelar"
-      severity="secondary"
-      (onClick)="visibleGpsModal = false"
-    />
-    <p-button label="Guardar" (onClick)="visibleGpsModal = false" />
-  </div>
+  <form [formGroup]="updatePremiseForm">
+    <div [formGroupName]="'location'">
+      <div class="flex align-items-center gap-3 mb-3">
+        <label for="lat" class="font-semibold w-6rem">Latitud</label>
+        <input
+          pInputText
+          id="lat"
+          class="flex-auto"
+          placeholder="39.25684"
+          autocomplete="off"
+          [formControlName]="'lat'"
+        />
+      </div>
+      <div class="flex align-items-center gap-3 mb-3">
+        <label for="long" class="font-semibold w-6rem">Longitud</label>
+        <input
+          pInputText
+          id="long"
+          class="flex-auto"
+          placeholder="7.25684"
+          autocomplete="off"
+          [formControlName]="'lng'"
+        />
+      </div>
+      <div class="flex justify-content-end gap-2">
+        <p-button
+          label="Cancelar"
+          severity="secondary"
+          (onClick)="visibleGpsModal = false"
+        />
+        <p-button label="Guardar" (onClick)="visibleGpsModal = false" />
+      </div>
+    </div>
+  </form>
 </p-dialog>

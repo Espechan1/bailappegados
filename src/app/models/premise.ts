@@ -28,3 +28,17 @@ export interface Gps {
   lat: number;
   lng: number;
 }
+
+export interface PremiseOutput {
+  id?: number;
+  name: string;
+  email: string;
+  address: string;
+  schedule: Schedule | null;
+  phone_number: string;
+  web: string | null;
+  person_contact: string | null;
+  location?: Gps;
+  images?: Blob | string;
+  user_id: number;
+}

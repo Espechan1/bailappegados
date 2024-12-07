@@ -76,7 +76,7 @@
                 </p-image>
                 <p-tag
                   [value]="event.price + ' €'"
-                  [severity]="'info'"
+                  [severity]="'danger'"
                   class="absolute"
                   [style.left.px]="4"
                   [style.top.px]="4"
@@ -102,7 +102,7 @@
                       "
                     >
                       <i class="pi pi-tag text-yellow-500"></i>
-                      <span class="text-900 font-medium text-sm">{{
+                      <span class="text-base font- text-sm">{{
                         styles.get(event.style_id)
                       }}</span>
                     </div>
@@ -117,7 +117,7 @@
                       "
                     >
                       <i class="pi pi-star-fill text-yellow-500"></i>
-                      <span class="text-900 font-medium text-sm">{{
+                      <span class="text-base font-medium text-sm">{{
                         event.dance_instructors
                       }}</span>
                     </div>
@@ -132,7 +132,7 @@
                       "
                     >
                       <i class="pi pi-headphones text-yellow-500"></i>
-                      <span class="text-900 font-medium text-sm">{{
+                      <span class="text-base font-medium text-sm">{{
                         event.dj
                       }}</span>
                     </div>
@@ -147,18 +147,19 @@
                       "
                     >
                       <i class="pi pi-map-marker text-yellow-500"></i>
-                      <span class="text-900 font-medium text-sm">{{
+                      <span class="text-base font-medium text-sm">{{
                         premises.get(event.premise_id)
                       }}</span>
                     </div>
                   </div>
                 </div>
-                <div class="flex flex-column md:align-items-end gap-5">
-                  <span class="text-900 font-medium text-sm"
-                    >Taller: {{ event.opening | date: 'dd-MM  HH:mm' }} -
+                <div class="flex flex-column gap-5">
+                  <span class="text-base font-medium"
+                    >Taller: {{ event.opening | date: 'dd-MM' }} <br />
+                    De {{ event.opening | date: 'HH:mm' }} a
                     {{ event.expiration | date: 'HH:mm' }}</span
                   >
-                  <span class="text-900 font-medium text-sm">
+                  <span class="text-base font-medium">
                     Horario local:
                     {{
                       getScheduleDayPremise(event)
@@ -239,7 +240,7 @@
                       "
                     >
                       <i class="pi pi-tag text-yellow-500"></i>
-                      <span class="text-900 font-medium text-sm">{{
+                      <span class="text-base font-medium text-sm">{{
                         styles.get(event.style_id)
                       }}</span>
                     </div>
@@ -254,7 +255,7 @@
                       "
                     >
                       <i class="pi pi-star-fill text-yellow-500"></i>
-                      <span class="text-900 font-medium text-sm">{{
+                      <span class="text-base font-medium">{{
                         event.dance_instructors
                       }}</span>
                     </div>
@@ -269,9 +270,7 @@
                       "
                     >
                       <i class="pi pi-headphones text-yellow-500"></i>
-                      <span class="text-900 font-medium text-sm">{{
-                        event.dj
-                      }}</span>
+                      <span class="text-base font-medium">{{ event.dj }}</span>
                     </div>
                     <br />
                     <div
@@ -284,7 +283,7 @@
                       "
                     >
                       <i class="pi pi-map-marker text-yellow-500"></i>
-                      <span class="text-900 font-medium text-sm">{{
+                      <span class="text-base font-medium">{{
                         premises.get(event.premise_id)
                       }}</span>
                     </div>
@@ -299,11 +298,9 @@
                       "
                     >
                       <i class="pi pi-calendar text-yellow-500"></i>
-                      <span class="text-900 font-medium text-sm"
-                        >Taller:{{
-                          event.opening | date: 'dd-MM-yyyy h:mm a'
-                        }}
-                        - {{ event.expiration | date: 'h:mm a' }}</span
+                      <span class="text-base font-medium"
+                        >Taller:{{ event.opening | date: 'dd-MM / h:mm a' }} -
+                        {{ event.expiration | date: 'h:mm a' }}</span
                       >
                     </div>
                   </div>

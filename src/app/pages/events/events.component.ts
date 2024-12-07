@@ -221,8 +221,9 @@ export class EventsComponent implements OnInit {
           this.stylesSelected.includes(e.style_id)) &&
         (this.premisesSelected.length === 0 ||
           this.premisesSelected.includes(e.premise_id)) &&
-        this.selectedDate?.toLocaleDateString() ==
-          e.opening?.toLocaleDateString()
+        (this.selectedDate == undefined ||
+          this.selectedDate.toLocaleDateString() ==
+            e.opening?.toLocaleDateString())
       );
     });
   }

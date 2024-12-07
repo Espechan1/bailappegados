@@ -21,6 +21,7 @@ export class UsersService {
               img.url = `${this.imgUrl}/${img.url}`;
             });
           }
+          user.birthday = new Date(user.birthday as Date);
         });
         return arrayUsers;
       }),
@@ -35,6 +36,7 @@ export class UsersService {
             img.url = `${this.imgUrl}/${img.url}`;
           });
         }
+        user.data.birthday = new Date(user.data.birthday as Date);
         return user;
       }),
     );
@@ -43,9 +45,9 @@ export class UsersService {
   create(newUser: UserOutput): Observable<Container<User>> {
     const formData = new FormData();
     formData.set('name', newUser.name);
+    formData.set('email', newUser.email);
     if (newUser.description) formData.set('description', newUser.description);
     if (newUser.location) formData.set('location', newUser.location);
-    formData.set('email', newUser.email);
     if (newUser.birthday)
       formData.set('birthday', newUser.birthday.toISOString().split('T')[0]);
     if (newUser.genre) formData.set('genre', newUser.genre.toString());
@@ -81,7 +83,10 @@ export class UsersService {
     if (userToUpdate.location) formData.set('location', userToUpdate.location);
     formData.set('email', userToUpdate.email);
     if (userToUpdate.birthday)
-      formData.set('birthday', userToUpdate.birthday.getDate().toString());
+      formData.set(
+        'birthday',
+        userToUpdate.birthday.toISOString().split('T')[0],
+      );
     if (userToUpdate.genre)
       formData.set('genre', userToUpdate.genre.toString());
     if (userToUpdate.styles)
@@ -96,7 +101,6 @@ export class UsersService {
     if (userToUpdate.password) formData.set('password', userToUpdate.password);
     if (userToUpdate.images && typeof userToUpdate.images !== 'string')
       formData.set('image', userToUpdate.images);
-    console.log(typeof userToUpdate.images);
 
     return this.http.post<Container<User>>(`${this.url}/${id}`, formData).pipe(
       map(user => {

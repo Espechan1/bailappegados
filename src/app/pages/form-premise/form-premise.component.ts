@@ -20,9 +20,8 @@ import { RouterLink } from '@angular/router';
 import { ImageCroppedEvent, ImageCropperComponent } from 'ngx-image-cropper';
 import { take } from 'rxjs';
 import { PremisesService } from '../../services/premises.service';
-import { Premise, Gps, Schedule } from '../../models/premise';
+import { Gps, Schedule, PremiseOutput } from '../../models/premise';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { Photo } from '../../models/photo';
 import { MapComponent } from '../../components/map/map.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputMaskModule } from 'primeng/inputmask';
@@ -79,7 +78,7 @@ export class FormPremiseComponent {
     person_contact: new FormControl<string | null>(null, [
       Validators.maxLength(50),
     ]),
-    images: new FormControl<Photo[] | null>(null), // undefined = {}
+    images: new FormControl<Blob | undefined>(undefined),
     location: new FormControl<Gps | null>(null),
     schedule: new FormGroup({
       Monday: new FormControl<string | null>(null),
@@ -101,8 +100,8 @@ export class FormPremiseComponent {
     if (this.isChecked) {
       const form = this.createPremiseForm.get('scheduleForm');
       const scheduleData = form ? (form.value as Schedule) : null;
-      const newPremise: Premise = {
-        ...(this.createPremiseForm.getRawValue() as unknown as Premise),
+      const newPremise: PremiseOutput = {
+        ...(this.createPremiseForm.getRawValue() as unknown as PremiseOutput),
         schedule: scheduleData,
         location: this.gps as unknown as Gps,
       };

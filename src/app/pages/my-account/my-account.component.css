@@ -3,6 +3,10 @@
   color: var(--myRed);
 }
 
+.BgImg{
+  background-image: url(../../../../public/fondosilueta.jpg);
+}
+
 .text-align-last {
   text-align-last:left;
 }

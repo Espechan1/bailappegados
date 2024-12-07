@@ -28,7 +28,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { PremisesService } from '../../services/premises.service';
 import { Premise } from '../../models/premise';
 import { ContainerList } from '../../models/container';
-import { Event as EventCustom } from '../../models/event';
+import { EventOutput as EventCustom } from '../../models/event';
 
 @Component({
   selector: 'app-form-event',
@@ -95,6 +95,7 @@ export class FormEventComponent implements OnInit {
       Validators.required,
       Validators.min(1),
     ]),
+    images: new FormControl<Blob | undefined>(undefined),
   });
 
   ngOnInit() {

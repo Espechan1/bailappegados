@@ -83,6 +83,7 @@
         [formControlName]="'style_id'"
         [options]="styles"
         [optionLabel]="'name'"
+        [optionValue]="'id'"
         placeholder="Estilo del taller"
       /><br /><br />
       <label for="price">Precio: </label>
@@ -98,10 +99,10 @@
       <label for="premises">Elige el local al que lo quieres asociar: </label>
       <p-dropdown
         id="premises"
-        formControlName="selectedCity"
         [options]="premisesList"
         [formControlName]="'premise_id'"
-        optionLabel="name"
+        [optionLabel]="'name'"
+        [optionValue]="'id'"
         placeholder="Selecciona tu local"
       />
       <br /><br />
@@ -111,7 +112,7 @@
         <image-cropper
           [imageChangedEvent]="imageChangedEvent"
           [onlyScaleDown]="true"
-          [aspectRatio]="4 / 3"
+          [aspectRatio]="1 / 1"
           [maintainAspectRatio]="false"
           output="blob"
           format="png"

@@ -50,7 +50,7 @@ export class ClassroomsComponent implements OnInit {
   constructor(@Inject(LOCALE_ID) public locale: string) {}
   //formatDate(value.data.opening, "dd/MM/YYYY HH:MM", this.locale)
 
-  //classroom?: Classroom;
+  selectedDate?: Date;
   classroomListOriginal: Classroom[] = [];
   classroomList: Classroom[] = [];
   stylesList: Style[] = [];
@@ -136,12 +136,15 @@ export class ClassroomsComponent implements OnInit {
   }
 
   filterClassrooms() {
-    this.classroomList = this.classroomListOriginal.filter(e => {
+    this.classroomList = this.classroomListOriginal.filter(c => {
       return (
         (this.stylesSelected.length == 0 ||
-          this.stylesSelected.includes(e.style_id)) &&
+          this.stylesSelected.includes(c.style_id)) &&
         (this.premisesSelected.length == 0 ||
-          this.premisesSelected.includes(e.premise_id))
+          this.premisesSelected.includes(c.premise_id)) &&
+        (this.selectedDate == undefined ||
+          this.selectedDate.toLocaleDateString() ==
+            c.opening?.toLocaleDateString())
       );
     });
   }

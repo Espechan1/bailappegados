@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { map, Observable } from 'rxjs';
-import { Premise } from '../models/premise';
+import { Premise, PremiseOutput } from '../models/premise';
 import { Container, ContainerList } from '../models/container';
 
 @Injectable()
@@ -41,7 +41,20 @@ export class PremisesService {
     );
   }
 
-  create(newPremise: Premise): Observable<Container<Premise>> {
+  create(newPremise: PremiseOutput): Observable<Container<Premise>> {
+    const formData = new FormData();
+    formData.set('name', newPremise.name);
+    formData.set('email', newPremise.email);
+    formData.set('address', newPremise.address);
+    formData.set('phone_number', newPremise.phone_number);
+    formData.set('user_id', newPremise.user_id.toString());
+    if (newPremise.person_contact)
+      formData.set('person_contact', newPremise.person_contact);
+    if (newPremise.web) formData.set('web', newPremise.web);
+    if (newPremise.schedule)
+      formData.set('schedule', JSON.stringify(newPremise.schedule));
+    if (newPremise.location)
+      formData.set('location', JSON.stringify(newPremise.location));
     return this.http.post<Container<Premise>>(this.url, newPremise).pipe(
       map(premise => {
         if (premise.data.images && premise.data.images.length > 0) {
@@ -54,7 +67,24 @@ export class PremisesService {
     );
   }
 
-  update(premiseToUpdate: Premise, id: number): Observable<Container<Premise>> {
+  update(
+    premiseToUpdate: PremiseOutput,
+    id: number,
+  ): Observable<Container<Premise>> {
+    const formData = new FormData();
+    formData.set('name', premiseToUpdate.name);
+    formData.set('email', premiseToUpdate.email);
+    formData.set('address', premiseToUpdate.address);
+    formData.set('phone_number', premiseToUpdate.phone_number);
+    formData.set('user_id', premiseToUpdate.user_id.toString());
+    if (premiseToUpdate.person_contact)
+      formData.set('person_contact', premiseToUpdate.person_contact);
+    if (premiseToUpdate.web) formData.set('web', premiseToUpdate.web);
+    if (premiseToUpdate.schedule)
+      formData.set('schedule', JSON.stringify(premiseToUpdate.schedule));
+    if (premiseToUpdate.location)
+      formData.set('location', JSON.stringify(premiseToUpdate.location));
+
     return this.http
       .post<Container<Premise>>(`${this.url}/${id}`, premiseToUpdate)
       .pipe(

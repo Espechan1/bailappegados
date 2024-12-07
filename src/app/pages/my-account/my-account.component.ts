@@ -7,8 +7,9 @@ import { EventsService } from '../../services/events.service';
 import { LoginDecodeResponse } from '../../models/login-response';
 import { Style } from '../../models/style';
 import { User } from '../../models/user';
-import { Premise } from '../../models/premise';
+import { Premise, PremiseOutput } from '../../models/premise';
 import { Event as EventCustom } from '../../models/event';
+import { EventOutput as EventOutput } from '../../models/event';
 import { take } from 'rxjs';
 import { Container, ContainerList } from '../../models/container';
 import {
@@ -155,8 +156,9 @@ export class MyAccountComponent implements OnInit {
       .getById((this.stateService.token as LoginDecodeResponse).userId)
       .pipe(take(1))
       .subscribe((value: Container<User>) => {
+        console.log(this.myUser);
         this.myUser = value.data;
-        this.selectedStyles = value.data.styles; //.map(value1 => value1.id);?
+        this.selectedStyles = value.data.styles;
         this.myAccountForm = this.initForm(this.myUser);
       });
   }
@@ -214,8 +216,9 @@ export class MyAccountComponent implements OnInit {
 
   //MIS LOCALES
   updatePremiseForm = new FormGroup({
-    id: new FormControl<number | null>(null),
+    // id: new FormControl<number | null>(null),
     name: new FormControl<string>('', [
+      //<-- para que no de error
       Validators.required,
       Validators.maxLength(50),
       Validators.minLength(1),
@@ -299,9 +302,13 @@ export class MyAccountComponent implements OnInit {
 
   onRowEditInitP(premise: Premise) {
     this.rowPremiseinEdit[premise.id?.toString() as string] = { ...premise };
+    // this.updatePremiseForm.get('name')?.setValue(premise.name)
+    // const patata = premise;
+    // delete patata.id
+    // this.updatePremiseForm.setValue(patata as any)
   }
 
-  onRowEditSaveP(premise: Premise) {
+  onRowEditSaveP(premise: PremiseOutput) {
     console.log(this.rowPremiseinEdit);
     console.log(premise);
     // if (premise && premise.id) {
@@ -356,10 +363,7 @@ export class MyAccountComponent implements OnInit {
       Validators.min(1),
       Validators.required,
     ]),
-    images: new FormControl<string | Blob | undefined>(
-      undefined,
-      // premise.images && premise.images?.length > 0 ? premise.images[0].url : undefined,
-    ),
+    images: new FormControl<string | Blob | undefined>(undefined),
   });
 
   getEvents(): void {
@@ -383,7 +387,7 @@ export class MyAccountComponent implements OnInit {
     this.rowEventInEdit[event.id?.toString() as string] = { ...event };
   }
 
-  onRowEditSaveE(event: EventCustom) {
+  onRowEditSaveE(event: EventOutput) {
     if (event && event.id) {
       this.eventsService
         .update(event, event.id)
@@ -397,7 +401,21 @@ export class MyAccountComponent implements OnInit {
               );
               if (index !== -1) {
                 // Actualizar el objeto premise en la lista
-                this.eventsList[index] = { ...event };
+
+                const tmp: EventCustom = {
+                  id: event.id,
+                  name: event.name,
+                  opening: event.opening,
+                  expiration: event.expiration,
+                  dance_instructors: event.dance_instructors,
+                  dj: event.dj,
+                  price: event.price,
+                  premise_id: event.premise_id,
+                  style_id: event.style_id,
+                };
+                if (event.images)
+                  tmp.images = [{ url: event.images.toString(), id: 0 }];
+                this.eventsList[index] = { ...tmp };
               }
             }
             delete this.rowEventInEdit[event.id?.toString() as string];

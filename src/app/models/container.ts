@@ -5,6 +5,7 @@ interface ContainerCommons {
 export interface ContainerList<T> extends ContainerCommons {
   data: T[];
 }
+
 export interface Container<T> extends ContainerCommons {
   data: T;
 }
