@@ -7,7 +7,7 @@ import { EventsService } from '../../services/events.service';
 import { LoginDecodeResponse } from '../../models/login-response';
 import { Style } from '../../models/style';
 import { User } from '../../models/user';
-import { Premise, PremiseOutput } from '../../models/premise';
+import { Gps, Premise, PremiseOutput, Schedule } from '../../models/premise';
 import { Event as EventCustom } from '../../models/event';
 import { EventOutput as EventOutput } from '../../models/event';
 import { take } from 'rxjs';
@@ -42,6 +42,9 @@ import { ImageModule } from 'primeng/image';
 import { ImageCroppedEvent, ImageCropperComponent } from 'ngx-image-cropper';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Photo } from '../../models/photo';
+import * as Leaflet from 'leaflet';
+import { icon, Layer, Marker } from 'leaflet';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 @Component({
   selector: 'app-my-account',
@@ -67,6 +70,7 @@ import { Photo } from '../../models/photo';
     KeyValuePipe,
     JsonPipe,
     DatePipe,
+    LeafletModule,
   ],
   providers: [
     StylesService,
@@ -97,10 +101,23 @@ export class MyAccountComponent implements OnInit {
   rowPremiseinEdit: Record<string, Premise> = {};
   rowEventInEdit: Record<string, EventCustom> = {};
   visibleScheduleModal = false;
+  visibleScheduleViewModal = false;
+  scheduleViewing: Schedule = {
+    Monday: null,
+    Tuesday: null,
+    Wednesday: null,
+    Thursday: null,
+    Friday: null,
+    Saturday: null,
+    Sunday: null,
+  };
   visibleGpsModal = false;
+  gpsEditing = false;
   eventsList: EventCustom[] = [];
   imageChangedEvent: Event | null = null;
   croppedImage: SafeUrl = '';
+  map!: Leaflet.Map;
+  mapMark?: Layer;
 
   ngOnInit(): void {
     this.getAllStyles();
@@ -110,7 +127,6 @@ export class MyAccountComponent implements OnInit {
   }
 
   //MIS DATOS
-
   myAccountForm = this.initForm();
 
   private initForm(user?: User): FormGroup {
@@ -234,7 +250,7 @@ export class MyAccountComponent implements OnInit {
     images: new FormControl<Photo[] | null>(null),
     location: new FormGroup({
       lat: new FormControl<number | undefined>(undefined),
-      lng: new FormControl<number | undefined>(undefined),
+      lon: new FormControl<number | undefined>(undefined),
     }),
     schedule: new FormGroup({
       Monday: new FormControl<string | null>(null),
@@ -252,6 +268,38 @@ export class MyAccountComponent implements OnInit {
       this.stateService.userLogged.isManager ||
       this.stateService.userLogged.isAdmin
     );
+  }
+
+  //map component
+  private initMap(): void {
+    this.map = Leaflet.map('map', {
+      center: [39.5984, 2.6616],
+      zoom: 12,
+    });
+    const tiles = Leaflet.tileLayer(
+      //capa puzzle
+      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      {
+        maxZoom: 18,
+        minZoom: 3,
+      },
+    );
+
+    const iconRetinaUrl = 'marker-icon-2x.png';
+    const iconUrl = 'marker-icon.png';
+    const shadowUrl = 'marker-shadow.png';
+    Marker.prototype.options.icon = icon({
+      //Plantilla del marcador
+      iconRetinaUrl,
+      iconUrl,
+      shadowUrl,
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      tooltipAnchor: [16, -28],
+      shadowSize: [41, 41],
+    });
+    tiles.addTo(this.map);
   }
 
   onValidatePremiseForm() {
@@ -279,24 +327,107 @@ export class MyAccountComponent implements OnInit {
       });
   }
 
-  // showDialogSchedule(premiseId: number) {
-  //   console.log(premiseId);
-  //   // this.visibleScheduleModal = true;
-  // }
-  // handleScheduleClick(event: Event) {
-  //   console.log(event);
-  // }
-  //
-  // showDialogScheduleEdit() {
-  //   this.visibleScheduleModal = true;
-  // }
+  showDialogScheduleUpdate(premiseId: number) {
+    console.log(premiseId);
+    // this.visibleScheduleModal = true;
+  }
 
-  onUpdateSchedule() {
+  showDialogScheduleEdit() {
+    this.visibleScheduleModal = true;
+  }
+
+  showDialogScheduleView(id: number) {
+    const premise = this.premisesList.find(p => p.id == id);
+
+    this.scheduleViewing =
+      premise && premise.schedule
+        ? premise.schedule
+        : {
+            Monday: null,
+            Tuesday: null,
+            Wednesday: null,
+            Thursday: null,
+            Friday: null,
+            Saturday: null,
+            Sunday: null,
+          };
+    this.visibleScheduleViewModal = true;
+  }
+
+  onCancelUpdateSchedule(id: number | undefined | null) {
+    const newSchedule = {
+      Monday: '',
+      Tuesday: '',
+      Wednesday: '',
+      Thursday: '',
+      Friday: '',
+      Saturday: '',
+      Sunday: '',
+    } as Schedule;
+    const prevSchedule =
+      this.rowPremiseinEdit[id?.toString() as string].schedule;
+    if (prevSchedule) {
+      newSchedule.Monday =
+        prevSchedule.Monday == null ? '' : prevSchedule.Monday;
+      newSchedule.Tuesday =
+        prevSchedule.Tuesday == null ? '' : prevSchedule.Tuesday;
+      newSchedule.Wednesday =
+        prevSchedule.Wednesday == null ? '' : prevSchedule.Wednesday;
+      newSchedule.Thursday =
+        prevSchedule.Thursday == null ? '' : prevSchedule.Thursday;
+      newSchedule.Friday =
+        prevSchedule.Friday == null ? '' : prevSchedule.Friday;
+      newSchedule.Saturday =
+        prevSchedule.Saturday == null ? '' : prevSchedule.Saturday;
+      newSchedule.Sunday =
+        prevSchedule.Sunday == null ? '' : prevSchedule.Sunday;
+    }
+    this.updatePremiseForm.controls.schedule.setValue(newSchedule);
     this.visibleScheduleModal = false;
   }
 
-  showDialogGps() {
+  showDialogGpsEdit(location: Gps) {
+    this.gpsEditing = true;
     this.visibleGpsModal = true;
+    this.createMap(location);
+
+    this.map.on('click', e => {
+      if (this.mapMark) this.map.removeLayer(this.mapMark);
+      this.mapMark = Leaflet.marker([e.latlng.lat, e.latlng.lng]);
+      this.map.addLayer(this.mapMark);
+    });
+  }
+
+  createMap(location: Gps) {
+    if (!this.map) {
+      setTimeout(() => {
+        this.initMap();
+        if (this.mapMark) this.map.removeLayer(this.mapMark);
+        this.mapMark = Leaflet.marker([location.lat, location.lon]);
+        this.map.addLayer(this.mapMark);
+      }, 250);
+    } else {
+      if (this.mapMark) this.map.removeLayer(this.mapMark);
+      this.mapMark = Leaflet.marker([location.lat, location.lon]);
+      this.map.addLayer(this.mapMark);
+    }
+  }
+
+  cancelSaveLocation() {
+    const oldLocation =
+      this.rowPremiseinEdit[
+        this.updatePremiseForm.controls.id?.toString() as string
+      ].location;
+    this.updatePremiseForm.controls.location.setValue(
+      oldLocation ? oldLocation : { lat: undefined, lon: undefined },
+    );
+    this.visibleGpsModal = false;
+  }
+
+  showDialogGpsView(location: Gps) {
+    this.gpsEditing = false;
+    this.visibleGpsModal = true;
+    this.createMap(location);
   }
 
   onRowEditCancelP(premise: Premise, index: number) {
@@ -322,10 +453,12 @@ export class MyAccountComponent implements OnInit {
       premise.person_contact,
     );
     this.updatePremiseForm.controls.phone_number.setValue(premise.phone_number);
-    if (premise.schedule)
-      this.updatePremiseForm.controls.schedule.setValue(premise.schedule);
     if (premise.images.length > 0)
       this.updatePremiseForm.controls.images.setValue(premise.images);
+    if (premise.schedule)
+      this.updatePremiseForm.controls.schedule.patchValue(premise.schedule);
+    if (premise.location)
+      this.updatePremiseForm.controls.location.setValue(premise.location);
   }
 
   onRowEditSaveP(premise: PremiseOutput) {

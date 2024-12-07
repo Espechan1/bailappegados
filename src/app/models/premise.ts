@@ -26,7 +26,7 @@ export interface Schedule {
 
 export interface Gps {
   lat: number;
-  lng: number;
+  lon: number;
 }
 
 export interface PremiseOutput {
