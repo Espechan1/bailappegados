@@ -395,6 +395,10 @@ export class MyAccountComponent implements OnInit {
       if (this.mapMark) this.map.removeLayer(this.mapMark);
       this.mapMark = Leaflet.marker([e.latlng.lat, e.latlng.lng]);
       this.map.addLayer(this.mapMark);
+      this.updatePremiseForm.controls.location.setValue({
+        lat: e.latlng.lat,
+        lon: e.latlng.lng,
+      });
     });
   }
 
@@ -461,31 +465,31 @@ export class MyAccountComponent implements OnInit {
       this.updatePremiseForm.controls.location.setValue(premise.location);
   }
 
-  onRowEditSaveP(premise: PremiseOutput) {
-    console.log(this.rowPremiseinEdit);
-    console.log(premise);
-    // if (premise && premise.id) {
-    //   this.premisesService
-    //     .update(premise, premise.id)
-    //     .pipe(take(1))
-    //     .subscribe(value => {
-    //       if (value.status === 'Success') {
-    //         alert('La modificación ha ido bien');
-    //         if (this.premisesList) {
-    //           const index = this.premisesList.findIndex(
-    //             p => p.id === premise.id, // Encontrar el índice del premise en premisesList y actualizarlo
-    //           );
-    //           if (index !== -1) {
-    //             // Actualizar el objeto premise en la lista
-    //             this.premisesList[index] = { ...premise };
-    //           }
-    //         }
-    //         delete this.rowPremiseinEdit[premise.id?.toString() as string];
-    //       } else {
-    //         alert('Hubo un error al modificar el premise');
-    //       }
-    //     });
-    // }
+  onRowEditSaveP(premise: Premise) {
+    const values = this.updatePremiseForm.getRawValue();
+    console.log(values);
+    if (premise && premise.id) {
+      this.premisesService
+        .update(values as unknown as PremiseOutput, values.id as number)
+        .pipe(take(1))
+        .subscribe(value => {
+          if (value.status === 'Success') {
+            alert('La modificación ha ido bien');
+            if (this.premisesList) {
+              const index = this.premisesList.findIndex(
+                p => p.id === premise.id, // Encontrar el índice del premise en premisesList y actualizarlo
+              );
+              if (index !== -1) {
+                // Actualizar el objeto premise en la lista
+                this.premisesList[index] = { ...premise };
+              }
+            }
+            delete this.rowPremiseinEdit[premise.id?.toString() as string];
+          } else {
+            alert('Hubo un error al modificar el premise');
+          }
+        });
+    }
   }
 
   //MIS EVENTOS

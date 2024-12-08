@@ -40,5 +40,4 @@ export interface PremiseOutput {
   person_contact: string | null;
   location?: Gps;
   images?: Blob | string;
-  user_id: number;
 }
