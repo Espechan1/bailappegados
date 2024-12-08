@@ -431,6 +431,17 @@
                   (click)="onRowEditInitP(premise)"
                   class="p-button-rounded p-button-text"
                 />
+
+                <p-button
+                  label=""
+                  *ngIf="!editing"
+                  pRipple
+                  type="button"
+                  pInitEditableRow
+                  icon="pi pi-trash"
+                  (click)="onRowDeleteP(premise.id)"
+                  class="p-button-rounded p-button-text"
+                />
                 <p-button
                   *ngIf="editing"
                   pRipple
@@ -599,6 +610,20 @@
               <ng-template pTemplate="input">
                 <input
                   pInputText
+                  type="number"
+                  [formControlName]="'capacity'"
+                />
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{ event.capacity }}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input
+                  pInputText
                   type="text"
                   [formControlName]="'premise_id'"
                 />
@@ -632,6 +657,15 @@
                 pInitEditableRow
                 icon="pi pi-pencil"
                 (click)="onRowEditInitE(event)"
+                class="p-button-rounded p-button-text"
+              />
+              <p-button
+                label=""
+                *ngIf="!editing"
+                pRipple
+                type="button"
+                icon="pi pi-trash"
+                (click)="onRowDeleteE(event.id)"
                 class="p-button-rounded p-button-text"
               />
               <p-button

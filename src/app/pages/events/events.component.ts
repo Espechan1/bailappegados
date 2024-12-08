@@ -76,24 +76,28 @@ export class EventsComponent implements OnInit {
 
   eventsListOriginal: EventCustom[] = [];
   eventsList: EventCustom[] = [];
+  filteredEvents: EventCustom[] = [];
+  layout: 'list' | 'grid' = 'list';
+  premises: Map<number, string> = new Map<number, string>();
+  premisesList: Premise[] = [];
+  premisesMap = new Map<number, Premise>();
+  premisesSelected: number[] = [];
+  registration: Registration = {};
+  registeredEvents: number[] = [];
+  selectedDate?: Date;
   styles: Map<number, string> = new Map<number, string>();
   stylesList: Style[] = [];
-  premises: Map<number, string> = new Map<number, string>();
-  premisesSelected: number[] = [];
-  selectedDate?: Date;
-  premisesList: Premise[] = [];
   stylesSelected: number[] = [];
-  premisesMap = new Map<number, Premise>();
-  registration: Registration = {};
-  layout: 'list' | 'grid' = 'list';
-  filteredEvents: EventCustom[] = [];
-  registeredEvents: number[] = [];
 
   ngOnInit(): void {
     this.getStyles();
     this.getAll();
     this.getPremises();
-    if (this.stateService.userLogged.isLogged && this.stateService.token) {
+    if (
+      this.stateService.userLogged.isLogged &&
+      this.stateService.token &&
+      this.stateService.token.userId
+    ) {
       this.IsUserRegisteredEvent();
     }
     this.filteredEvents = [...this.eventsList];

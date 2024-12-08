@@ -159,18 +159,19 @@
                   <div class="flex flex-row-reverse md:flex-row gap-2">
                     <p-button
                       icon="pi pi-heart"
-                      [outlined]="true"
-                      severity="danger"
+                      [outlined]="false"
+                      *ngIf="!registeredClasses.includes(classroom.id)"
                       label="Inscríbete a la clase"
                     />
-                    <!--                      *ngIf="!registeredClasses.includes(classroom.id)"-->
-                    <!--                      (click)="registrationUser(Number(classroom.id))"-->
+                    <!--                      (click)="enrolledUser(Number(classroom.id))"-->
 
                     <p-button
-                      severity="danger"
                       icon="pi pi-search"
                       class="flex-auto md:flex-initial white-space-nowrap"
                       label="Ver participantes"
+                      styleClass="colorButton"
+                      *ngIf="registeredClasses.includes(classroom.id)"
+                      (click)="viewParticipants(Number(classroom.id))"
                     />
                     <!--                    *ngIf="registeredClasses.includes(classroom.id)"-->
                     <!--                    (click)="viewParticipants(Number(classroom.id))"-->

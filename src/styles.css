@@ -60,3 +60,8 @@ h1 {
 .myRed {
   color: var(--myRed);
 }
+
+.colorButton {
+  background-color: #ec4899;
+  color: whitesmoke;
+}

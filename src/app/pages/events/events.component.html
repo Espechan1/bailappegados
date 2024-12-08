@@ -153,37 +153,75 @@
                     </div>
                   </div>
                 </div>
-                <div class="flex flex-column gap-5">
-                  <span class="text-base font-medium"
-                    >Taller día: {{ event.opening | date: 'dd-MM' }} <br />
-                    De {{ event.opening | date: 'HH:mm' }} a
-                    {{ event.expiration | date: 'HH:mm' }}</span
+                <div class="flex flex-column">
+                  <br />
+                  <div
+                    class="surface-0 flex align-items-center gap-2 justify-content-left py-1 px-2"
+                    style="
+                      border-radius: 30px;
+                      box-shadow:
+                        0 1px 2px 0 rgba(0, 0, 0, 0.04),
+                        0 1px 2px 0 rgba(0, 0, 0, 0.06);
+                    "
                   >
-                  <span class="text-base font-medium">
-                    Horario local:
-                    {{
+                    <i class="pi pi-calendar text-yellow-500"></i>
+                    <span class="text-base font-medium text-sm"
+                      >Taller día: {{ event.opening | date: 'dd-MM' }} <br />
+                      De {{ event.opening | date: 'HH:mm' }} a
+                      {{ event.expiration | date: 'HH:mm' }}
+                    </span>
+                  </div>
+                  <br />
+                  <div
+                    class="surface-0 flex align-items-center gap-2 justify-content-left py-1 px-2"
+                    style="
+                      border-radius: 30px;
+                      box-shadow:
+                        0 1px 2px 0 rgba(0, 0, 0, 0.04),
+                        0 1px 2px 0 rgba(0, 0, 0, 0.06);
+                    "
+                  >
+                    <i class="pi pi-calendar-clock text-yellow-500"></i>
+                    <span class="text-base font-medium text-sm">{{
                       getScheduleDayPremise(event)
                         ? getScheduleDayPremise(event)
-                        : 'Apertura especial'
-                    }}
-                  </span>
+                        : 'Especial'
+                    }}</span>
+                  </div>
+
+                  <br />
+                  <div
+                    class="surface-0 flex align-items-center gap-2 justify-content-left py-1 px-2"
+                    style="
+                      border-radius: 30px;
+                      box-shadow:
+                        0 1px 2px 0 rgba(0, 0, 0, 0.04),
+                        0 1px 2px 0 rgba(0, 0, 0, 0.06);
+                    "
+                  >
+                    <i class="pi pi-users text-yellow-500"></i>
+                    <span class="text-base font-medium text-sm">{{
+                      event.capacity ? event.capacity : 'No definido'
+                    }}</span>
+                  </div>
+                  <br />
                   <div class="flex flex-row-reverse md:flex-column gap-2">
                     <p-button
                       icon="pi pi-heart"
-                      [outlined]="true"
-                      severity="danger"
+                      [outlined]="false"
                       label="Inscríbete al evento"
                       *ngIf="!registeredEvents.includes(event.id)"
                       (click)="registrationUser(Number(event.id))"
+                      styleClass="colorButton"
                     />
 
                     <p-button
                       *ngIf="registeredEvents.includes(event.id)"
                       (click)="viewParticipants(Number(event.id))"
-                      severity="danger"
                       icon="pi pi-search"
                       class="flex-auto md:flex-initial white-space-nowrap"
                       label="Ver inscritos"
+                      styleClass="colorButton"
                     />
                   </div>
                 </div>
@@ -291,6 +329,21 @@
                     </div>
                     <br />
                     <div
+                      class="surface-0 flex align-items-start gap-2 py-1 px-2 justify-content-start"
+                      style="
+                        border-radius: 30px;
+                        box-shadow:
+                          0 1px 2px 0 rgba(0, 0, 0, 0.04),
+                          0 1px 2px 0 rgba(0, 0, 0, 0.06);
+                      "
+                    >
+                      <i class="pi pi-users text-yellow-500"></i>
+                      <span class="text-base font-medium">{{
+                        event.capacity
+                      }}</span>
+                    </div>
+                    <br />
+                    <div
                       class="surface-0 flex align-items-start gap-2 justify-content-center py-1 px-2"
                       style="
                         border-radius: 30px;
@@ -314,20 +367,20 @@
                     >
                       <p-button
                         icon="pi pi-heart"
-                        [outlined]="true"
-                        severity="danger"
+                        [outlined]="false"
                         label="Inscríbete al evento"
                         *ngIf="!registeredEvents.includes(event.id)"
                         (click)="registrationUser(Number(event.id))"
+                        styleClass="colorButton"
                       />
 
                       <p-button
                         *ngIf="registeredEvents.includes(event.id)"
                         (click)="viewParticipants(Number(event.id))"
-                        severity="danger"
                         icon="pi pi-search"
                         class="flex-auto md:flex-initial white-space-nowrap"
                         label="Ver inscritos"
+                        styleClass="colorButton"
                       />
                     </div>
                   </div>

@@ -16,8 +16,8 @@
   );
 }
 
-.bgRed {
-  background-color: var(--myRed);
+.bgColor {
+  background-color: #13293D;
 }
 
 .mxrem {

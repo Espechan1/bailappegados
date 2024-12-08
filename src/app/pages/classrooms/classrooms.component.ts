@@ -72,7 +72,7 @@ export class ClassroomsComponent implements OnInit {
   premisesName: Map<number, string> = new Map<number, string>();
   teachers: Map<number, string> = new Map<number, string>();
   layout: 'list' | 'grid' = 'list';
-  // registeredClasses: number[] = [];
+  registeredClasses: number[] = [];
 
   ngOnInit(): void {
     this.getStyles();
@@ -123,7 +123,7 @@ export class ClassroomsComponent implements OnInit {
       });
   }
 
-  // registrationUser(clickedEvent: number) {
+  // enrolledUser(clickedEvent: number) {
   //   if (
   //     this.stateService.userLogged.isLogged &&
   //     this.stateService.token &&
@@ -146,7 +146,7 @@ export class ClassroomsComponent implements OnInit {
   //         }
   //         if (value.status === 'Success') {
   //           alert(value.data);
-  //           this.registeredEvents.push(clickedEvent);
+  //           this.registeredClasses.push(clickedEvent);
   //         }
   //       });
   //   } else {

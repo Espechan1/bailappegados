@@ -7,6 +7,7 @@ export interface Event {
   expiration?: Date;
   dance_instructors: string;
   dj: string;
+  capacity?: number;
   price?: number;
   premise_id: number;
   style_id: number;
@@ -20,6 +21,7 @@ export interface EventOutput {
   expiration?: Date;
   dance_instructors: string;
   dj: string;
+  capacity?: number;
   price?: number;
   premise_id: number;
   style_id: number;
