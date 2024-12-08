@@ -1,6 +1,5 @@
 image-cropper {
-  max-height: 33vh;
-  width: 500px;
+  max-width: 350px;
 }
 
 #scheduleDiv {
@@ -10,8 +9,6 @@ image-cropper {
 
 .cropper-wrapper {
   /*min-height: 300px;*/
-  max-width: 500px;
-  width: 300px;
-  object-fit: fill;
+  width: fit-content;
   position: relative;
 }

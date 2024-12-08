@@ -54,6 +54,7 @@ export class PremisesService {
       formData.set('schedule', JSON.stringify(newPremise.schedule));
     if (newPremise.location)
       formData.set('location', JSON.stringify(newPremise.location));
+    if (newPremise.images) formData.set('image', newPremise.images);
     return this.http.post<Container<Premise>>(this.url, formData).pipe(
       map(premise => {
         if (premise.data.images && premise.data.images.length > 0) {

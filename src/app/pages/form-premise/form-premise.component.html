@@ -158,10 +158,6 @@
       <div class="cropper-wrapper" *ngIf="imageChangedEvent !== null">
         <image-cropper
           [imageChangedEvent]="imageChangedEvent"
-          [onlyScaleDown]="true"
-          [aspectRatio]="4 / 3"
-          [maintainAspectRatio]="false"
-          output="blob"
           format="png"
           (imageCropped)="imageCropped($event)"
         >

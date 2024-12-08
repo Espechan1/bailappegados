@@ -92,7 +92,8 @@
         [optionLabel]="'name'"
         [optionValue]="'id'"
         placeholder="Estilo del taller"
-      /><br /><br />
+      />
+      <br /><br />
       <label for="price">Precio: </label>
       <p-inputNumber
         [formControlName]="'price'"
@@ -119,10 +120,11 @@
         <image-cropper
           [imageChangedEvent]="imageChangedEvent"
           [onlyScaleDown]="true"
-          [aspectRatio]="1 / 1"
           [maintainAspectRatio]="false"
+          [aspectRatio]="4 / 3"
           output="blob"
           format="png"
+          style="width: fit-content"
           (imageCropped)="imageCropped($event)"
         >
         </image-cropper>
