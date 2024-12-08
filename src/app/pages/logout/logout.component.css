@@ -1,0 +1,9 @@
+.container1 {
+  width: 100vw;
+  text-align: center;
+  font-size: x-large;
+  padding-top: 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
