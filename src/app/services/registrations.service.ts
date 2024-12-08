@@ -8,6 +8,7 @@ import { Registration } from '../models/registration';
 @Injectable()
 export class RegistrationsService {
   private readonly url = `${environment.api}/registrations`;
+  private readonly urlEvByUsId = `${this.url}/events`;
   private readonly http = inject(HttpClient);
 
   getAll(): Observable<ContainerList<Registration>> {
@@ -16,6 +17,10 @@ export class RegistrationsService {
 
   getById(id: number): Observable<Container<Registration>> {
     return this.http.get<Container<Registration>>(`${this.url}/${id}`);
+  }
+
+  eventsRegisteredByUser(id: number): Observable<Container<number[]>> {
+    return this.http.get<Container<number[]>>(`${this.urlEvByUsId}/${id}`);
   }
 
   create(newRegistration: Registration): Observable<Container<Registration>> {

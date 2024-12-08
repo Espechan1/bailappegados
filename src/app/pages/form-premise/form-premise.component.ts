@@ -1,4 +1,6 @@
 import { Component, inject } from '@angular/core';
+import { PremisesService } from '../../services/premises.service';
+import { StateService } from '../../services/state.service';
 import {
   FormControl,
   FormGroup,
@@ -19,7 +21,6 @@ import { PrimeTemplate } from 'primeng/api';
 import { RouterLink } from '@angular/router';
 import { ImageCroppedEvent, ImageCropperComponent } from 'ngx-image-cropper';
 import { take } from 'rxjs';
-import { PremisesService } from '../../services/premises.service';
 import { Gps, Schedule, PremiseOutput } from '../../models/premise';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { MapComponent } from '../../components/map/map.component';
@@ -51,10 +52,11 @@ import { InputMaskModule } from 'primeng/inputmask';
   ],
   templateUrl: './form-premise.component.html',
   styleUrl: './form-premise.component.css',
-  providers: [PremisesService],
+  providers: [PremisesService, StateService],
 })
 export class FormPremiseComponent {
   private readonly premisesService = inject(PremisesService);
+  private readonly stateService = inject(StateService);
   private sanitizer = inject(DomSanitizer);
 
   gps?: Gps;
@@ -89,7 +91,9 @@ export class FormPremiseComponent {
       Saturday: new FormControl<string | null>(null),
       Sunday: new FormControl<string | null>(null),
     }),
-    user_id: new FormControl<number | null>(null),
+    user_id: new FormControl<number | null>(
+      this.stateService.token?.userId as number,
+    ),
   });
 
   handleMapClick(coords: Gps): void {

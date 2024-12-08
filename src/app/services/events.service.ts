@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { Container, ContainerList } from '../models/container';
 import { Event, EventOutput } from '../models/event';
+import { format } from 'date-fns';
 
 @Injectable()
 export class EventsService {
@@ -71,15 +72,13 @@ export class EventsService {
     formData.set('premise_id', newEvent.premise_id.toString());
     if (newEvent.price) formData.set('price', newEvent.price.toString());
     if (newEvent.opening)
-      formData.set(
-        'expiration',
-        newEvent.opening.toLocaleString().replace(',', ''),
-      );
+      formData.set('opening', format(newEvent.opening, 'yyyy-MM-dd HH:mm:ss'));
     if (newEvent.expiration)
       formData.set(
         'expiration',
-        newEvent.expiration.toLocaleString().replace(',', ''),
+        format(newEvent.expiration, 'yyyy-MM-dd HH:mm:ss'),
       );
+    if (newEvent.images) formData.set('images', newEvent.images);
 
     return this.http.post<Container<Event>>(this.url, formData).pipe(
       map(event => {
@@ -104,14 +103,15 @@ export class EventsService {
       formData.set('price', eventToUpdate.price.toString());
     if (eventToUpdate.opening)
       formData.set(
-        'expiration',
-        eventToUpdate.opening.toLocaleString().replace(',', ''),
+        'opening',
+        format(eventToUpdate.opening, 'yyyy-MM-dd HH:mm:ss'),
       );
     if (eventToUpdate.expiration)
       formData.set(
         'expiration',
-        eventToUpdate.expiration.toLocaleString().replace(',', ''),
+        format(eventToUpdate.expiration, 'yyyy-MM-dd HH:mm:ss'),
       );
+    if (eventToUpdate.images) formData.set('images', eventToUpdate.images);
     return this.http.post<Container<Event>>(`${this.url}/${id}`, formData).pipe(
       map(event1 => {
         if (event1.data.images && event1.data.images.length > 0) {

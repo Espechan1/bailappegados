@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { Container, ContainerList } from '../models/container';
 import { User, UserOutput } from '../models/user';
+import { format } from 'date-fns';
 
 @Injectable()
 export class UsersService {
@@ -49,7 +50,7 @@ export class UsersService {
     if (newUser.description) formData.set('description', newUser.description);
     if (newUser.location) formData.set('location', newUser.location);
     if (newUser.birthday)
-      formData.set('birthday', newUser.birthday.toISOString().split('T')[0]);
+      formData.set('birthday', format(newUser.birthday, 'yyyy-MM-dd'));
     if (newUser.genre) formData.set('genre', newUser.genre.toString());
     if (newUser.styles)
       formData.set(
@@ -83,10 +84,7 @@ export class UsersService {
     if (userToUpdate.location) formData.set('location', userToUpdate.location);
     formData.set('email', userToUpdate.email);
     if (userToUpdate.birthday)
-      formData.set(
-        'birthday',
-        userToUpdate.birthday.toISOString().split('T')[0],
-      );
+      formData.set('birthday', format(userToUpdate.birthday, 'yyyy-MM-dd'));
     if (userToUpdate.genre)
       formData.set('genre', userToUpdate.genre.toString());
     if (userToUpdate.styles)

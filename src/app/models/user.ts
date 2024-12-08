@@ -14,6 +14,7 @@ export interface User {
   roles: Role[];
   images?: Photo[];
   styles?: Style[];
+  //age?: number;
 }
 
 export interface UserLogged {
@@ -36,4 +37,5 @@ export interface UserOutput {
   roles: Role[];
   images?: Blob | string;
   styles?: Style[];
+  //age?: number;
 }

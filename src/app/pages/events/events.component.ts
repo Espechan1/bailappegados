@@ -12,7 +12,13 @@ import { ContainerList } from '../../models/container';
 import { DataViewModule } from 'primeng/dataview';
 import { TagModule } from 'primeng/tag';
 import { Button, ButtonDirective } from 'primeng/button';
-import { DatePipe, NgClass, NgForOf, NgOptimizedImage } from '@angular/common';
+import {
+  DatePipe,
+  NgClass,
+  NgForOf,
+  NgIf,
+  NgOptimizedImage,
+} from '@angular/common';
 import { Ripple } from 'primeng/ripple';
 import { Style } from '../../models/style';
 import { ImageModule } from 'primeng/image';
@@ -44,6 +50,7 @@ import { CalendarModule } from 'primeng/calendar';
     MultiSelectModule,
     DatePipe,
     CalendarModule,
+    NgIf,
   ],
   templateUrl: './events.component.html',
   styleUrl: './events.component.css',
@@ -65,27 +72,34 @@ export class EventsComponent implements OnInit {
   protected readonly Number = Number;
 
   constructor(@Inject(LOCALE_ID) public locale: string) {}
-
   //formatDate(value.data.opening, "dd/MM/YYYY HH:MM", this.locale)
 
   eventsListOriginal: EventCustom[] = [];
   eventsList: EventCustom[] = [];
+  filteredEvents: EventCustom[] = [];
+  layout: 'list' | 'grid' = 'list';
+  premises: Map<number, string> = new Map<number, string>();
+  premisesList: Premise[] = [];
+  premisesMap = new Map<number, Premise>();
+  premisesSelected: number[] = [];
+  registration: Registration = {};
+  registeredEvents: number[] = [];
+  selectedDate?: Date;
   styles: Map<number, string> = new Map<number, string>();
   stylesList: Style[] = [];
-  premises: Map<number, string> = new Map<number, string>();
-  premisesSelected: number[] = [];
-  selectedDate?: Date;
-  premisesList: Premise[] = [];
   stylesSelected: number[] = [];
-  premisesMap = new Map<number, Premise>();
-  registration: Registration = {};
-  layout: 'list' | 'grid' = 'list';
-  filteredEvents: EventCustom[] = [];
 
   ngOnInit(): void {
     this.getStyles();
     this.getAll();
     this.getPremises();
+    if (
+      this.stateService.userLogged.isLogged &&
+      this.stateService.token &&
+      this.stateService.token.userId
+    ) {
+      this.IsUserRegisteredEvent();
+    }
     this.filteredEvents = [...this.eventsList];
   }
 
@@ -146,6 +160,22 @@ export class EventsComponent implements OnInit {
       });
   }
 
+  IsUserRegisteredEvent() {
+    this.registrationServices
+      .eventsRegisteredByUser(this.stateService.token?.userId as number)
+      .pipe(take(1))
+      .subscribe(value => {
+        if (value.status === 'Success') {
+          this.registeredEvents = value.data;
+        } else {
+          console.error(
+            'Error al obtener los eventos registrados:',
+            value.data,
+          );
+        }
+      });
+  }
+
   registrationUser(clickedEvent: number) {
     if (
       this.stateService.userLogged.isLogged &&
@@ -164,24 +194,22 @@ export class EventsComponent implements OnInit {
         .create(this.registration)
         .pipe(take(1))
         .subscribe(value => {
-          if (value.status == 'Error') {
+          if (value.status === 'Error') {
             alert(value.data);
           }
-          if (value.status == 'Success') {
+          if (value.status === 'Success') {
             alert(value.data);
+            this.registeredEvents.push(clickedEvent);
           }
         });
     } else {
       alert(
         'Tienes que estar logueado para inscribirte como participante a un evento.',
       );
-      console.log(
-        'El registro no existe, revisa la variable registration que has creado.',
-      );
     }
   }
 
-  onEventSelected(eventId: number) {
+  viewParticipants(eventId: number) {
     this.router.navigate(['/registrations/' + eventId]).then();
   }
 

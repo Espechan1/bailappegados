@@ -41,6 +41,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { ImageModule } from 'primeng/image';
 import { ImageCroppedEvent, ImageCropperComponent } from 'ngx-image-cropper';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { ClassroomsService } from '../../services/classrooms.service';
 import { Photo } from '../../models/photo';
 import * as Leaflet from 'leaflet';
 import { icon, Layer, Marker } from 'leaflet';
@@ -78,6 +79,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
     StateService,
     EventsService,
     PremisesService,
+    ClassroomsService,
   ],
   templateUrl: './my-account.component.html',
   styleUrl: './my-account.component.css',
@@ -88,6 +90,7 @@ export class MyAccountComponent implements OnInit {
   private readonly usersService = inject(UsersService);
   private readonly premisesService = inject(PremisesService);
   private readonly eventsService = inject(EventsService);
+  private readonly classroomsService = inject(ClassroomsService);
 
   private sanitizer = inject(DomSanitizer);
   private router = inject(Router);
@@ -320,16 +323,10 @@ export class MyAccountComponent implements OnInit {
       .pipe(take(1))
       .subscribe((value: ContainerList<Premise>) => {
         this.premisesList = value.data;
-        console.log(this.premisesList);
         value.data.forEach(premise =>
           this.premisesMap.set(premise.id as number, premise.name),
         );
       });
-  }
-
-  showDialogScheduleUpdate(premiseId: number) {
-    console.log(premiseId);
-    // this.visibleScheduleModal = true;
   }
 
   showDialogScheduleEdit() {
@@ -465,6 +462,17 @@ export class MyAccountComponent implements OnInit {
       this.updatePremiseForm.controls.location.setValue(premise.location);
   }
 
+  onRowDeleteP(id: number) {
+    if (confirm('¿Estás seguro que quieres dar de baja este local?')) {
+      this.premisesService
+        .remove(id)
+        .pipe(take(1))
+        .subscribe(value => {
+          alert(value.status);
+        });
+    }
+  }
+
   onRowEditSaveP(premise: Premise) {
     const values = this.updatePremiseForm.getRawValue();
     console.log(values);
@@ -510,6 +518,10 @@ export class MyAccountComponent implements OnInit {
       Validators.required,
       Validators.maxLength(50),
       Validators.minLength(1),
+    ]),
+    capacity: new FormControl<number | undefined>(undefined, [
+      Validators.min(1),
+      Validators.max(500),
     ]),
     price: new FormControl<number | undefined>(undefined, [Validators.min(0)]),
     premise_id: new FormControl<number | undefined>(undefined, [
@@ -566,6 +578,7 @@ export class MyAccountComponent implements OnInit {
                   expiration: event.expiration,
                   dance_instructors: event.dance_instructors,
                   dj: event.dj,
+                  capacity: event.capacity,
                   price: event.price,
                   premise_id: event.premise_id,
                   style_id: event.style_id,
@@ -580,6 +593,19 @@ export class MyAccountComponent implements OnInit {
             alert('Hubo un error al modificar el premise');
           }
         });
+    }
+  }
+
+  onRowDeleteE(id: number) {
+    if (confirm('Seguro que quieres eliminar el evento?')) {
+      this.eventsService
+        .remove(id)
+        .pipe(take(1))
+        .subscribe(value => {
+          alert(value.data);
+        });
+    } else {
+      alert('Solicitud cancelada');
     }
   }
 

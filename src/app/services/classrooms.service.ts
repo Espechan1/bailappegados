@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { Container, ContainerList } from '../models/container';
 import { Classroom, ClassroomOutput } from '../models/classroom';
+import { format } from 'date-fns';
 
 @Injectable()
 export class ClassroomsService {
@@ -49,20 +50,20 @@ export class ClassroomsService {
     formData.set('phone_number', newClassroom.phone_number);
     if (newClassroom.opening)
       formData.set(
-        'expiration',
-        newClassroom.opening.toLocaleString().replace(',', ''),
+        'opening',
+        format(newClassroom.opening, 'yyyy-MM-dd HH:mm:ss'),
       );
     if (newClassroom.expiration)
       formData.set(
         'expiration',
-        newClassroom.expiration.toLocaleString().replace(',', ''),
+        format(newClassroom.expiration, 'yyyy-MM-dd HH:mm:ss'),
       );
     if (newClassroom.price)
       formData.set('price', newClassroom.price.toString());
     formData.set('premise_id', newClassroom.premise_id.toString());
     formData.set('style_id', newClassroom.style_id.toString());
     formData.set('teacher_id', newClassroom.teacher_id.toString());
-
+    if (newClassroom.images) formData.set('images', newClassroom.images);
     return this.http.post<Container<Classroom>>(this.url, formData).pipe(
       map(classroom => {
         if (classroom.data.images && classroom.data.images.length > 0) {
@@ -84,19 +85,20 @@ export class ClassroomsService {
     formData.set('phone_number', classToUpdate.phone_number);
     if (classToUpdate.opening)
       formData.set(
-        'expiration',
-        classToUpdate.opening.toLocaleString().replace(',', ''),
+        'opening',
+        format(classToUpdate.opening, 'yyyy-MM-dd HH:mm:ss'),
       );
     if (classToUpdate.expiration)
       formData.set(
         'expiration',
-        classToUpdate.expiration.toLocaleString().replace(',', ''),
+        format(classToUpdate.expiration, 'yyyy-MM-dd HH:mm:ss'),
       );
     if (classToUpdate.price)
       formData.set('price', classToUpdate.price.toString());
     formData.set('premise_id', classToUpdate.premise_id.toString());
     formData.set('style_id', classToUpdate.style_id.toString());
     formData.set('teacher_id', classToUpdate.teacher_id.toString());
+    if (classToUpdate.images) formData.set('images', classToUpdate.images);
     return this.http
       .post<Container<Classroom>>(`${this.url}/${id}`, classToUpdate)
       .pipe(

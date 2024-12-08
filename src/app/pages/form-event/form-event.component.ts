@@ -28,7 +28,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { PremisesService } from '../../services/premises.service';
 import { Premise } from '../../models/premise';
 import { ContainerList } from '../../models/container';
-import { EventOutput as EventCustom } from '../../models/event';
+import { EventOutput } from '../../models/event';
 
 @Component({
   selector: 'app-form-event',
@@ -67,6 +67,7 @@ export class FormEventComponent implements OnInit {
   styles?: Style[] = [];
   errorsMap = new Map<string, string>();
   premisesList?: { id: number | undefined; name: string }[];
+  newEvent?: EventOutput;
 
   createEventForm = new FormGroup({
     name: new FormControl<string>('', [
@@ -86,6 +87,7 @@ export class FormEventComponent implements OnInit {
       Validators.maxLength(50),
       Validators.minLength(4),
     ]),
+    capacity: new FormControl<number | undefined>(undefined),
     price: new FormControl<number | undefined>(undefined),
     premise_id: new FormControl<number | undefined>(undefined, [
       Validators.required,
@@ -127,7 +129,7 @@ export class FormEventComponent implements OnInit {
 
   createEvent(): void {
     this.eventsService
-      .create(this.createEventForm.getRawValue() as EventCustom)
+      .create(this.createEventForm.getRawValue() as unknown as EventOutput)
       .pipe(take(1))
       .subscribe(ev => {
         alert('El evento se ha creado correctamente: ' + ev.data);
@@ -161,6 +163,9 @@ export class FormEventComponent implements OnInit {
       this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(
         event.objectUrl,
       );
+      if (event.blob) {
+        this.createEventForm.controls['images'].setValue(event.blob);
+      }
     }
   }
 
