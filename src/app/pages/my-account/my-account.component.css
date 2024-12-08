@@ -49,3 +49,18 @@
   text-align: center;
 }
 
+.map-container {
+  width: 25rem;
+  height: 25rem;
+  margin: 20px auto;
+}
+
+.map-frame {
+  border: 2px solid black;
+  height: 100%;
+}
+
+#map {
+  height: 100%;
+}
+

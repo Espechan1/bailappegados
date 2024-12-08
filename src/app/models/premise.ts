@@ -26,7 +26,7 @@ export interface Schedule {
 
 export interface Gps {
   lat: number;
-  lng: number;
+  lon: number;
 }
 
 export interface PremiseOutput {
@@ -40,5 +40,4 @@ export interface PremiseOutput {
   person_contact: string | null;
   location?: Gps;
   images?: Blob | string;
-  user_id: number;
 }

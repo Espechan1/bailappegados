@@ -97,7 +97,7 @@ export class FormPremiseComponent {
   });
 
   handleMapClick(coords: Gps): void {
-    console.log(`lat: ${coords.lat}, lng: ${coords.lng}`);
+    console.log(`lat: ${coords.lat}, lon: ${coords.lon}`);
   }
 
   createPremise(): void {

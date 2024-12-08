@@ -54,7 +54,7 @@ export class MapComponent implements AfterViewInit {
       marker = Leaflet.marker([e.latlng.lat, e.latlng.lng]); //Crea el nuevo
       this.map.addLayer(marker); //Lo añade en el mapa
       console.log(marker);
-      this.handleMapClick.emit({ ...e.latlng });
+      this.handleMapClick.emit({ lat: e.latlng.lat, lon: e.latlng.lng });
     });
 
     tiles.addTo(this.map);

@@ -47,7 +47,6 @@ export class PremisesService {
     formData.set('email', newPremise.email);
     formData.set('address', newPremise.address);
     formData.set('phone_number', newPremise.phone_number);
-    formData.set('user_id', newPremise.user_id.toString());
     if (newPremise.person_contact)
       formData.set('person_contact', newPremise.person_contact);
     if (newPremise.web) formData.set('web', newPremise.web);
@@ -55,7 +54,7 @@ export class PremisesService {
       formData.set('schedule', JSON.stringify(newPremise.schedule));
     if (newPremise.location)
       formData.set('location', JSON.stringify(newPremise.location));
-    return this.http.post<Container<Premise>>(this.url, newPremise).pipe(
+    return this.http.post<Container<Premise>>(this.url, formData).pipe(
       map(premise => {
         if (premise.data.images && premise.data.images.length > 0) {
           premise.data.images.forEach(img => {
@@ -76,7 +75,6 @@ export class PremisesService {
     formData.set('email', premiseToUpdate.email);
     formData.set('address', premiseToUpdate.address);
     formData.set('phone_number', premiseToUpdate.phone_number);
-    formData.set('user_id', premiseToUpdate.user_id.toString());
     if (premiseToUpdate.person_contact)
       formData.set('person_contact', premiseToUpdate.person_contact);
     if (premiseToUpdate.web) formData.set('web', premiseToUpdate.web);
@@ -84,9 +82,11 @@ export class PremisesService {
       formData.set('schedule', JSON.stringify(premiseToUpdate.schedule));
     if (premiseToUpdate.location)
       formData.set('location', JSON.stringify(premiseToUpdate.location));
+    if (premiseToUpdate.images && typeof premiseToUpdate.images != 'object')
+      formData.set('image', premiseToUpdate.images);
 
     return this.http
-      .post<Container<Premise>>(`${this.url}/${id}`, premiseToUpdate)
+      .post<Container<Premise>>(`${this.url}/${id}`, formData)
       .pipe(
         map(premise => {
           if (premise.data.images && premise.data.images.length > 0) {
@@ -94,6 +94,7 @@ export class PremisesService {
               img.url = `${this.imgUrl}/${img.url}`;
             });
           }
+          console.log(premise);
           return premise;
         }),
       );
@@ -120,6 +121,7 @@ export class PremisesService {
       );
   }
 }
+
 /*
 * formatDate(
   value: string | number | Date,
