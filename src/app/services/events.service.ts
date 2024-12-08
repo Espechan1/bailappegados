@@ -78,7 +78,7 @@ export class EventsService {
         'expiration',
         format(newEvent.expiration, 'yyyy-MM-dd HH:mm:ss'),
       );
-    if (newEvent.images) formData.set('images', newEvent.images);
+    if (newEvent.images) formData.set('image', newEvent.images);
 
     return this.http.post<Container<Event>>(this.url, formData).pipe(
       map(event => {

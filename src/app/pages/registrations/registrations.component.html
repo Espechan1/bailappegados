@@ -7,7 +7,7 @@
       content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
     />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Usuarios Registrados</title>
+    <title>Usuarios Participantes</title>
   </head>
   <body>
     <p-table [value]="usersRegistered" [tableStyle]="{ 'min-width': '60rem' }">
@@ -29,9 +29,10 @@
       </ng-template>
       <ng-template pTemplate="body" let-usersRegistered>
         <tr>
-          <td>{{ usersRegistered.image }}</td>
+          <td>{{ usersRegistered.images[0] }}</td>
           <td>{{ usersRegistered.name }}</td>
           <td>{{ usersRegistered.location }}</td>
+          <td>{{ usersRegistered.age }}</td>
           <td><p-tag [value]="usersRegistered.status_match" /></td>
           <!-- [severity]="getSeverity(usersRegistered.status_match)"-->
         </tr>

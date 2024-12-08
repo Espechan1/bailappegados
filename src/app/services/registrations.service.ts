@@ -15,8 +15,13 @@ export class RegistrationsService {
     return this.http.get<ContainerList<Registration>>(this.url);
   }
 
-  getById(id: number): Observable<Container<Registration>> {
-    return this.http.get<Container<Registration>>(`${this.url}/${id}`);
+  getById(
+    userId: number,
+    eventId: number,
+  ): Observable<Container<Registration>> {
+    return this.http.get<Container<Registration>>(
+      `${this.url}/${userId}/${eventId}`,
+    );
   }
 
   eventsRegisteredByUser(id: number): Observable<Container<number[]>> {

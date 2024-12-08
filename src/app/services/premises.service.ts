@@ -43,17 +43,27 @@ export class PremisesService {
 
   create(newPremise: PremiseOutput): Observable<Container<Premise>> {
     const formData = new FormData();
+
     formData.set('name', newPremise.name);
     formData.set('email', newPremise.email);
     formData.set('address', newPremise.address);
     formData.set('phone_number', newPremise.phone_number);
-    if (newPremise.person_contact)
+    if (newPremise.person_contact) {
       formData.set('person_contact', newPremise.person_contact);
-    if (newPremise.web) formData.set('web', newPremise.web);
-    if (newPremise.schedule)
+    }
+    if (newPremise.web) {
+      formData.set('web', newPremise.web);
+    }
+    if (newPremise.schedule) {
       formData.set('schedule', JSON.stringify(newPremise.schedule));
-    if (newPremise.location)
+    }
+    if (newPremise.location) {
       formData.set('location', JSON.stringify(newPremise.location));
+    }
+    if (newPremise.images) {
+      formData.set('image', newPremise.images);
+    }
+    formData.set('user_id', newPremise.user_id.toString());
     return this.http.post<Container<Premise>>(this.url, formData).pipe(
       map(premise => {
         if (premise.data.images && premise.data.images.length > 0) {
