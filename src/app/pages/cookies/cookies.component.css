@@ -3,3 +3,10 @@ th,
 td {
   border: 1px solid black;
 }
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 90%;
+  text-align: justify;
+}
