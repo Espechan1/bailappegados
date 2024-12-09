@@ -111,7 +111,8 @@ export class EventsService {
         'expiration',
         format(eventToUpdate.expiration, 'yyyy-MM-dd HH:mm:ss'),
       );
-    if (eventToUpdate.images) formData.set('images', eventToUpdate.images);
+    if (eventToUpdate.images) formData.set('image', eventToUpdate.images);
+    console.log(formData);
     return this.http.post<Container<Event>>(`${this.url}/${id}`, formData).pipe(
       map(event1 => {
         if (event1.data.images && event1.data.images.length > 0) {

@@ -210,6 +210,14 @@ export class MyAccountComponent implements OnInit {
     }
   }
 
+  imageCroppedEvent(event: ImageCroppedEvent) {
+    if (event.blob) this.updateEventForm.controls.images.setValue(event.blob);
+  }
+
+  imageCroppedPremise(event: ImageCroppedEvent) {
+    if (event.blob) this.updatePremiseForm.controls.images.setValue(event.blob);
+  }
+
   deleteUser(): void {
     confirm(
       '¿Estás seguro que quieres borrar tu cuenta? Una vez confirmado, tus datos se borrarán instantáneamente.',
@@ -250,7 +258,7 @@ export class MyAccountComponent implements OnInit {
     person_contact: new FormControl<string | null>('', [
       Validators.maxLength(50),
     ]),
-    images: new FormControl<Photo[] | null>(null),
+    images: new FormControl<Photo[] | null | Blob>(null),
     location: new FormGroup({
       lat: new FormControl<number | undefined>(undefined),
       lon: new FormControl<number | undefined>(undefined),
@@ -469,8 +477,9 @@ export class MyAccountComponent implements OnInit {
       this.premisesService
         .remove(id)
         .pipe(take(1))
-        .subscribe(value => {
-          alert(value.status);
+        .subscribe(() => {
+          alert('Local borrado con éxito');
+          window.location.reload();
         });
     }
   }
@@ -504,13 +513,14 @@ export class MyAccountComponent implements OnInit {
 
   //MIS EVENTOS
   updateEventForm = new FormGroup({
+    id: new FormControl<number | undefined>(undefined),
     name: new FormControl<string>('', [
       Validators.required,
       Validators.maxLength(50),
       Validators.minLength(1),
     ]),
     opening: new FormControl<string | undefined>(''),
-    expiration: new FormControl<string | undefined>(''),
+    expiration: new FormControl<string>(''),
     dance_instructors: new FormControl<string>('', [
       Validators.required,
       Validators.maxLength(50),
@@ -556,12 +566,29 @@ export class MyAccountComponent implements OnInit {
 
   onRowEditInitE(event: EventCustom) {
     this.rowEventInEdit[event.id?.toString() as string] = { ...event };
+
+    this.updateEventForm.controls.id.setValue(event.id);
+    this.updateEventForm.controls.dj.setValue(event.dj);
+    this.updateEventForm.controls.capacity.setValue(event.capacity);
+    this.updateEventForm.controls.price.setValue(event.price);
+    this.updateEventForm.controls.dance_instructors.setValue(
+      event.dance_instructors,
+    );
+    if (event.expiration)
+      this.updateEventForm.controls.expiration.setValue(
+        event.expiration.toString(),
+      );
+    this.updateEventForm.controls.name.setValue(event.name);
+    this.updateEventForm.controls.opening.setValue(event.opening?.toString());
+    this.updateEventForm.controls.premise_id.setValue(event.premise_id);
+    this.updateEventForm.controls.style_id.setValue(event.style_id);
   }
 
   onRowEditSaveE(event: EventOutput) {
+    const values = this.updateEventForm.getRawValue();
     if (event && event.id) {
       this.eventsService
-        .update(event, event.id)
+        .update(values as unknown as EventOutput, event.id)
         .pipe(take(1))
         .subscribe(value => {
           if (value.status === 'Success') {
@@ -603,8 +630,8 @@ export class MyAccountComponent implements OnInit {
       this.eventsService
         .remove(id)
         .pipe(take(1))
-        .subscribe(value => {
-          alert(value.data);
+        .subscribe(() => {
+          alert('Evento borrado con éxito');
         });
     } else {
       alert('Solicitud cancelada');

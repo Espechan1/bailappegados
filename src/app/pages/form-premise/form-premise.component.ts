@@ -18,7 +18,7 @@ import { PasswordModule } from 'primeng/password';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { NgIf, NgOptimizedImage } from '@angular/common';
 import { PrimeTemplate } from 'primeng/api';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ImageCroppedEvent, ImageCropperComponent } from 'ngx-image-cropper';
 import { take } from 'rxjs';
 import { Gps, PremiseOutput } from '../../models/premise';
@@ -58,7 +58,7 @@ export class FormPremiseComponent {
   private readonly premisesService = inject(PremisesService);
   private readonly stateService = inject(StateService);
   private sanitizer = inject(DomSanitizer);
-
+  private router = inject(Router);
   isChecked = false;
   imageChangedEvent: Event | null = null;
   croppedImage: SafeUrl = '';
@@ -109,11 +109,12 @@ export class FormPremiseComponent {
         .create(values as unknown as PremiseOutput)
         .pipe(take(1))
         .subscribe({
-          next: value => {
-            console.log(value);
+          next: () => {
+            alert('Local creado con éxito');
+            this.router.navigate(['/my-account']);
           },
           error: err => {
-            console.log(err);
+            alert(err);
           },
         });
     }
