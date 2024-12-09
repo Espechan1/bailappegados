@@ -64,3 +64,16 @@
   height: 100%;
 }
 
+.add-link {
+  font-weight: 500;
+  color: white;
+  background-color: #db2777;
+  padding: 10px;
+  border-radius: 8px;
+  max-width: 200px;
+  font-size: 13pt;
+  text-decoration: none;
+  appearance: menulist-button;
+  box-sizing: border-box;
+  text-align: center;
+}

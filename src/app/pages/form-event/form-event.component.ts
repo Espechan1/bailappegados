@@ -131,8 +131,8 @@ export class FormEventComponent implements OnInit {
     this.eventsService
       .create(this.createEventForm.getRawValue() as unknown as EventOutput)
       .pipe(take(1))
-      .subscribe(ev => {
-        alert('El evento se ha creado correctamente: ' + ev.data);
+      .subscribe(() => {
+        alert('El evento se ha creado correctamente');
       });
   }
 

@@ -21,7 +21,7 @@ import { PrimeTemplate } from 'primeng/api';
 import { RouterLink } from '@angular/router';
 import { ImageCroppedEvent, ImageCropperComponent } from 'ngx-image-cropper';
 import { take } from 'rxjs';
-import { Gps, Schedule, PremiseOutput } from '../../models/premise';
+import { Gps, PremiseOutput } from '../../models/premise';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { MapComponent } from '../../components/map/map.component';
 import { DropdownModule } from 'primeng/dropdown';
@@ -59,7 +59,6 @@ export class FormPremiseComponent {
   private readonly stateService = inject(StateService);
   private sanitizer = inject(DomSanitizer);
 
-  gps?: Gps;
   isChecked = false;
   imageChangedEvent: Event | null = null;
   croppedImage: SafeUrl = '';
@@ -97,21 +96,17 @@ export class FormPremiseComponent {
   });
 
   handleMapClick(coords: Gps): void {
-    console.log(`lat: ${coords.lat}, lon: ${coords.lon}`);
+    this.createPremiseForm.controls.location.setValue({
+      lat: coords.lat,
+      lon: coords.lon,
+    });
   }
 
   createPremise(): void {
     if (this.isChecked) {
-      const form = this.createPremiseForm.get('scheduleForm');
-      const scheduleData = form ? (form.value as Schedule) : null;
-      const newPremise: PremiseOutput = {
-        ...(this.createPremiseForm.getRawValue() as unknown as PremiseOutput),
-        schedule: scheduleData,
-        location: this.gps as unknown as Gps,
-      };
-
+      const values = this.createPremiseForm.getRawValue();
       this.premisesService
-        .create(newPremise)
+        .create(values as unknown as PremiseOutput)
         .pipe(take(1))
         .subscribe({
           next: value => {
@@ -126,21 +121,17 @@ export class FormPremiseComponent {
 
   fileChangeEvent(event: Event): void {
     this.imageChangedEvent = event;
-    console.log(event);
   }
 
   imageCropped(event: ImageCroppedEvent) {
-    // Se dispara cuando finaliza el recorte de la imagen. El evento proporciona información sobre la imagen recortada, como su URL y datos en formato base64.
     console.log(event);
-    if (event.objectUrl != null) {
-      this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(
-        event.objectUrl,
-      );
-    }
+    // Se dispara cuando finaliza el recorte de la imagen. El evento proporciona información sobre la imagen recortada, como su URL y datos en formato base64.
+    if (event.blob) this.createPremiseForm.controls.images.setValue(event.blob);
   }
   onCreate() {
     if (this.createPremiseForm.invalid) {
       console.log('Algo ta mal');
+      console.log(this.createPremiseForm.errors);
       for (const controlsKey in this.createPremiseForm.controls) {
         this.createPremiseForm.get(controlsKey)?.markAsDirty();
         this.createPremiseForm.get(controlsKey)?.updateValueAndValidity();
