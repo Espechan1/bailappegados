@@ -387,16 +387,18 @@ export class MyAccountComponent implements OnInit {
     this.gpsEditing = true;
     this.visibleGpsModal = true;
     this.createMap(location);
-
-    this.map.on('click', e => {
-      if (this.mapMark) this.map.removeLayer(this.mapMark);
-      this.mapMark = Leaflet.marker([e.latlng.lat, e.latlng.lng]);
-      this.map.addLayer(this.mapMark);
-      this.updatePremiseForm.controls.location.setValue({
-        lat: e.latlng.lat,
-        lon: e.latlng.lng,
+    const timeout = this.map ? 0 : 300;
+    setTimeout(() => {
+      this.map.on('click', e => {
+        if (this.mapMark) this.map.removeLayer(this.mapMark);
+        this.mapMark = Leaflet.marker([e.latlng.lat, e.latlng.lng]);
+        this.map.addLayer(this.mapMark);
+        this.updatePremiseForm.controls.location.setValue({
+          lat: e.latlng.lat,
+          lon: e.latlng.lng,
+        });
       });
-    });
+    }, timeout);
   }
 
   createMap(location: Gps) {
