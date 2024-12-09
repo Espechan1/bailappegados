@@ -53,11 +53,11 @@
             {{ event.price + ' €' }}
           </div>
           <span>
-            <p-button icon="pi pi-heart" severity="danger" [outlined]="true" />
             <p-button
-              icon="pi pi-shopping-cart"
-              styleClass="ml-2"
+              icon="pi pi-heart"
               severity="danger"
+              [outlined]="false"
+              routerLink="/events"
             />
           </span>
         </div>

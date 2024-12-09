@@ -1,0 +1,144 @@
+<div class="flex justify-content-center flex-wrap">
+  <div class="p-4 shadow-2 border-round w-full lg:w-6">
+    <div class="text-center mb-5">
+      <img
+        ngSrc="/imgRegisterBig.png"
+        alt="Image"
+        height="200"
+        width="250"
+        class="mb-3"
+      />
+      <div class="text-900 text-3xl font-medium mb-3">
+        Crea tu clase para que la gente se informe y se apunte
+      </div>
+    </div>
+
+    <form [formGroup]="createClassForm" (ngSubmit)="errorsValidation()">
+      <label for="nameEvent" class="block text-900 font-medium mb-2"
+        >Nombre de la clase:
+      </label>
+      <small>{{ errorsMap.get('name') }}</small>
+      <input
+        [formControlName]="'name'"
+        type="text"
+        placeholder="Nombre de la clase"
+        pInputText
+        id="nameEvent"
+        aria-describedby="name-help"
+        class="w-full mb-3"
+      />
+
+      <br />
+      <label for="opening" class="block text-900 font-medium mb-2"
+        >Hora de inicio
+      </label>
+      <p-calendar
+        id="opening"
+        inputId="calendar-24h"
+        dateFormat="dd.mm.yy"
+        [formControlName]="'opening'"
+        [showTime]="true"
+        [hourFormat]="String(24)"
+      />
+      <br /><br />
+      <label for="expiration" class="block text-900 font-medium mb-2"
+        >Hora de fin:
+      </label>
+      <p-calendar
+        id="expiration"
+        inputId="calendar-24h"
+        dateFormat="dd.mm.yy"
+        [formControlName]="'expiration'"
+        [showTime]="true"
+        [hourFormat]="String(24)"
+      />
+
+      <!--      <br /><br />-->
+      <!--      <label for="capacity">Capacidad de la sala(opcional): </label>-->
+      <!--      <p-inputNumber-->
+      <!--        inputId="integeronly"-->
+      <!--        [formControlName]="'capacity'"-->
+      <!--        id="capacity"-->
+      <!--      />-->
+      <br /><br />
+      <label for="styles">Elige el estilo de la clase: </label>
+      <p-dropdown
+        id="styles"
+        [formControlName]="'style_id'"
+        [options]="styles"
+        [optionLabel]="'name'"
+        [optionValue]="'id'"
+        placeholder="Ejemplo: bachata"
+      />
+      <br /><br />
+      <label for="phone" class="block text-900 font-medium mb-2"
+        >Teléfono:
+      </label>
+      <input
+        [formControlName]="'phone_number'"
+        type="tel"
+        pattern="^(\+34|0034|34)?[6-9]\d{8}$"
+        pInputText
+        id="phone"
+        placeholder="Escribe tu teléfono"
+        aria-describedby="name-help"
+      />
+      <br /><br />
+      <label for="price">Precio: </label>
+      <p-inputNumber
+        [formControlName]="'price'"
+        mode="currency"
+        id="price"
+        inputId="currency-spain"
+        currency="EUR"
+        locale="es-ES"
+      />
+      <br /><br />
+      <label for="premises">Elige el local al que lo quieres asociar: </label>
+      <p-dropdown
+        id="premises"
+        [options]="premisesList"
+        [formControlName]="'premise_id'"
+        [optionLabel]="'name'"
+        [optionValue]="'id'"
+        placeholder="Selecciona el local"
+      />
+      <br /><br />
+      <p>Añade una imagen en formato JPG o PNG</p>
+      <input type="file" (change)="fileChangeEvent($event)" />
+      <div class="cropper-wrapper" *ngIf="imageChangedEvent !== null">
+        <image-cropper
+          [imageChangedEvent]="imageChangedEvent"
+          [onlyScaleDown]="true"
+          [maintainAspectRatio]="false"
+          [aspectRatio]="4 / 3"
+          output="blob"
+          format="png"
+          style="width: fit-content"
+          (imageCropped)="imageCropped($event)"
+        >
+        </image-cropper>
+      </div>
+      <br />
+      <br />
+      <div class="flex align-items-center justify-content-between mb-6">
+        <br /><br />
+      </div>
+      {{ createClassForm.errors }}
+      <div class="flex align-items-center justify-content-around mb-6">
+        <p-button
+          (click)="createClass()"
+          type="submit"
+          label="Crear clase"
+          class="p-button-success"
+          severity="success"
+        ></p-button>
+        <p-button
+          (click)="createClassForm.reset()"
+          label="Borrar datos"
+          severity="danger"
+        />
+      </div>
+    </form>
+  </div>
+</div>

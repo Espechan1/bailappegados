@@ -495,7 +495,11 @@
       [tableStyle]="{ 'min-width': '50rem' }"
     >
       <ng-template pTemplate="header">
-        <a routerLink="/form-event"> + Añadir un nuevo evento </a>
+        <tr style="margin: auto">
+          <a class="add-link" routerLink="/form-event">
+            Añadir un nuevo evento
+          </a>
+        </tr>
         <tr>
           <th style="width: 11.11%; text-align-last: center">Foto</th>
           <th style="width: 11.11%">Nombre</th>
@@ -709,31 +713,31 @@
 >
   <div class="flex align-items-center gap-3 mb-3">
     <span class="font-semibold w-6rem">Lunes:</span>
-    <span class="flex-auto">{{ scheduleViewing.Monday || 'cerrado' }} </span>
+    <span class="flex-auto">{{ scheduleViewing.Monday || 'Cerrado' }} </span>
   </div>
   <div class="flex align-items-center gap-3 mb-3">
     <span class="font-semibold w-6rem">Martes:</span>
-    <span class="flex-auto">{{ scheduleViewing.Tuesday || 'cerrado' }} </span>
+    <span class="flex-auto">{{ scheduleViewing.Tuesday || 'Cerrado' }} </span>
   </div>
   <div class="flex align-items-center gap-3 mb-3">
     <span class="font-semibold w-6rem">Miércoles:</span>
-    <span class="flex-auto">{{ scheduleViewing.Wednesday || 'cerrado' }}</span>
+    <span class="flex-auto">{{ scheduleViewing.Wednesday || 'Cerrado' }}</span>
   </div>
   <div class="flex align-items-center gap-3 mb-3">
     <span class="font-semibold w-6rem">Jueves:</span>
-    <span class="flex-auto">{{ scheduleViewing.Thursday || 'cerrado' }}</span>
+    <span class="flex-auto">{{ scheduleViewing.Thursday || 'Cerrado' }}</span>
   </div>
   <div class="flex align-items-center gap-3 mb-3">
     <span class="font-semibold w-6rem">Viernes:</span>
-    <span class="flex-auto">{{ scheduleViewing.Friday || 'cerrado' }}</span>
+    <span class="flex-auto">{{ scheduleViewing.Friday || 'Cerrado' }}</span>
   </div>
   <div class="flex align-items-center gap-3 mb-3">
     <span class="font-semibold w-6rem">Sábado:</span>
-    <span class="flex-auto">{{ scheduleViewing.Saturday || 'cerrado' }}</span>
+    <span class="flex-auto">{{ scheduleViewing.Saturday || 'Cerrado' }}</span>
   </div>
   <div class="flex align-items-center gap-3 mb-3">
     <span class="font-semibold w-6rem">Domingo:</span>
-    <span class="flex-auto">{{ scheduleViewing.Sunday || 'cerrado' }}</span>
+    <span class="flex-auto">{{ scheduleViewing.Sunday || 'Cerrado' }}</span>
   </div>
   <div class="flex justify-content-center">
     <p-button label="Cerrar" (onClick)="visibleScheduleViewModal = false" />

@@ -7,6 +7,7 @@ export interface Classroom {
   opening?: Date;
   expiration?: Date;
   price?: number;
+  //capacity?: number;
   premise_id: number;
   style_id: number;
   teacher_id: number;
@@ -20,6 +21,7 @@ export interface ClassroomOutput {
   opening?: Date;
   expiration?: Date;
   price?: number;
+  //capacity?: number;
   premise_id: number;
   style_id: number;
   teacher_id: number;

@@ -9,7 +9,7 @@ import { take } from 'rxjs';
 import { ContainerList } from '../../models/container';
 import { Event } from '../../models/event';
 import { Ripple } from 'primeng/ripple';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-guest',
@@ -22,6 +22,7 @@ import { Router } from '@angular/router';
     Button,
     ButtonDirective,
     Ripple,
+    RouterLink,
   ],
   providers: [EventsService],
   templateUrl: './guest.component.html',

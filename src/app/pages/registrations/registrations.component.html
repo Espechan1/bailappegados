@@ -23,6 +23,9 @@
             Localidad <p-sortIcon field="location" />
           </th>
           <th pSortableColumn="state" style="width: 20%">
+            Edad <p-sortIcon field="age" />
+          </th>
+          <th pSortableColumn="state" style="width: 20%">
             Disponibilidad <p-sortIcon field="state" />
           </th>
         </tr>
@@ -32,6 +35,7 @@
           <td>{{ usersRegistered.image }}</td>
           <td>{{ usersRegistered.name }}</td>
           <td>{{ usersRegistered.location }}</td>
+          <td>{{ usersRegistered.age }}</td>
           <td><p-tag [value]="usersRegistered.status_match" /></td>
           <!-- [severity]="getSeverity(usersRegistered.status_match)"-->
         </tr>

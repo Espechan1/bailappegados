@@ -18,8 +18,7 @@ import { FormPremiseComponent } from './pages/form-premise/form-premise.componen
 import { ClassroomsComponent } from './pages/classrooms/classrooms.component';
 import { RegistrationsComponent } from './pages/registrations/registrations.component';
 import { FormEventComponent } from './pages/form-event/form-event.component';
-
-// const stateService = inject(StateService)
+import { FormClassComponent } from './pages/form-class/form-class.component';
 
 function checkToken() {
   const stateService = inject(StateService);
@@ -38,6 +37,7 @@ export const routes: Routes = [
   { path: 'conditions', component: ConditionsComponent },
   { path: 'form-premise', component: FormPremiseComponent },
   { path: 'form-event', component: FormEventComponent },
+  { path: 'form-class', component: FormClassComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'classrooms', component: ClassroomsComponent },
   { path: 'registrations/:eventId', component: RegistrationsComponent },
